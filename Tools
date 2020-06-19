@@ -1,0 +1,26 @@
+# pre-requirements
+    library(gWidgets2)
+    library(gWidgets2RGtk2)
+    library(cairoDevice)
+    library(QuasR)
+    library(Rsubread)
+    library(edgeR)
+    library(ggplot2)
+    library(grid)
+    library(gridExtra)
+    library(plotrix)
+    library(tidyverse)
+
+# working directory
+setwd("D:/OneDrive - catholic.ac.kr/@STUDY/tool")  
+# - box1.png
+# - title.png
+
+
+# Main window
+window <- gwindow("tReasure",width = 1100, height = 650)
+img <- gdkPixbufNewFromFile(file.path(getwd(), "box1.png"))
+getToolkitWidget(window)$setIcon(img)
+
+# Sub window (Notebook)
+notebook <- gnotebook(container = window
