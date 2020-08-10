@@ -9,4 +9,8 @@ tReasure is a package for the R computing environment and it is assumed that you
   
   
 tReasure currently automates the following tasks:
-
+1) preprocessing of the raw sequence reads
+2) pre-processing 
+3) alignment and quantification
+4) statistical analysis for differentially expressed tRNAs gene
+5) visualization
