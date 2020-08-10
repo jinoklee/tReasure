@@ -325,7 +325,17 @@
   #......................................................................................#
   
   # Main window----------------------
-  window <- gbasicdialog("tReasure", do.buttons = FALSE)
+  window <- gwindow("tReasure")
+  addHandlerUnrealize(window, handler = function(h,...) {
+    val <- gconfirm("Really close window", parent=h$obj)
+    if(as.logical(val)){
+      dispose(window)
+      gtkMainQuit() 
+    }else{
+      return(TRUE) 
+    }      # don't destroy
+  })
+  
   mother <- ggroup(container = window, horizontal = FALSE)
   size(mother) <- c(1000,740)
   
@@ -1102,7 +1112,7 @@
         
 # Main window----------------------      
   
-  visible(window, TRUE)
+  gtkMain()
           
         
         
