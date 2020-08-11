@@ -9,9 +9,9 @@ tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-fr
    2) Pre-processing of trimming adapter and filtering reads
    3) Alignment and quantification
    4) Statistical analysis for differentially expressed tRNAs gene
-   5) Visualization <br/><br/>
+   5) Visualization 
 '''
-
+<br/><br/>
 ### **Analysis flow of tReasure**
   ![Flow](https://github.com/jinoklee/tReasure/blob/master/docs/flow.png?raw=true)<br/><br/>
 
