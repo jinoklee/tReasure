@@ -12,7 +12,7 @@ tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-fr
 5) Visualization
 
 
-### **Flow**
+### **Analysis flow of tReasure**
  ![Flow](https://github.com/jinoklee/tReasure/blob/master/docs/flow.png?raw=true)
 
 
