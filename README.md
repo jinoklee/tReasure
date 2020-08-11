@@ -13,7 +13,7 @@ tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-fr
 
 
 **Flow**
-!(https://github.com/jinoklee/tReasure/blob/master/docs/flow.png?raw=true)
+![Flow](https://github.com/jinoklee/tReasure/blob/master/docs/flow.png?raw=true)
 
 
 
