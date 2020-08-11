@@ -16,7 +16,7 @@ tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-fr
 
 
 ##Installation guide
-======================================
+---------------------------
 **tReasure** is a package for the R computing environment and it is assumed that you have already installed R. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
   
   
