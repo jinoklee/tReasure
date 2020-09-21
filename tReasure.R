@@ -882,7 +882,7 @@
         addSpace(tmp.52, 10)
         glabel(" Stat.Method : ", container = tmp.52, anchor = c(-1,0))
         addSpace(tmp.52, 10)
-        method_deseq <- gradio("Likelihood F-test", container = tmp.52)
+        method_deseq <- gradio("Wald test", container = tmp.52)
         addSpace(tmp.52, 10)
         
         # Plot design--------------------
