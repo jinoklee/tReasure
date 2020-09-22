@@ -4,7 +4,7 @@
     echo sLinkFile = "%USERPROFILE%\Desktop\tReasure.lnk"
     echo Set oLink = oWS.CreateShortcut(sLinkFile^)
     echo oLink.TargetPath = "C:\Program Files\R\R-4.0.2\Rscript.exe"
-    echo oLink.Arguments = """%USERPROFILE%\Documents\tReasure_test.R"""
+    echo oLink.Arguments = """%USERPROFILE%\Documents\tReasure.R"""
     echo oLink.IconLocation = "%USERPROFILE%\Downloads\treasure.ico"
     echo oLink.WorkingDirectory = "%USERPROFILE%\Documents"
     echo oLink.Save
