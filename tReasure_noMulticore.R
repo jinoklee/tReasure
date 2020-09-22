@@ -538,7 +538,24 @@
             
             write.table(sFile2, sam_trim, sep = "\t", quote = FALSE, row.names = FALSE)
 
+            # preprocessing status-------------------
             
+            # preprocess_status <- function(){
+            #   for(i in sFile2$SampleName){
+            #     a <- sFile1$FileName[grep(i, sFile2$SampleName)]
+            #     t <- sFile2$FileName[grep(i, sFile2$SampleName)]
+            #     insert(st, paste("filtering : ", a), do.newline = TRUE)
+            #     repeat{
+            #       Sys.sleep(1)
+            #       insert(st, ".", do.newline = FALSE)
+            #       if(file.exists(t) == TRUE) break
+            #     }
+            #     insert(st, " ", do.newline = TRUE)
+            #     insert(st, paste("complete "), do.newline=TRUE)
+            #   }
+            # }
+            # 
+            # status <- future(preprocess_status())
 
                   pre <- function(){resa <- preprocessReads(filename = sFile1$FileName,outputFilename = sFile2$FileName,
                                                             minLength = minLength, Rpattern = aseq)
@@ -685,6 +702,27 @@
             sFile <- file.path(dir,"trim", "sample_trim.txt")
             sFile2 <- read.delim(sFile)
             
+            # alignment status----------------------
+            
+            # algin_status <- function(){
+            #   for(i in sFile2$SampleName){
+            #     a <- sFile2$FileName[grep(i, sFile2$SampleName)]
+            #     Sys.sleep(10)
+            #     insert(st, paste("aligning   : ", a), do.newline = TRUE)
+            #     repeat{
+            #       Sys.sleep(1)
+            #       insert(st, ".", do.newline = FALSE)
+            #       dir <- getwd()
+            #       list <- list.files(file.path(dir,"trim"), pattern=".bam$", full.names = TRUE)
+            #       if(length(grep(i, list))>0)break
+            #     }
+            #     insert(st, " ", do.newline = TRUE)
+            #     a <- gsub(".fastq$","_*.bam",a)
+            #     insert(st, paste0("complete"), do.newline=TRUE)
+            #   }
+            # }
+            # 
+            # status <- future(algin_status())
 
                   bowtie <- function(){
                     proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 2 --best")
