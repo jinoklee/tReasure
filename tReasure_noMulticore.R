@@ -15,7 +15,7 @@
   # install.packages("cairoDevice")
   # install.packages("gridExtra")
   #install.packages("future")
-  #install.packages("https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-0.17.tar.xz")
+ 
   
   options(guiToolkit="RGtk2")
   library(gWidgets2)
