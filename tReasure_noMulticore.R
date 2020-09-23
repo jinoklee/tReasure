@@ -167,7 +167,7 @@
 
     detRNA <- mutate(outt, Sig=ifelse(outt$FDR<= pval & outt$logFC <= -fc, "Down_DEtRNA", ifelse(outt$FDR <= pval & outt$logFC>= fc,"Up_DEtRNA", "Nonsig_DEtRNA")))
     
-    png("./stat/Plot/volcanoplot_trna%02d.png", height=height, width=width, res=res)
+    png("./stat/plot/volcanoplot_trna%02d.png", height=height, width=width, res=res)
     p <- function(){
       ggplot(detRNA, aes(x = logFC, y = -log10(FDR)))+
       geom_point(aes(col=Sig)) +
@@ -180,7 +180,7 @@
       scale_colour_manual(values = c("Nonsig_DEtRNA"="grey89", "Up_DEtRNA"="tomato","Down_DEtRNA"="#67A9CF"))}
     print(p())
     dev.off()
-    save(p,pval,fc,detRNA,file="./stat/Plot/Volcano_Plot.RData")
+    save(p,pval,fc,detRNA,file="./stat/plot/Volcano_Plot.RData")
     
   }
   
@@ -273,7 +273,7 @@
     
     b2_data<- b2_data[!grepl("^a", b2_data$codon),]
     
-    png("./stat/Plot/barplot_isodecoder%02d.png", height=height, width=width, res=res)
+    png("./stat/plot/barplot_isodecoder%02d.png", height=height, width=width, res=res)
     
     p <- function(){
       ggplot(c, aes(x=codon, y=Freq, fill=Sig))+
@@ -293,7 +293,7 @@
     geom_text(data=b2_data, aes(x = title, y= -0.45, label=codon), size=3, colour = "black", angle=90, inherit.aes = FALSE)}
     print(p())
     dev.off()
-    save(p, pval,fc, c, file="./stat/Plot/Bar_Plot.RData")
+    save(p, pval,fc, c, file="./stat/plot/Bar_Plot.RData")
   }
   
   pyramid <- function(width, height, res){
@@ -331,12 +331,12 @@
     colnames(d_gene) <- c("Var1", "Down_DEtRNA")
     geneplot <- merge(d_gene, u_gene, by="Var1", all= T)
     geneplot <- geneplot[c(order(geneplot$Up_DEtRNA,decreasing = T)),]
-    png("./stat/Plot/pyramid_isoaccepter%02d.png", width=width, height=height,  res=res)
+    png("./stat/plot/pyramid_isoaccepter%02d.png", width=width, height=height,  res=res)
     
     p <- function(){pyramid.plot(geneplot$Down_DEtRNA, geneplot$Up_DEtRNA,labels= geneplot$Var1,lxcol="#67A9CF", rxcol="#EF8A62",unit = "Freqency",gap=0.3, space=0.15, top.labels = c("Down_DEtRNAs", "tRNA-AA","Up_DEtRNAs"),laxlab=c(0,1,2,3), raxlab=c(0,1,2,3))}
     print(p())
     graphics.off()
-    save(p, geneplot, file="./stat/Plot/Pyramid_Plot.RData")
+    save(p, geneplot, file="./stat/plot/Pyramid_Plot.RData")
   }
   
   #......................................................................................#
@@ -412,8 +412,8 @@
           dir <- getwd()
           if(!dir.exists(paste(dir, "/trim", sep = ""))){
             dir.create(paste(dir, "/trim", sep = ""), recursive = TRUE)}
-          if(!dir.exists(paste(dir, "/stat/Plot", sep = ""))){
-            dir.create(paste(dir, "/stat/Plot", sep = ""), recursive = TRUE)}
+          if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
+            dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
         })
         
         
@@ -458,8 +458,8 @@
           dir <- getwd()
           if(!dir.exists(paste(dir, "/trim", sep = ""))){
             dir.create(paste(dir, "/trim", sep = ""), recursive = TRUE)}
-          if(!dir.exists(paste(dir, "/stat/Plot", sep = ""))){
-            dir.create(paste(dir, "/stat/Plot", sep = ""), recursive = TRUE)}
+          if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
+            dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
           
           sample2$Batch <- as.character(sample2$Batch)
           tbl[] <- sample2
@@ -507,7 +507,7 @@
         min <- gradio(c("15", "16","17"), container = tmp.2)
         addSpace(tmp.2, 10)
         
-        glabel(" Minimum Quality : ", container = tmp.2, anchor = c(-1,0))
+        glabel(" Minimum quality : ", container = tmp.2, anchor = c(-1,0))
         addSpace(tmp.2, 10)
         
         q <- gradio(c("20", "30"), container = tmp.2)
@@ -580,7 +580,7 @@
             # display
             rest <- data.frame(Names = row.names(res),res)
             colnames(rest) <- gsub(".fastq","", colnames(rest))
-            write.table(rest, "trim_res.txt", sep="\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+            write.table(rest, "./trim/trim_res.txt", sep="\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
             rest <- rest[-c(2,5,6),]
             res_trim <- gtable(data.frame(rest), container = ggr21)
             insert(st, "", do.newline = TRUE)
@@ -647,8 +647,8 @@
           dir <- getwd()
           if(!dir.exists(paste(dir, "/trim", sep = ""))){
             dir.create(paste(dir, "/trim", sep = ""), recursive = TRUE)}
-          if(!dir.exists(paste(dir, "/stat/Plot", sep = ""))){
-            dir.create(paste(dir, "/stat/Plot", sep = ""), recursive = TRUE)}
+          if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
+            dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
           })
         
         addHandlerChanged(seltrn_button, handler = function(h,...){
@@ -732,7 +732,7 @@
 
             projt <- bowtie()
             alinstat <- data.frame(Names=row.names(alignmentStats(projt)),alignmentStats(projt))
-            write.table(alinstat, "alignment_stat.txt",sep = "\t")
+            write.table(alinstat, "./trim/alignment_stat.txt",sep = "\t")
             
             
             # read counts
@@ -859,8 +859,8 @@
               dir <- getwd()
               if(!dir.exists(paste(dir, "/trim", sep = ""))){
                 dir.create(paste(dir, "/trim", sep = ""), recursive = TRUE)}
-              if(!dir.exists(paste(dir, "/stat/Plot", sep = ""))){
-                dir.create(paste(dir, "/stat/Plot", sep = ""), recursive = TRUE)}
+              if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
+                dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
             }
           
           sFile <- read.delim("sample.txt")
@@ -889,10 +889,10 @@
           cols <- as.character(sFile$Group)
           cols[cols=="control"] = "blue"
           cols[cols=="test"] ="red"
-          png( './stat/Plot/plotMDS.png', width=650, height=500,  res=80)
+          png( './stat/plot/plotMDS.png', width=650, height=500,  res=80)
           plotMDS(y,col=cols)
           graphics.off()
-          gimage("./stat/Plot/plotMDS.png", container = Pre_MDS)
+          gimage("./stat/plot/plotMDS.png", container = Pre_MDS)
           
           insert(st, " ", do.newline = TRUE)  
           insert(st,"[ Save : MDS_plot is done as png format ] Click! Next tab of DEtRNA list ", do.newline = TRUE )
@@ -1009,8 +1009,8 @@
         addHandlerClicked(statdeseq_button, handler = function(h,...){
           insert(st,"[ Statistical analysis  : DESeq2 ]", do.newline = TRUE )
           dir <- getwd()
-          if(!dir.exists(paste(dir, "/stat/Plot", sep = ""))){
-            dir.create(paste(dir, "/stat/Plot", sep = ""), recursive = TRUE)}
+          if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
+            dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
           
           tcount <- read.delim("filtered_readcount_trna.txt")
           ccount <- read.delim("filtered_readcount_isodecoder.txt")
@@ -1109,13 +1109,13 @@
           write.table(DEaa, "./stat/DEisoacceptor_list.txt", sep = "\t", quote = FALSE)
           
           volcano(650, 460, 80)
-          v_plot <- gimage("./stat/Plot/volcanoplot_trna01.png", container = Plot_trna)
+          v_plot <- gimage("./stat/plot/volcanoplot_trna01.png", container = Plot_trna)
           
           barplot(850, 460,80)
-          b_plot <- gimage("./stat/Plot/barplot_isodecoder01.png", container = Plot_codon)
+          b_plot <- gimage("./stat/plot/barplot_isodecoder01.png", container = Plot_codon)
           
           pyramid(650, 460,80)
-          p_plot <- gimage("./stat/Plot/pyramid_isoaccepter01.png", container = Plot_aa)
+          p_plot <- gimage("./stat/plot/pyramid_isoaccepter01.png", container = Plot_aa)
           
           insert(st, " ", do.newline = TRUE)  
           insert(st,"[ Save : the plots of satistical analysis] Click! Next tab of Plot", do.newline = TRUE )
