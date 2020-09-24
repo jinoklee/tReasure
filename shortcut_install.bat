@@ -14,7 +14,7 @@ for /r "%src%" %%F in (*%search%*) do (
     echo Set oLink = oWS.CreateShortcut(sLinkFile^)
     echo oLink.TargetPath = "%full%"
     echo oLink.Arguments = """%USERPROFILE%\Documents\tReasure.R"""
-    echo oLink.IconLocation = "%USERPROFILE%\Downloads\treasure.ico"
+    echo oLink.IconLocation = "%USERPROFILE%\Downloads\tReasure.ico"
     echo oLink.WorkingDirectory = "%USERPROFILE%\Documents"
     echo oLink.Save
 )>"%SCRIPT%"
