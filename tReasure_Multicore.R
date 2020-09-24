@@ -168,17 +168,17 @@
     detRNA <- mutate(outt, Sig=ifelse(outt$FDR<= pval & outt$logFC <= -fc, "Down_DEtRNA", ifelse(outt$FDR <= pval & outt$logFC>= fc,"Up_DEtRNA", "Nonsig_DEtRNA")))
     
     png("./stat/plot/volcanoplot_trna%02d.png", height=height, width=width, res=res)
-    p <- function(){
+    p <- 
       ggplot(detRNA, aes(x = logFC, y = -log10(FDR)))+
-      geom_point(aes(col=Sig)) +
+      geom_point(size=2,aes(col=Sig)) +
       xlab(" log2 Fold Change") +
       ylab("-log10 Adjusted P value ") +
       geom_vline(xintercept = c(-fc,fc),col = "red",linetype = "dotted",size = 0.5) +
       geom_hline(yintercept = c(-log10(pval)),col = "red", linetype = "dotted",size = 0.5) +
       theme_classic()+
       theme(legend.position = "top")+
-      scale_colour_manual(values = c("Nonsig_DEtRNA"="grey89", "Up_DEtRNA"="tomato","Down_DEtRNA"="#67A9CF"))}
-    print(p())
+      scale_colour_manual(values = c("Nonsig_DEtRNA"="grey89", "Up_DEtRNA"="tomato","Down_DEtRNA"="#67A9CF"))
+    print(p)
     dev.off()
     save(p,pval,fc,detRNA,file="./stat/plot/Volcano_Plot.RData")
     
@@ -275,7 +275,7 @@
     
     png("./stat/plot/barplot_isodecoder%02d.png", height=height, width=width, res=res)
     
-    p <- function(){
+    p <- 
       ggplot(c, aes(x=codon, y=Freq, fill=Sig))+
       geom_bar( stat="identity")+
       scale_fill_manual(values=c("Up_DEtRNA"="#EF8A62", "Down_DEtRNA"="#67A9CF", "Nonsig_DEtRNA"="grey89", filter="white"), breaks = c("Up_DEtRNA","Non_DEtRNA","Down_DEtRNA"))+
@@ -290,8 +290,8 @@
     #annotate("text",x=rep(1, max(c$Freq)/2), y=seq(2,max(c$Freq),2), label=c("2","4","6","8","10","12","14"), color="black", size = 3)+
     geom_text(data=b1_data, aes(x = title, y = -1.5, label=aa), colour ="black", size=3, fontface="bold", inherit.aes = FALSE)+
     geom_segment(data=b1_data, aes(x=start, y = -1.1, xend=end, yend=-1.1), colour="black", alpha=1, size=1,inherit.aes = FALSE)+
-    geom_text(data=b2_data, aes(x = title, y= -0.45, label=codon), size=3, colour = "black", angle=90, inherit.aes = FALSE)}
-    print(p())
+    geom_text(data=b2_data, aes(x = title, y= -0.45, label=codon), size=3, colour = "black", angle=90, inherit.aes = FALSE)
+    print(p)
     dev.off()
     save(p, pval,fc, c, file="./stat/plot/Bar_Plot.RData")
   }
@@ -333,8 +333,8 @@
     geneplot <- geneplot[c(order(geneplot$Up_DEtRNA,decreasing = T)),]
     png("./stat/plot/pyramid_isoaccepter%02d.png", width=width, height=height,  res=res)
     
-    p <- function(){pyramid.plot(geneplot$Down_DEtRNA, geneplot$Up_DEtRNA,labels= geneplot$Var1,lxcol="#67A9CF", rxcol="#EF8A62",unit = "Freqency",gap=0.3, space=0.15, top.labels = c("Down_DEtRNAs", "tRNA-AA","Up_DEtRNAs"),laxlab=c(0,1,2,3), raxlab=c(0,1,2,3))}
-    print(p())
+    p <- pyramid.plot(geneplot$Down_DEtRNA, geneplot$Up_DEtRNA,labels= geneplot$Var1,lxcol="#67A9CF", rxcol="#EF8A62",unit = "Freqency",gap=0.3, space=0.15, top.labels = c("Down_DEtRNAs", "tRNA-AA","Up_DEtRNAs"),laxlab=c(0,1,2,3), raxlab=c(0,1,2,3))
+    print(p)
     graphics.off()
     save(p, geneplot, file="./stat/plot/Pyramid_Plot.RData")
   }
