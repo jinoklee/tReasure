@@ -3,6 +3,7 @@
 
 #Github stuffs
 .gitignore
+.Rbuildignore
 README.md
 .Rhistory
-docs/
+WholeGenomeFasta/
