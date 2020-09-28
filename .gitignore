@@ -37,3 +37,13 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+#R add
+tReasure.Rproj
+pkg_libs.R
+.gitignore
+WholeGenomeFasta/
+SampleTest/
+
+
+
