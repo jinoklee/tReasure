@@ -1,11 +1,26 @@
 Package: tReasure
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
+Version: 1.0.0
+Author: jinoklee, minholee
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT License
 Encoding: UTF-8
-LazyData: true
+LazyData: 
+BiocManager
+QuasR
+Rsubread
+edgeR
+DESeq2
+ggplot2
+grid
+gridExtra
+plotrix
+tidyverse
+dplyr
+gWidgets2
+gWidgets2RGtk2
+cairoDevice
+future
