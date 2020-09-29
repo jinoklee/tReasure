@@ -1,4 +1,3 @@
-[header](https://github.com/jinoklee/tReasure/blob/master/docs/header.png?raw=true)
 
 # tReasure
 tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-friendly tool for the tRNA expression analysis of deep-sequencing experiments for small RNAs using R packages. 
