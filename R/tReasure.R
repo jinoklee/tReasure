@@ -1,64 +1,32 @@
+#' window
+#'
+#' @param ()
+#' @return tReasure window
+#' @export
+tReasure <- function(){
+
   #......................................................................................#
-  # install & library package
+  # setting the PATH for TEST : sysmtem.file('', package="tReasure")
   #......................................................................................#
-  ## if (!requireNamespace("BiocManager", quietly = TRUE))
-  ##   install.packages("BiocManager")
-  
-  ## BiocManager::install("QuasR")
-  ## BiocManager::install("Rsubread")
-  ## BiocManager::install("edgeR")
-  ## BiocManager::install("DESeq2")
-  ## install.packages("plotrix")
-  ## install.packages("tidyverse")
-  # install.packages("gWidgets2")
-  # install.packages("gWidgets2RGtk2")
-  # install.packages("cairoDevice")
-  # install.packages("gridExtra")
-  #install.packages("future")
- 
-  
-  options(guiToolkit="RGtk2")
-  library(gWidgets2)
-  library(gWidgets2RGtk2)
-  library(cairoDevice)
-  library(QuasR)
-  library(Rsubread)
-  library(edgeR)
-  library(ggplot2)
-  library(grid)
-  library(gridExtra)
-  library(plotrix)
-  library(tidyverse)
-  library(dplyr)
-  library(DESeq2)
-  #library(future)
-  #plan(multiprocess)
-  #plan(multicore)
-  
-  
+
+  hg19.fa <- system.file( "extdata", "WholeGenomeFasta/hg19/hg19.fa",package = "tReasure")
+  hg38.fa <- system.file( "extdata", "WholeGenomeFasta/hg38/hg38.fa",package = "tReasure")
+  mm10.fa<- system.file( "extdata", "WholeGenomeFasta/mm10/mm10.fa",package = "tReasure")
+
+  hg19.gtf <- system.file( "extdata", "hg19-tRNAs.gtf", package = "tReasure")
+  hg38.gtf <- system.file( "extdata", "hg38-tRNAs.gtf", package = "tReasure")
+  mm10.gtf <- system.file( "extdata", "mm10-tRNAs.gtf", package = "tReasure")
+
+  hg19.annot <- system.file("extdata", "duplicate_tRNA_hg19.txt",package = "tReasure")
+  hg38.annot <- system.file("extdata", "duplicate_tRNA_hg38.txt",package = "tReasure")
+  mm10.annot <- system.file("extdata", "duplicate_tRNA_mm10.txt",package = "tReasure")
+  # icon <- "/data4/jinoklee/@tReasure/Imgae/icon.png"
+  intro <- system.file("extdata", "intro.png", package = "tReasure")
+
   #......................................................................................#
-  # setting the PATH for TEST : sysmtem.file('', package="tReasure") 
+  # function
   #......................................................................................#
-  
-  hg19.fa <- "/data4/jinoklee/@tReasure/WholeGenomeFasta/hg19/hg19.fa"
-  hg38.fa <- "/data4/jinoklee/@tReasure/WholeGenomeFasta/hg38/hg38.fa"
-  mm10.fa <- "/data4/jinoklee/@tReasure/WholeGenomeFasta/mm10/mm10.fa"
-  
-  hg19.gtf <- "/data4/jinoklee/@tReasure/AnnotationGTF/hg19-tRNAs.gtf"
-  hg38.gtf <- "/data4/jinoklee/@tReasure/AnnotationGTF/hg38-tRNAs.gtf"
-  mm10.gtf <- "/data4/jinoklee/@tReasure/AnnotationGTF/mm10-tRNAs.gtf"
-  
-  hg19.annot <- "/data4/jinoklee/@tReasure/data/duplicate_tRNA_hg19.txt"
-  hg38.annot <- "/data4/jinoklee/@tReasure/data/duplicate_tRNA_hg38.txt"
-  mm10.annot <- "/data4/jinoklee/@tReasure/data/duplicate_tRNA_mm10.txt"
-  
-  icon <- "/data4/jinoklee/@tReasure/Imgae/icon.png"
-  intro <- "/data4/jinoklee/@tReasure/Imgae/intro.png"
-  
-  #......................................................................................#
-  # function  
-  #......................................................................................#
-  
+
   aa_codon_nn <- function(name){
     name <- gsub("[.]","-", name)
     out <- data.frame(do.call('rbind', strsplit(as.character(name), "-")))
@@ -66,7 +34,7 @@
     out <- transform(out, iso=paste(out$aa, out$anti_c, out$n1, sep = "-"))
     return(out$iso)
   }
-  
+
   aa_codon_modi <- function(name){
     name <- gsub("[.]","-", name)
     out <- data.frame(do.call('rbind', strsplit(as.character(name), "-")))
@@ -74,7 +42,7 @@
     out <- transform(out, iso=paste(out$trna, out$aa, out$anti_c, out$n1, out$n2, sep = "-"))
     return(out$iso)
   }
-  
+
   edge_function <- function(count){
     sFile<- read.delim("sample.txt")
     case <- factor(sFile$Group)
@@ -85,72 +53,72 @@
     }else{design <- model.matrix(~case)
     coef = 2}
     rownames(design) <- colnames(count)
-    
+
     y <- DGEList(count, group = case)
     y <- calcNormFactors(y)
     y <- estimateDisp(y, design, robust = TRUE)
-    
+
     if(svalue(method_edgeR) == "Exact test"){
       test <- exactTest(y)
     }else if(svalue(method_edgeR) == "Quasi-likelihood F-test"){
-      fit <- glmQLFit(y, design) 
+      fit <- glmQLFit(y, design)
       test <- glmQLFTest(fit, coef=coef)
     }else{
       fit <- glmFit(y, design)
       test <- glmLRT(fit, coef=coef)
     }
-    
-    out_bh <- topTags(test, n = Inf, adjust.method="BH") 
-    out_bh <- out_bh$table 
+
+    out_bh <- topTags(test, n = Inf, adjust.method="BH")
+    out_bh <- out_bh$table
     colnames(out_bh)[ncol(out_bh)] <- "Benjamini"
-    
+
     out_bonf <- topTags(test, n= Inf, adjust.method = "bonferroni")
     out_bonf <- out_bonf$table
     colnames(out_bonf)[ncol(out_bonf)] <- "Bonferroni"
-    
+
     out_fdr <- topTags(test, n= Inf, adjust.method = "fdr")
     out_fdr <- out_fdr$table
     colnames(out_fdr)[ncol(out_fdr)] <- "FDR"
-    
+
     out <- cbind(out_fdr[,], Bonferroni = out_bonf$Bonferroni, Benjamini=out_bh$Benjamini)
     out <- data.frame(Name = rownames(out), out[,])
     return(out)
   }
-  
+
   deseq_function <- function(count){
     sFile<- read.delim("sample.txt")
     colData  <- sFile[,c("Group","Batch")]
     colnames(colData) <- c("condition","type")
     colData$condition <- factor(colData$condition)
     colData$type <- factor(colData$type)
-    
+
     dds <-DESeqDataSetFromMatrix(countData = count, colData = colData , design = ~ condition)
-    
+
     dds$condition <- factor(dds$condition, levels=c("control","test"))
     dds <- DESeq(dds)
-    
+
     res_bh <- results(dds, contrast = c("condition","test","control"),pAdjustMethod= "BH")
     res_bh <- as.data.frame(res_bh)
     colnames(res_bh)[ncol(res_bh)] <- "Benjamini"
-    
+
     res_bonf <- results(dds, contrast = c("condition","test","control"),pAdjustMethod= "bonferroni")
     res_bonf<- as.data.frame(res_bonf)
     colnames(res_bonf)[ncol(res_bonf)] <- "Bonferroni"
-    
+
     res_fdr <- results(dds, contrast = c("condition","test","control"),pAdjustMethod= "fdr")
     res_fdr <- as.data.frame(res_fdr)
     colnames(res_fdr)[ncol(res_fdr)] <- "FDR"
-    
+
     res <- cbind(res_fdr[,], Bonferroni = res_bonf$Bonferroni, Benjamini=res_bh$Benjamini)
     colnames(res)[2] <- "logFC"
     res <- data.frame(Name = rownames(res), res[,])
     return(res)
   }
-  
+
 
   volcano <- function(width, height, res){
     out <- read.delim("./stat/stat_trna_list.txt")
-    
+
     if(svalue(widget_list$fdr_s) == "Bejamini-Hochberg"){
       outt <- select(out, Name, logFC, Benjamini)
       colnames(outt)[ncol(outt)]<-"FDR"
@@ -160,34 +128,34 @@
     }else{
       outt <- select(out, Name, logFC, FDR)
     }
-    
+
     pval <- svalue(widget_list$pval)
     fc <- svalue(widget_list$FC)
-    
+
 
     detRNA <- mutate(outt, Sig=ifelse(outt$FDR<= pval & outt$logFC <= -fc, "Down_DEtRNA", ifelse(outt$FDR <= pval & outt$logFC>= fc,"Up_DEtRNA", "Nonsig_DEtRNA")))
-    
+
     png("./stat/plot/volcanoplot_trna%02d.png", height=height, width=width, res=res)
-    p <- 
+    p <- function(){
       ggplot(detRNA, aes(x = logFC, y = -log10(FDR)))+
-      geom_point(size=2, aes(col=Sig)) +
+      geom_point(aes(col=Sig)) +
       xlab(" log2 Fold Change") +
       ylab("-log10 Adjusted P value ") +
       geom_vline(xintercept = c(-fc,fc),col = "red",linetype = "dotted",size = 0.5) +
       geom_hline(yintercept = c(-log10(pval)),col = "red", linetype = "dotted",size = 0.5) +
       theme_classic()+
       theme(legend.position = "top")+
-      scale_colour_manual(values = c("Nonsig_DEtRNA"="grey89", "Up_DEtRNA"="tomato","Down_DEtRNA"="#67A9CF"))
-    print(p)
+      scale_colour_manual(values = c("Nonsig_DEtRNA"="grey89", "Up_DEtRNA"="tomato","Down_DEtRNA"="#67A9CF"))}
+    print(p())
     dev.off()
     save(p,pval,fc,detRNA,file="./stat/plot/Volcano_Plot.RData")
-    
+
   }
-  
+
   barplot <- function(width, height, res){
     trna <- read.delim("readcount_isodecoder.txt")
     out <- read.delim("./stat/stat_isodecoder_list.txt")
-    
+
     pval <- svalue(widget_list$pval)
     fc <- svalue(widget_list$FC)
 
@@ -207,7 +175,7 @@
     no <- as.character(out$Name[!(out$Name %in% c(dw,up))])
     su <- c(up, dw,no)
     rm <- as.character(trna$Names[!(trna$Names %in% su)])
-    
+
     tRNA_aa_codon <- function(data, t){
       out <- data.frame(aa_codon=substr(data,1,7))
       out <- data.frame(table(out$aa_codon))
@@ -218,8 +186,8 @@
       outt$codon <- gsub("-CA","iCAT", outt$codon)
       return(outt)
     }
-    
-    
+
+
     up <- tRNA_aa_codon(up, "Up_DEtRNA")
     dw <- tRNA_aa_codon(dw, "Down_DEtRNA")
     no <- tRNA_aa_codon(no, "Nonsig_DEtRNA")
@@ -228,54 +196,54 @@
     c <- rbind(up,dw, no, rm)
     c<- c[order(c$aa),]
     empty_bar <- 1
-    
+
     to_add <- data.frame(matrix(NA, empty_bar*nlevels(as.factor(c$aa)), ncol(c)))
     colnames(to_add) <- colnames(c)
     to_add$aa <- rep(levels(as.factor(c$aa)), each=empty_bar)
     to_add$codon <- paste("a", seq(1, nrow(to_add)))
     to_add$Var1 <- paste("a", seq(1, nrow(to_add)))
     c <- rbind(c, to_add)
-    
-    
+
+
     c$aa <- as.character(c$aa)
     c$codon <- as.character(c$codon)
     c$Var1 <- gsub("iMet-CA","iMet-iCAT", c$Var1)
-    
+
     c <- c %>% arrange(aa,codon)
-    
+
     c$Freq[is.na(c$Freq)] <- 0
-    
-    
+
+
     base <- data.frame(Var1=c$Var1)
     base$Var1 <- as.character(base$Var1)
     n <- length(grep("iMet", base$Var1))
     base$Var1[grep("iMet", base$Var1)] <- rep("iMet-iCAT", n)
     base_data <- data.frame(Var1= base[!duplicated(base$Var1),])
     out <- data.frame(do.call('rbind',strsplit(as.character(base_data$Var1), split="-")))
-    
+
     base_data$aa <- out$X1
     base_data$codon <- out$X2
     base_data$id <- seq(1, nrow(base_data))
-    
-    b1_data<- base_data%>% 
-      group_by(aa) %>% 
-      summarize(start=min(id), end=max(id)) %>% 
-      rowwise() %>% 
+
+    b1_data<- base_data%>%
+      group_by(aa) %>%
+      summarize(start=min(id), end=max(id)) %>%
+      rowwise() %>%
       mutate(title=mean(c(start, end)))
-    
+
     b1_data<- b1_data[!grepl("^a", b1_data$aa),]
 
-    b2_data <- base_data%>% 
-      group_by(codon) %>% 
-      summarize(start=min(id), end=max(id)) %>% 
-      rowwise() %>% 
+    b2_data <- base_data%>%
+      group_by(codon) %>%
+      summarize(start=min(id), end=max(id)) %>%
+      rowwise() %>%
       mutate(title=mean(c(start, end)))
-    
+
     b2_data<- b2_data[!grepl("^a", b2_data$codon),]
-    
+
     png("./stat/plot/barplot_isodecoder%02d.png", height=height, width=width, res=res)
-    
-    p <- 
+
+    p <- function(){
       ggplot(c, aes(x=codon, y=Freq, fill=Sig))+
       geom_bar( stat="identity")+
       scale_fill_manual(values=c("Up_DEtRNA"="#EF8A62", "Down_DEtRNA"="#67A9CF", "Nonsig_DEtRNA"="grey89", filter="white"), breaks = c("Up_DEtRNA","Non_DEtRNA","Down_DEtRNA"))+
@@ -290,18 +258,18 @@
     #annotate("text",x=rep(1, max(c$Freq)/2), y=seq(2,max(c$Freq),2), label=c("2","4","6","8","10","12","14"), color="black", size = 3)+
     geom_text(data=b1_data, aes(x = title, y = -1.5, label=aa), colour ="black", size=3, fontface="bold", inherit.aes = FALSE)+
     geom_segment(data=b1_data, aes(x=start, y = -1.1, xend=end, yend=-1.1), colour="black", alpha=1, size=1,inherit.aes = FALSE)+
-    geom_text(data=b2_data, aes(x = title, y= -0.45, label=codon), size=3, colour = "black", angle=90, inherit.aes = FALSE)
-    print(p)
+    geom_text(data=b2_data, aes(x = title, y= -0.45, label=codon), size=3, colour = "black", angle=90, inherit.aes = FALSE)}
+    print(p())
     dev.off()
     save(p, pval,fc, c, file="./stat/plot/Bar_Plot.RData")
   }
-  
+
   pyramid <- function(width, height, res){
     trna <- read.delim("readcount_isodecoder.txt")
     out <- read.delim("./stat/stat_isoacceptor_list.txt")
     pval <- svalue(widget_list$pval)
     fc <- svalue(widget_list$FC)
- 
+
     if(svalue(widget_list$fdr_s) == "Benjamini-Hochberg"){
       dw <- filter(out, logFC < -fc, out$Benjamini < pval)
       up <- filter(out, logFC > fc, out$Benjamini <  pval)
@@ -312,19 +280,19 @@
       dw <- filter(out, logFC < -fc, out$FDR <  pval)
       up <- filter(out, logFC > fc, out$FDR <  pval)
     }
-    
-    
+
+
     dw <- as.character(dw$Name)
     up <- as.character(up$Name)
-    
-    
+
+
     aa_codon <- function(name){
       out <- data.frame(do.call('rbind', strsplit(as.character(name), "-")))
       colnames(out) <- c("aa","codon")
       out <- data.frame(out <- table(out$aa))
       return(out)
     }
-    
+
     u_gene <- aa_codon(up)
     colnames(u_gene) <- c("Var1","Up_DEtRNA")
     d_gene <- aa_codon(dw)
@@ -332,32 +300,32 @@
     geneplot <- merge(d_gene, u_gene, by="Var1", all= T)
     geneplot <- geneplot[c(order(geneplot$Up_DEtRNA,decreasing = T)),]
     png("./stat/plot/pyramid_isoaccepter%02d.png", width=width, height=height,  res=res)
-    
-    p <- pyramid.plot(geneplot$Down_DEtRNA, geneplot$Up_DEtRNA,labels= geneplot$Var1,lxcol="#67A9CF", rxcol="#EF8A62",unit = "Freqency",gap=0.3, space=0.15, top.labels = c("Down_DEtRNAs", "tRNA-AA","Up_DEtRNAs"),laxlab=c(0,1,2,3), raxlab=c(0,1,2,3))
-    print(p)
+
+    p <- function(){pyramid.plot(geneplot$Down_DEtRNA, geneplot$Up_DEtRNA,labels= geneplot$Var1,lxcol="#67A9CF", rxcol="#EF8A62",unit = "Freqency",gap=0.3, space=0.15, top.labels = c("Down_DEtRNAs", "tRNA-AA","Up_DEtRNAs"),laxlab=c(0,1,2,3), raxlab=c(0,1,2,3))}
+    print(p())
     graphics.off()
     save(p, geneplot, file="./stat/plot/Pyramid_Plot.RData")
   }
-  
+
   #......................................................................................#
   #  tReasure
   #......................................................................................#
-  
+
   # Main window----------------------
   window <- gwindow("tReasure")
   addHandlerUnrealize(window, handler = function(h,...) {
     val <- gconfirm("Really close window", parent=h$obj)
     if(as.logical(val)){
       dispose(window)
-      gtkMainQuit() 
+      gtkMainQuit()
     }else{
-      return(TRUE) 
-    }      
+      return(TRUE)
+    }
   })
-  
+
   mother <- ggroup(container = window, horizontal = FALSE)
   size(mother) <- c(1000,740)
-  
+
   # Sub window (Notebook)------------
   notebook <- gnotebook(container = mother)
   gr0 <- ggroup(container = notebook, label ="  Introduction  ",expand = TRUE)
@@ -371,13 +339,13 @@
   size(child) <- c(1000,100)
   st <- gtext("  ",container = child)
   size(st) <- c(1000,100)
-  
+
   # gr0 : Introduction---------------
   ggr1 <- ggroup(container = gr0, horizontal = TRUE, fill = "both", expand = TRUE)
   gimage(intro, container = ggr1)
-  
+
   # gr1 : Sample List----------------
-  
+
         # design-------------------
         addSpace(gr1, 20)
         ggr1 <- ggroup(container = gr1,  spacing = 10) ; size(ggr1) <- c(896,532)
@@ -387,25 +355,25 @@
         addSpace(tmp.1, 10)
         glabel(" Select a directory of FASTQ files : ", container = tmp.1, anchor = c(-1,0))
         addSpace(tmp.1, 10)
-        
+
         # option-------------------
         fq_dir <- gfilebrowse(text = " ", quote = FALSE, type = "selectdir", container = tmp.1)
         addSpace(tmp.1, 20)
-        
+
         make_button <- gbutton(" RUN ", container = tmp.1, expand = FALSE)
-        
+
         tmp.11 <- gframe(" [OPTION] Load the sample list ", container = paned.1, horizontal = FALSE, spacing = 10) ; size(tmp.11) <- c(250,200)
         addSpace(tmp.11, 10)
-        
+
         glabel(" Select a file of \n the pre-made sample list : ", container = tmp.11, anchor = c(-1,0))
         addSpace(tmp.11, 20)
-        
+
         sel_button <- gfilebrowse(text=" ", quote = FALSE, type="open", container = tmp.11,
                                   filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
-        
-        tbl <- gdf(data.frame(FileName=c("Path/samplename.fastq"),SampleName=c("samplename"), 
+
+        tbl <- gdf(data.frame(FileName=c("Path/samplename.fastq"),SampleName=c("samplename"),
                               Group=c("control"), Batch=c("batch I")), container = ggr1, multiple = FALSE)
-  
+
         # handler-------------------
         addHandlerChanged(fq_dir, handler = function(h,...){
           setwd(svalue(fq_dir))
@@ -415,8 +383,8 @@
           if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
             dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
         })
-        
-        
+
+
         addHandlerChanged(make_button, handler = function(h,...){
           b <- svalue(fq_dir)
           if(identical(b,character(0))){
@@ -449,8 +417,8 @@
             insert(st, ".", do.newline = TRUE)
           }
         })
-        
-        
+
+
         addHandlerChanged(sel_button, handler = function(h,...){
           sample2 <- read.table(svalue(sel_button), header = T, sep = "\t")
           sampath <- gsub("sample.txt", "", svalue(sel_button))
@@ -460,7 +428,7 @@
             dir.create(paste(dir, "/trim", sep = ""), recursive = TRUE)}
           if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
             dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
-          
+
           sample2$Batch <- as.character(sample2$Batch)
           tbl[] <- sample2
           insert(st, " ", do.newline = TRUE)
@@ -481,11 +449,11 @@
             insert(st, ".", do.newline = TRUE)
           })
         })
-  
-  
-        
+
+
+
   # gr2 : Preprocessing----------------
-  
+
         # design-------------------
         addSpace(gr2, 20)
         ggr21 <- ggroup(container = gr2,  spacing = 10); size(ggr21) <- c(896,532)
@@ -493,28 +461,28 @@
         paned.2 <- gpanedgroup(container = ggr21, horizontal = FALSE, spacing = 10)
         tmp.2 <- gframe("  Trimming  ", container = paned.2, horizontal = FALSE, spacing = 10); size(tmp.2) <- c(250,532)
         addSpace(tmp.2, 10)
-        
+
         # option-------------------
         glabel(" Information of adapter : ", container = tmp.2, anchor = c(-1,0))
         addSpace(tmp.2, 10)
-        
+
         adapt <- gradio(c("Illumina smallRNA 3' adapter", "Illumina universal adapter","No Adapter"), container = tmp.2)
         addSpace(tmp.2, 10)
-        
+
         glabel(" Minimum lenght : ", container = tmp.2, anchor = c(-1,0))
         addSpace(tmp.2, 10)
-        
+
         min <- gradio(c("15", "16","17"), container = tmp.2)
         addSpace(tmp.2, 10)
-        
+
         glabel(" Minimum quality : ", container = tmp.2, anchor = c(-1,0))
         addSpace(tmp.2, 10)
-        
+
         q <- gradio(c("20", "30"), container = tmp.2)
         addSpace(tmp.2, 20)
-        
+
         trim_button <- gbutton("RUN", container = tmp.2, expand = FALSE)
-        
+
         # handler-------------------
         addHandlerClicked(trim_button, handler = function(h,...){
           if(file.exists("sample.txt") == FALSE & file.exists("*.fastq") == FALSE){
@@ -528,54 +496,62 @@
 
             sam_trim <- file.path(dir,"trim","sample.txt")
             sam_trim <- sub(".txt", "_trim.txt", sam_trim)
-            
+
             sFile1 <- read.delim("sample.txt", header = TRUE, as.is = TRUE)
             sFile2 <- sFile1[,c("FileName","SampleName")]
-            
+
             sFile2$FileName <- file.path(dir, 'trim', sFile2$SampleName)
             sFile2$FileName <- gsub("$",".fastq", sFile2$FileName)
             sFile2$FileName <- sub(paste0(".","fastq$"), paste0("_trim.","fastq"),sFile2$FileName)
-            
+
             write.table(sFile2, sam_trim, sep = "\t", quote = FALSE, row.names = FALSE)
 
+
+            # preprocessing future-------------------
+
+            pre <- function(){resa <- preprocessReads(filename = sFile1$FileName,outputFilename = sFile2$FileName,
+                                                      minLength = minLength, Rpattern = aseq)
+            return(resa)}
+
+            preno <- function(){resno <- preprocessReads(filename = sFile1$FileName, outputFilename = sFile2$FileName,
+                                                         minLength = minLength)
+            return(resno)}
+
+            if(svalue(adapt) == "Illumina smallRNA 3' adapter"){
+              aseq <- "TGGAATTCTCGGGTGCCAAGG"
+              minLength = as.numeric(svalue(min))
+              a <- future(pre())
+              #res <- pre()
+            }else if(svalue(adapt) =="Illumina universal adapter"){
+              aseq <- "AGATCGGAAGAG"
+              a <- future(pre())
+              #res <- pre()
+            }else{
+              a <-future(preno())
+              #res <- preno()
+            }
+
+
             # preprocessing status-------------------
-            
-            # preprocess_status <- function(){
-            #   for(i in sFile2$SampleName){
-            #     a <- sFile1$FileName[grep(i, sFile2$SampleName)]
-            #     t <- sFile2$FileName[grep(i, sFile2$SampleName)]
-            #     insert(st, paste("filtering : ", a), do.newline = TRUE)
-            #     repeat{
-            #       Sys.sleep(1)
-            #       insert(st, ".", do.newline = FALSE)
-            #       if(file.exists(t) == TRUE) break
-            #     }
-            #     insert(st, " ", do.newline = TRUE)
-            #     insert(st, paste("complete "), do.newline=TRUE)
-            #   }
-            # }
-            # 
-            # status <- future(preprocess_status())
 
-                  pre <- function(){resa <- preprocessReads(filename = sFile1$FileName,outputFilename = sFile2$FileName,
-                                                            minLength = minLength, Rpattern = aseq)
-                    return(resa)}
+            preprocess_status <- function(){
+              for(i in sFile2$SampleName){
+                a <- sFile1$FileName[grep(i, sFile2$SampleName)]
+                t <- sFile2$FileName[grep(i, sFile2$SampleName)]
+                insert(st, paste("filtering : ", a), do.newline = TRUE)
+                repeat{
+                  Sys.sleep(1)
+                  insert(st, ".", do.newline = FALSE)
+                  if(file.exists(t) == TRUE) break
+                }
+                insert(st, " ", do.newline = TRUE)
+                insert(st, paste("complete "), do.newline=TRUE)
+              }
+            }
 
-                  preno <- function(){resno <- preprocessReads(filename = sFile1$FileName, outputFilename = sFile2$FileName,
-                                                               minLength = minLength)
-                  return(resno)}
-
-                  if(svalue(adapt) == "Illumina smallRNA 3' adapter"){
-                    aseq <- "TGGAATTCTCGGGTGCCAAGG"
-                    minLength = as.numeric(svalue(min))
-                    res <- pre()
-                  }else if(svalue(adapt) =="Illumina universal adapter"){
-                    aseq <- "AGATCGGAAGAG"
-                    res <- pre()
-                  }else{
-                    res <- preno()
-                  }
-
+            #status <- future(preprocess_status())
+            preprocess_status()
+            res <- value(a)
 
             # display
             rest <- data.frame(Names = row.names(res),res)
@@ -588,11 +564,11 @@
             insert(st, ".", do.newline = TRUE)
           }
         })
-  
-  
-        
+
+
+
   # gr3 : Analysis-------------------
-        
+
         # design-------------------
         addSpace(gr3, 20)
         ggr31 <- ggroup(container = gr3,  spacing = 10); size(ggr31) <- c(896,532)
@@ -601,46 +577,46 @@
         pangr <- ggroup(container = paned.3, horizontal =FALSE)
         tmp.3 <- gframe("  Alignment & Read count  ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.3) <- c(250,260)
         addSpace(tmp.3, 10)
-        
+
         RC_view <- gnotebook(container = ggr31 ); size(RC_view) <- c(700, 500)
         RC_trna <- ggroup(container = RC_view, horizontal = FALSE, label = " tRNA level ")
         RC_codon <- ggroup(container = RC_view, horizontal = FALSE, label = " Isodecoder level")
         RC_aa <- ggroup(container = RC_view, horizontal = FALSE, label = "Isoacceptor level")
-        
+
         # option-------------------
         glabel(" Select of genome assembly : ", container = tmp.3, anchor = c(-1,0))
         addSpace(tmp.3, 10)
-        
+
         ref <- gradio(c("UCSC.hg19", "UCSC.hg38","UCSC.mm10"),container = tmp.3)
         addSpace(tmp.3, 20)
-        
+
         tmp.31 <- gframe(" [OPTION] Working directory ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.31) <- c(250,90)
         addSpace(tmp.31, 10)
-        
+
         glabel(" Select the directory of the FASTQ files : ", container = tmp.31, anchor = c(-1,0))
         addSpace(tmp.31, 10)
-        
+
         tmp.32 <- gframe(" [OPTION] Load the readcounts files ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.32) <- c(250,120)
         addSpace(tmp.32, 10)
-        
+
         glabel(" Select the file of readcounts : ", container = tmp.32, anchor = c(-1,0))
         addSpace(tmp.32, 10)
-        
+
         selfq_button <- gfilebrowse(text = "", quote = FALSE, type = "selectdir", container = tmp.31,
                                     filter=list("*.fa" = list(patterns = c("*.fa")), "*.*" = list(patterns = c("*"))))
-        
-        seltrn_button <- gfilebrowse(text = "tRNA level", quote = FALSE, type = "open", container = tmp.32, 
+
+        seltrn_button <- gfilebrowse(text = "tRNA level", quote = FALSE, type = "open", container = tmp.32,
                                      filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
-        
-        selco_button <- gfilebrowse(text = "Isodecoder level", quote = FALSE, type = "open", container = tmp.32, 
+
+        selco_button <- gfilebrowse(text = "Isodecoder level", quote = FALSE, type = "open", container = tmp.32,
                                     filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
-        
-        selaa_button <- gfilebrowse(text = "Isoacceptor level", quote = FALSE, type = "open", container = tmp.32, 
+
+        selaa_button <- gfilebrowse(text = "Isoacceptor level", quote = FALSE, type = "open", container = tmp.32,
                                     filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
-        
+
         anl_button <- gbutton("RUN", container=tmp.3)
-        
-        
+
+
         # handler --------------
         addHandlerChanged(selfq_button, handler = function(h,...){
           setwd(svalue(selfq_button))
@@ -650,41 +626,41 @@
           if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
             dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
           })
-        
+
         addHandlerChanged(seltrn_button, handler = function(h,...){
           tcount <- read.delim(svalue(seltrn_button))
           gtable(tcount, container=RC_trna)
         })
-        
+
         addHandlerChanged(selco_button, handler = function(h, ...){
           ccount = read.delim(svalue(selco_button))
           gtable(ccount, container=RC_codon)
         })
-        
+
         addHandlerChanged(selaa_button,handler = function(h, ...){
           acount = read.delim(svalue(selaa_button))
           gtable(acount, container=RC_aa)
         })
-        
+
         addHandlerClicked(anl_button,handler = function(h, ...){
 
           insert(st,"[ START : alignment & quantification of readcount ]", do.newline = TRUE )
           insert(st,"It takes several minutes to analyze. Please wait....", do.newline = TRUE )
           b <- svalue(fq_dir)
           c <- svalue(selfq_button)
-          
+
           if(
             identical(b,character(0)) & identical(c,character(0))
           ){
             gmessage("Warning: Select a directory of FASTQ files")
           }else{
-            
+
             if(identical(b,character(0))){
               dir <- svalue(selfq_button)
             }else{
               dir <- getwd()
             }
-            
+
             if(svalue(ref) == "UCSC.hg19"){
               genome = hg19.fa
               annot_ext = hg19.gtf
@@ -698,47 +674,52 @@
               annot_ext = mm10.gtf
               annot_dup <- read.delim(mm10.annot)
             }
-            
+
             sFile <- file.path(dir,"trim", "sample_trim.txt")
             sFile2 <- read.delim(sFile)
-            
+
+            # alignment future----------------------
+
+            bowtie <- function(){
+              proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 2 --best")
+              return(proj)
+            }
+            bow <- future(bowtie())
+
             # alignment status----------------------
-            
-            # algin_status <- function(){
-            #   for(i in sFile2$SampleName){
-            #     a <- sFile2$FileName[grep(i, sFile2$SampleName)]
-            #     Sys.sleep(10)
-            #     insert(st, paste("aligning   : ", a), do.newline = TRUE)
-            #     repeat{
-            #       Sys.sleep(1)
-            #       insert(st, ".", do.newline = FALSE)
-            #       dir <- getwd()
-            #       list <- list.files(file.path(dir,"trim"), pattern=".bam$", full.names = TRUE)
-            #       if(length(grep(i, list))>0)break
-            #     }
-            #     insert(st, " ", do.newline = TRUE)
-            #     a <- gsub(".fastq$","_*.bam",a)
-            #     insert(st, paste0("complete"), do.newline=TRUE)
-            #   }
-            # }
-            # 
-            # status <- future(algin_status())
 
-                  bowtie <- function(){
-                    proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 2 --best")
-                    return(proj)
-                  }
- 
+            algin_status <- function(){
+              for(i in sFile2$SampleName){
+                a <- sFile2$FileName[grep(i, sFile2$SampleName)]
+                Sys.sleep(10)
+                insert(st, paste("aligning   : ", a), do.newline = TRUE)
+                repeat{
+                  Sys.sleep(1)
+                  insert(st, ".", do.newline = FALSE)
+                  dir <- getwd()
+                  list <- list.files(file.path(dir,"trim"), pattern=".bam$", full.names = TRUE)
+                  if(length(grep(i, list))>0)break
+                }
+                insert(st, " ", do.newline = TRUE)
+                a <- gsub(".fastq$","_*.bam",a)
+                insert(st, paste0("complete"), do.newline=TRUE)
+              }
+            }
 
-            projt <- bowtie()
+            algin_status()
+            projt <- value(bow)
+
+            #status <- future(algin_status())
+            #projt <- bowtie()
+
             alinstat <- data.frame(Names=row.names(alignmentStats(projt)),alignmentStats(projt))
             write.table(alinstat, "./trim/alignment_stat.txt",sep = "\t")
-            
-            
+
+
             # read counts
-            
+
             bFile <- list.files(file.path(dir,"trim"), pattern = ".bam$", full.names = T)
-            
+
                   # tRNA level
                   readcount <- function(){
                     trna <- featureCounts(bFile, annot.ext = annot_ext, isGTFAnnotationFile=TRUE, GTF.attrType = "gene_id")
@@ -749,18 +730,18 @@
                     write.table(trna$annotation,file.path("annotation_trna.txt"), quote = F, sep = "\t")
                     return(tcount)
                   }
-                  
+
 
                   tcount <- readcount()
                   gtable(tcount, container=RC_trna)
-                  
+
                   # Anticodon level
                   tcount$iso <- aa_codon_nn(rownames(tcount))
                   rownames(tcount) <- aa_codon_modi(rownames(tcount))
-                  
+
                   d_dup <- tcount[rownames(tcount)%in%rownames(annot_dup),]
                   d_uni <- tcount[!rownames(tcount)%in%rownames(annot_dup),]
-                  
+
                   d<-c()
                   t <- unique(d_dup$iso)
                   for(i in t){
@@ -768,18 +749,18 @@
                     sum <- colSums(c[,2:(ncol(c)-1)])
                     d <-rbind(d, sum)
                   }
-                  
+
                   d <- data.frame(d)
                   rownames(d) <- as.character(t)
-                  
+
                   iso <- rbind(d, d_uni[,2:(ncol(d_uni)-1)])
                   rownames(iso) <- gsub("tRNA-","",rownames(iso))
-                  
+
                   ccount <- data.frame(Name=rownames(iso), iso[,1:ncol(iso)])
-                  
+
                   write.table(ccount, "readcount_isodecoder.txt", quote = F, sep = "\t")
                   gtable(ccount, container=RC_codon)
-                  
+
                   # Aminoacid level
                   iso$Name <- substr(rownames(iso), 1,7)
                   e<-c()
@@ -789,25 +770,25 @@
                     sum <- colSums(c[,1:(ncol(c)-1)])
                     e <-rbind(e, sum)
                   }
-                  
+
                   e <- data.frame(e)
                   rownames(e) <- as.character(t)
-                  
+
                   acount <- data.frame(Names= rownames(e),e[,1:ncol(e)])
                   gtable(acount, container=RC_aa)
                   write.table(acount, "readcount_isoacceptor.txt", quote = F, sep = "\t")
-                  insert(st, " ", do.newline = TRUE)  
+                  insert(st, " ", do.newline = TRUE)
                   insert(st,"[ DONE : alignment & quantification of readcount ] Click! Next tab of Preview ", do.newline = TRUE )
                   insert(st, ".", do.newline = TRUE)
           }
-          
+
         })
-        
-          
-  
-        
+
+
+
+
   # gr4 : Preview--------------------
-        
+
         # design--------------------
         addSpace(gr4, 20)
         ggr41 <- ggroup(container = gr4,  spacing = 10); size(ggr41) <- c(896,532)
@@ -816,7 +797,7 @@
         tmp.4 <- gframe("  Preview  ", container = paned.4, horizontal = FALSE, spacing = 10)
         size(tmp.4) <- c(250,284)
         addSpace(tmp.4, 10)
-        
+
         tmp.41 <- gframe( " Filtering : ", container = tmp.4, anchor =c(-1,0), horizontal = FALSE)
         addSpace(tmp.41, 5)
         tmp.411 <- ggroup(container = tmp.41, horizontal = TRUE)
@@ -832,23 +813,23 @@
         size(sfilv) <- c(125,21)
         addSpace(tmp.411, 5)
         addSpace(tmp.41, 5)
-        
+
         Pre_view <- gnotebook(container = ggr41 ); size(Pre_view) <- c(700, 532)
         Pre_MDS <- ggroup(container = Pre_view, horizontal = FALSE, label=" MDS Plot ")
-        
+
         tmp.42 <- gframe(" [OPTION] Working directory ", container = paned.4, horizontal = FALSE, spacing = 10)
         size(tmp.42) <- c(250,200)
         addSpace(tmp.42, 10)
         glabel(" Select the directory of the readcounts files :", container = tmp.42, anchor = c(-1,0))
         addSpace(tmp.42, 10)
-        
+
         # option--------------------
-        selrc_button <- gfilebrowse(text = "", quote = FALSE, type = "selectdir", container = tmp.42, 
+        selrc_button <- gfilebrowse(text = "", quote = FALSE, type = "selectdir", container = tmp.42,
                                     filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
         addSpace(tmp.4, 20)
-        
+
         Pre_button <- gbutton("RUN", container = tmp.4)
-        
+
         # handler--------------------
         addHandlerChanged(Pre_button, handler = function(h, ...){
           insert(st,"[ MDS plots ]", do.newline = TRUE )
@@ -862,12 +843,12 @@
               if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
                 dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
             }
-          
+
           sFile <- read.delim("sample.txt")
           tcount<- read.delim("readcount_trna.txt")
           ccount <- read.delim("readcount_isodecoder.txt")
           acount <- read.delim("readcount_isoacceptor.txt")
-          
+
           # tRNA levels
           filter_gene <- function(count){
             count<- count[,colnames(count) %in% sFile$SampleName]
@@ -880,11 +861,11 @@
           filter_t <- filter_gene(tcount)
           filter_c <- filter_gene(ccount)
           filter_a <- filter_gene(acount)
-          
+
           write.table(filter_t$counts, "filtered_readcount_trna.txt",sep = "\t", quote = F)
           write.table(filter_c$counts, "filtered_readcount_isodecoder.txt",sep = "\t", quote = F)
           write.table(filter_a$counts, "filtered_readcount_isoacceptor.txt",sep = "\t", quote = F)
-          
+
           y <- calcNormFactors(filter_t)
           cols <- as.character(sFile$Group)
           cols[cols=="control"] = "blue"
@@ -893,40 +874,40 @@
           plotMDS(y,col=cols)
           graphics.off()
           gimage("./stat/plot/plotMDS.png", container = Pre_MDS)
-          
-          insert(st, " ", do.newline = TRUE)  
+
+          insert(st, " ", do.newline = TRUE)
           insert(st,"[ Save : MDS_plot is done as png format ] Click! Next tab of DEtRNA list ", do.newline = TRUE )
           insert(st, ".", do.newline = TRUE)
         })
-        
-  
-        
+
+
+
   # gr5 : DEtRNA list----------------
-        
+
         # Statistical design--------------------
         addSpace(gr5, 20)
         ggr51 <- ggroup(container = gr5,  spacing = 10); size(ggr51) <- c(896,532)
         addSpace(ggr51, 10)
         paned.5 <- gpanedgroup(container = ggr51, horizontal = FALSE, spacing = 10)
-        
+
         ggr52 <- gnotebook(container=paned.5, tab.pos  = 3) ; size(ggr52) <- c(250, 200)
         stat2 <- ggroup(container = ggr52, label = " DEseq ")
         stat1 <- ggroup(container = ggr52, label = " EdgeR ")
-        
+
         tmp.51 <- gframe("  Statics  ", container = stat1, horizontal = FALSE, spacing = 10); size(tmp.51) <- c(235,150)
         addSpace(tmp.51, 10)
         glabel(" Stat.Method : ", container = tmp.51, anchor = c(-1,0))
         addSpace(tmp.51, 10)
         method_edgeR <- gradio(c("Exact test", "Likelihood F-test", "Quasi-likelihood F-test"), container = tmp.51)
         addSpace(tmp.51, 10)
-        
+
         tmp.52 <- gframe("  Statics  ", container = stat2, horizontal = FALSE, spacing = 10); size(tmp.52) <- c(235,150)
         addSpace(tmp.52, 10)
         glabel(" Stat.Method : ", container = tmp.52, anchor = c(-1,0))
         addSpace(tmp.52, 10)
         method_deseq <- gradio("Walt test", container = tmp.52)
         addSpace(tmp.52, 10)
-        
+
         # Plot design--------------------
         addSpace(gr6, 20)
         ggr61 <- ggroup(container = gr6,  spacing = 10); size(ggr61) <- c(996,550)
@@ -935,7 +916,7 @@
         Plot_trna <- ggroup(container = Plot_view, horizontal = FALSE, label = " tRNA level ")
         Plot_codon <- ggroup(container = Plot_view, horizontal = FALSE, label = " Isodecoder level ")
         Plot_aa <- ggroup(container = Plot_view, horizontal = FALSE, label = " Isoacceptor level ")
-        
+
         tmp.61 <- gframe("",container = Plot_trna, anchor =c(-1,0), horizontal = TRUE)
         tmp.611 <- ggroup(container = tmp.61, horizontal = TRUE)
         wid_label <-glabel(" Width : ", container = tmp.611, anchor=c(-1,0)); size(wid_label) <- c(110,20)
@@ -946,8 +927,8 @@
         tmp.613 <- ggroup(container = tmp.61, horizontal = TRUE)
         res_label<- glabel(" Resolution : ", container = tmp.613, anchor = c(-1,0)); size(res_label) <- c(110,20)
         res_v <- gtext("100",container = tmp.613, width = 120, height = 20)
-        
-        
+
+
         tmp.62 <- gframe(container = Plot_codon, anchor =c(-1,0), horizontal = TRUE)
         tmp.621 <- ggroup(container = tmp.62, horizontal = TRUE)
         wid_label <-glabel(" Width : ", container = tmp.621, anchor=c(-1,0)); size(wid_label) <- c(110,20)
@@ -958,8 +939,8 @@
         tmp.623 <- ggroup(container = tmp.62, horizontal = TRUE)
         res_label<- glabel(" Resolution : ", container = tmp.623, anchor = c(-1,0)); size(res_label) <- c(110,20)
         res_b <- gtext("100",container = tmp.623, width = 120, height = 20)
-        
-        
+
+
         tmp.63 <- gframe(container = Plot_aa, anchor =c(-1,0), horizontal = TRUE)
         tmp.631 <- ggroup(container = tmp.63, horizontal = TRUE)
         wid_label <-glabel(" Width : ", container = tmp.631, anchor=c(-1,0)); size(wid_label) <- c(110,20)
@@ -970,68 +951,68 @@
         tmp.633 <- ggroup(container = tmp.63, horizontal = TRUE)
         res_label<- glabel(" Resolution : ", container = tmp.633, anchor = c(-1,0)); size(res_label) <- c(110,20)
         res_p <- gtext("100",container = tmp.633, width = 120, height = 20)
-        
-        
+
+
         v_plot <- ggraphics(container = Plot_trna)
         b_plot <- ggraphics(container = Plot_codon)
         p_plot <- ggraphics(container = Plot_aa)
-        
+
         # Statistical Option --------------------
         statedgeR_button <- gbutton ("EdgeR RUN", container = tmp.51)
-        
+
         statdeseq_button <- gbutton("DEseq RUN", container = tmp.52)
-        
+
         # Statistical handler --------------------
         addHandlerClicked(statedgeR_button, handler = function(h, ...){
           insert(st,"[ Statistical analysis  : EdgeR ]", do.newline = TRUE )
           insert(st,"It takes a few minutes. Please wait....", do.newline = TRUE )
-          
+
           tcount <- read.delim("filtered_readcount_trna.txt")
           ccount <- read.delim("filtered_readcount_isodecoder.txt")
           acount <- read.delim("filtered_readcount_isoacceptor.txt")
-          
+
           t_out <- edge_function(tcount)
           c_out <- edge_function(ccount)
           a_out <- edge_function(acount)
-         
+
           stat_trna[] <- t_out
           stat_codon[] <- c_out
           stat_aa[] <- a_out
-          
+
           write.table(t_out, "./stat/stat_trna_list.txt", sep="\t", quote = FALSE)
           write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE)
           write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE)
-          insert(st, " ", do.newline = TRUE)  
+          insert(st, " ", do.newline = TRUE)
           insert(st,"[ Save : the result files of satistical analysis ] Adjust the threshold value.", do.newline = TRUE )
           insert(st, ".", do.newline = TRUE)
         })
-        
+
         addHandlerClicked(statdeseq_button, handler = function(h,...){
           insert(st,"[ Statistical analysis  : DESeq2 ]", do.newline = TRUE )
           dir <- getwd()
           if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
             dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
-          
+
           tcount <- read.delim("filtered_readcount_trna.txt")
           ccount <- read.delim("filtered_readcount_isodecoder.txt")
           acount <- read.delim("filtered_readcount_isoacceptor.txt")
-          
+
           t_out <- deseq_function(tcount)
           c_out <- deseq_function(ccount)
           a_out <- deseq_function(acount)
-        
+
           stat_trna[] <- t_out
           stat_codon[] <- c_out
           stat_aa[] <- a_out
-        
+
           write.table(t_out, "./stat/stat_trna_list.txt", sep="\t", quote = FALSE)
           write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE)
           write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE)
-          insert(st, " ", do.newline = TRUE)  
+          insert(st, " ", do.newline = TRUE)
           insert(st,"[ Save : the result files of satistical analysis ] Adjust the threshold value.", do.newline = TRUE )
           insert(st, ".", do.newline = TRUE)
         })
-        
+
         # Threshold Design --------------------
         widget_list <- list()
         ggr.53 <- gframe("  Threshold  ", container = paned.5, horizontal = FALSE, spacing = 10)
@@ -1047,17 +1028,17 @@
         FC_label<- glabel(" Fold change  > : ", container = tmp.523, anchor = c(-1,0)); size(FC_label) <- c(115,21)
         widget_list$FC <- gcombobox(c(0,1,1.5,2),container = tmp.523); size(widget_list$FC) <- c(120,21)
         addSpace(ggr.53, 30)
-        
+
         DE_view <- gnotebook(container = ggr51 ); size(DE_view) <- c(700, 532)
         DE_trna <- ggroup(container = DE_view, horizontal = FALSE, label=" tRNA level ")
         DE_codon <- ggroup(container = DE_view, horizontal = FALSE, label=" Isodecoder level")
         DE_aa <- ggroup(container=DE_view, horizontal = FALSE, label= "Isoacceptor level")
-        
+
         stat_trna <- gtable(data.frame(), container = DE_trna)
         stat_codon <- gtable(data.frame(), container = DE_codon)
         stat_aa <- gtable(data.frame(), container = DE_aa)
-        
-        
+
+
         # Threshold handler  --------------------
         update_trna_frame <- function(...){
           data <- read.delim("./stat/stat_trna_list.txt")
@@ -1067,7 +1048,7 @@
             stat_trna[] <- filter(data, data$Bonferroni < svalue(widget_list$pval) & abs(data$logFC) > svalue(widget_list$FC))
           }else{stat_trna[] <- filter(data, data$FDR < svalue(widget_list$pval) & abs(data$logFC) > svalue(widget_list$FC))}
         }
-        
+
         update_codon_frame <- function(...){
           data <- read.delim("./stat/stat_isodecoder_list.txt")
           if(svalue(widget_list$fdr_s) == "Benjamini-Hochberg"){
@@ -1076,7 +1057,7 @@
             stat_codon[] <- filter(data, data$Bonferroni < svalue(widget_list$pval) & abs(data$logFC) > svalue(widget_list$FC))
           }else{stat_codon[] <- filter(data, data$FDR < svalue(widget_list$pval) & abs(data$logFC) > svalue(widget_list$FC))}
         }
-        
+
         update_aa_frame <- function(...){
           data <- read.delim("./stat/stat_isoacceptor_list.txt")
           if(svalue(widget_list$fdr_s) == "Benjamini-Hochberg"){
@@ -1085,63 +1066,64 @@
             stat_aa[] <- filter(data, data$Bonferroni < svalue(widget_list$pval) & abs(data$logFC) > svalue(widget_list$FC))
           }else{stat_aa[] <- filter(data, data$FDR < svalue(widget_list$pval) & abs(data$logFC) > svalue(widget_list$FC))}
         }
-        
+
         callback <- function(h, ...){
           update_trna_frame()
           update_codon_frame()
           update_aa_frame()
         }
-        
+
         sapply(widget_list, addHandlerChanged, handler = callback)
-        
-        
+
+
         # Plot option --------------------
         DE_button <- gbutton(" Plot ", container = ggr.53)
-        
+
         # Plot handler --------------------
         addHandlerClicked(DE_button, handler = function(h, ...){
           DEtRNA <- stat_trna[]
           DEcodon <- stat_codon[]
           DEaa <- stat_aa[]
-          
+
           write.table(DEtRNA, "./stat/DEtrna_list.txt", sep = "\t", quote = FALSE)
           write.table(DEcodon, "./stat/DEisodecoder_list.txt", sep = "\t", quote = FALSE)
           write.table(DEaa, "./stat/DEisoacceptor_list.txt", sep = "\t", quote = FALSE)
-          
+
           volcano(650, 460, 80)
           v_plot <- gimage("./stat/plot/volcanoplot_trna01.png", container = Plot_trna)
-          
+
           barplot(850, 460,80)
           b_plot <- gimage("./stat/plot/barplot_isodecoder01.png", container = Plot_codon)
-          
+
           pyramid(650, 460,80)
           p_plot <- gimage("./stat/plot/pyramid_isoaccepter01.png", container = Plot_aa)
-          
-          insert(st, " ", do.newline = TRUE)  
+
+          insert(st, " ", do.newline = TRUE)
           insert(st,"[ Save : the plots of satistical analysis] Click! Next tab of Plot", do.newline = TRUE )
           insert(st, ".", do.newline = TRUE)
         })
-  
-        
+
+
   # gr6 : Plots----------------------
-  
+
         # re-size saved plot handler----------------------
         tsave <- gbutton(" Save ", container = tmp.61,expand=TRUE, fill="x", handler= function(h, ...){
           volcano(as.numeric(svalue(wid_v)), as.numeric(svalue(hei_v)), as.numeric(svalue(res_v)))
         }); size(tsave) <- c(200,20)
-        
+
         csave <- gbutton(" Save ", container = tmp.62,expand=TRUE, fill="x",handler= function(h, ...){
           barplot(as.numeric(svalue(wid_b)), as.numeric(svalue(hei_b)), as.numeric(svalue(res_b)))
-        }); size(csave) <- c(200,20) 
-        
+        }); size(csave) <- c(200,20)
+
         asave <- gbutton(" Save ", container = tmp.63,expand=TRUE, fill="x", handler= function(h, ...){
           pyramid(as.numeric(svalue(wid_p)), as.numeric(svalue(hei_p)), as.numeric(svalue(res_p)))
         }); size(asave) <- c(200,20)
 
-        
-# Main window----------------------      
-  
+
+# Main window----------------------
+
   gtkMain()
-          
-        
-        
+}
+
+
+
