@@ -21,6 +21,8 @@
    
 <br/>
 <br/>
+<br/>
+<br/>
 
 
 
@@ -67,6 +69,7 @@ Before the start tReasure packages, you should download the genome index files w
 
 For a standalone tReasure for window user, download script’s file. Download a bundle of files contained Rscript ([tReasure.R](https://www.dropbox.com/s/iskwxurw06fjzkh/tReasure.R?dl=0)) and a batch file named shortcut_install.bat.Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
 
+<br/>
 <br/>
 <br/>
 <br/>
@@ -123,6 +126,7 @@ plan(multiprocess) for Window or plan(multicore) for Linux
 
 If you have successfully gone through the installation you are ready to use tReasure.
 
+<br/>
 <br/>
 <br/>
 <br/>
