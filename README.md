@@ -27,24 +27,29 @@ Installation guide
 **STEP1. Install the devtools package**
 To install tReasure package, start by installing the devtools package.
 Open R or Rstudio and type on console
-'''
+<pre>
+<code>
 install.packages(“devtools”)
 library(devtools)
 install_github(“jinoklee/tReasure”)
 library(tReasure)
-'''
+</code>
+</pre>
 You can also install tReasure packages from local source.
     
 Download tReasure_1.0.0.tar.gz
 Open R or Rstudio and type on console
     
-'''
+<pre>
+<code>
 install.packages(“~/Download/tReasure_1.0.0.tar.gz”, repo=NULL, type = “source”)
 library(tReasure)
-'''
+</code>
+</pre>
+
 **STEP2. Download files contained genome index and sample raw data. **
 Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
-* Download a bundle of genome index files and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta). 
+* Download a bundle of genome index files and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
 * Caution! Before moving, you should make a folder named “WholeGenomeFasta”.
 You can also download sample raw files for a test. 
 
@@ -54,8 +59,9 @@ Download a bundle of files contained Rscript (tReasure.R) and a batch file named
 Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
 
 3.  Preliminaries
-3.1 install all the packages
-'''
+3.1. install all the packages
+<pre>
+<code>
 install.packages("gWidgets2")
 install.packages("gWidgets2RGtk2")
 install.packages("cairoDevice")
@@ -76,7 +82,8 @@ BiocManager::install("DESeq2")
 BiocManager::install("edgeR")
     
 check that all the packages listed above have been installed correctly.
-'''
+<pre>
+<code>
 options(guiToolkit="RGtk2")
 library(gWidgets2)
 library(gWidgets2RGtk2)
@@ -101,16 +108,20 @@ Start
 ---------------------------
 1.  Using R or Rstudio
 Open R or Rstudio and type on console
-'''
+<pre>
+<code>
 library(tReasure)
 tReasure()
-'''
+</code>
+</pre>
 2. using Rscript 
-2.1 For Window users 
+2.1. For Window users 
 Double click the icon of tReasure on the desktop.
-2.2 For Linux or MacOS users
+2.2. For Linux or MacOS users
 Click on the tReasure and type on command
-'''
+<pre>
+<code>
 Rscript tReasure.R
-'''
+</code>
+</pre>
 
