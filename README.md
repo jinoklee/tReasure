@@ -42,7 +42,7 @@ library(tReasure)
 </pre>
 
 ### _**[Other methods]**_
-You can also install tReasure packages from local source. Download tReasure_1.0.0.tar.gz and saved it on Download folders.Open R or Rstudio and type on console as below.
+You can also install tReasure packages from local source. Download <span style= "color:red">tReasure_1.0.0.tar.gz</span> and saved it on Download folders.Open R or Rstudio and type on console as below.
 <pre>
 <code>
 install.packages(“~/Download/tReasure_1.0.0.tar.gz”, repo=NULL, type = “source”)
@@ -55,7 +55,7 @@ library(tReasure)
 ### _**STEP2. Download files contained genome index and sample raw data**_
 
 Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
-+ Download a bundle of genome index files and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta)._Caution! Before moving, you should make a folder named “WholeGenomeFasta”._
++ Download <span style= "color:red">a bundle of genome index files</span> and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta)._Caution! Before moving, you should make a folder named “WholeGenomeFasta”._
 + You can also download sample raw files for a test. 
 
 <br/>
