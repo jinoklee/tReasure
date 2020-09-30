@@ -42,7 +42,7 @@ library(tReasure)
 </pre>
 
 ### _**[Other methods]**_
-You can also install tReasure packages from local source. Download <p style= "color:red">tReasure_1.0.0.tar.gz</p> and saved it on Download folders.Open R or Rstudio and type on console as below.
+You can also install tReasure packages from local source. Download  syntax:[tReasure_1.0.0.tar.gz](https://www.dropbox.com/s/3vix75t5yh5okbp/tReasure_1.0.0.tar.gz?dl=0) and saved it on Download folders.Open R or Rstudio and type on console as below.
 <pre>
 <code>
 install.packages(“~/Download/tReasure_1.0.0.tar.gz”, repo=NULL, type = “source”)
@@ -55,14 +55,14 @@ library(tReasure)
 ### _**STEP2. Download files contained genome index and sample raw data**_
 
 Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
-+ Download <span style= "color:red">a bundle of genome index files</span> and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta)._Caution! Before moving, you should make a folder named “WholeGenomeFasta”._
-+ You can also download sample raw files for a test. 
++ Download syntax:[a bundle of genome index files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0) and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta)._Caution! Before moving, you should make a folder named “WholeGenomeFasta”._
++ You can also download syntax:[sample raw files](https://www.dropbox.com/s/iskwxurw06fjzkh/tReasure.R?dl=0) for a test. 
 
 <br/>
 
 ### _**STEP3. Download tReasure Rscript for analysis using Rscript execution**_
 
-For a standalone tReasure for window user, download script’s file (tReasure.R). Download a bundle of files contained Rscript (tReasure.R) and a batch file named shortcut_install.bat.Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
+For a standalone tReasure for window user, download script’s file. Download a bundle of files contained Rscript (syntax:[tReasure.R](https://www.dropbox.com/s/iskwxurw06fjzkh/tReasure.R?dl=0)) and a batch file named shortcut_install.bat.Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
 
 <br/>
 <br/>
