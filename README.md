@@ -17,6 +17,7 @@ tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-fr
    ![Flow](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/flow.png?raw=true)<br/><br/>
    
 <br/>
+<br/>
 
 
 
@@ -64,6 +65,7 @@ Before the start tReasure packages, you should download the genome index files w
 
 For a standalone tReasure for window user, download script’s file (tReasure.R). Download a bundle of files contained Rscript (tReasure.R) and a batch file named shortcut_install.bat.Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
 
+<br/>
 <br/>
 
 
@@ -119,6 +121,7 @@ plan(multiprocess) for Window or plan(multicore) for Linux
 
 If you have successfully gone through the installation you are ready to use tReasure.
 
+<br/>
 <br/>
 
 
