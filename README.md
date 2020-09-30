@@ -16,7 +16,7 @@
     5) Visualization 
 
 <br/><br/>
-  ## Analysis flow
+  #### Analysis flow
    ![Flow](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/flow.png?raw=true)<br/><br/>
    
 <br/>
