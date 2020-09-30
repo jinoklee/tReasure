@@ -1,5 +1,8 @@
 
+
+
 # tReasure
+***
 tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-friendly tool for the tRNA expression analysis of deep-sequencing experiments for small RNAs using R packages. 
 
     tReasure currently implements the following tasks:
@@ -16,14 +19,14 @@ tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-fr
 
 
 
-### Installation guide
+## Installation guide
 ***
 **tReasure** is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
 
 
 --------------------------- 
 
-## _**STEP1. Install the devtools package**_
+### _**STEP1. Install the devtools package**_
 
 To install tReasure package, start by installing the devtools package.
 
@@ -38,6 +41,7 @@ library(tReasure)
 </code>
 </pre>
 
+### _**[OPTION]**_
 You can also install tReasure packages from local source. Download tReasure_1.0.0.tar.gz and saved on Download folders.
 
 Open R or Rstudio and type on console
@@ -48,13 +52,13 @@ library(tReasure)
 </code>
 </pre>
 
-##_**STEP2. Download files contained genome index and sample raw data**_
+### _**STEP2. Download files contained genome index and sample raw data**_
 
 Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
 + Download a bundle of genome index files and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta)._Caution! Before moving, you should make a folder named “WholeGenomeFasta”._
 + You can also download sample raw files for a test. 
 
-##_**STEP3. Download tReasure Rscript for analysis using Rscript execution**_
+### _**STEP3. Download tReasure Rscript for analysis using Rscript execution**_
 
 For a standalone tReasure for window user, download script’s file (tReasure.R). Download a bundle of files contained Rscript (tReasure.R) and a batch file named shortcut_install.bat.Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
 
