@@ -47,13 +47,13 @@ library(tReasure)
 </code>
 </pre>
 
-**STEP2. Download files contained genome index and sample raw data. **
+**STEP2. Download files contained genome index and sample raw data**
 Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
-* Download a bundle of genome index files and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
-* Caution! Before moving, you should make a folder named “WholeGenomeFasta”.
++ Download a bundle of genome index files and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
++ Caution! Before moving, you should make a folder named “WholeGenomeFasta”.
 You can also download sample raw files for a test. 
 
-**STEP3. Download tReasure Rscript for analysis using Rscript execution.**
+**STEP3. Download tReasure Rscript for analysis using Rscript execution**
 For a standalone tReasure for window user, download script’s file (tReasure.R). 
 Download a bundle of files contained Rscript (tReasure.R) and a batch file named shortcut_install.bat.
 Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
@@ -81,7 +81,7 @@ BiocManager::install("Rsubread")
 BiocManager::install("DESeq2")
 BiocManager::install("edgeR")
     
-check that all the packages listed above have been installed correctly.
+3.2. check that all the packages listed above have been installed correctly.
 <pre>
 <code>
 options(guiToolkit="RGtk2")
@@ -101,24 +101,29 @@ library(edgeR)
 library(statmod)
 library(future)
 plan(multiprocess) for Window or plan(multicore) for Linux
-    
+</code>
+</pre>
+
 If you have successfully gone through the installation you are ready to use tReasure.
 
 Start
 ---------------------------
 1.  Using R or Rstudio
 Open R or Rstudio and type on console
+
 <pre>
 <code>
 library(tReasure)
 tReasure()
 </code>
 </pre>
+
 2. using Rscript 
 2.1. For Window users 
 Double click the icon of tReasure on the desktop.
 2.2. For Linux or MacOS users
 Click on the tReasure and type on command
+
 <pre>
 <code>
 Rscript tReasure.R
