@@ -22,36 +22,37 @@ Installation guide
 
 
   
- 	1.  Install R from http://cran.r-project.org/ according to your operating system.
- 	2.  Download tReasure packages from https://github.com/jinoklee/tReasure and additional files.  
- 	**STEP1. Install the devtools package**
- 	To install tReasure package, start by installing the devtools package.
-    Open R or Rstudio and type on console
+1.  Install R from http://cran.r-project.org/ according to your operating system.
+2.  Download tReasure packages from https://github.com/jinoklee/tReasure and additional files.  
+**STEP1. Install the devtools package**
+To install tReasure package, start by installing the devtools package.
+Open R or Rstudio and type on console
     '''
     install.packages(“devtools”)
     library(devtools)
     install_github(“jinoklee/tReasure”)
     library(tReasure)
     '''
-	You can also install tReasure packages from local source.
+You can also install tReasure packages from local source.
     
-    Download tReasure_1.0.0.tar.gz
-    Open R or Rstudio and type on console
+Download tReasure_1.0.0.tar.gz
+Open R or Rstudio and type on console
     
-    '''
-    install.packages(“~/Download/tReasure_1.0.0.tar.gz”, repo=NULL, type = “source”)
-    library(tReasure)
-    '''
- 	**STEP2. Download files contained genome index and sample raw data. **
- 	Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
-    Download a bundle of genome index files and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta). Caution! Before moving, you should make a folder named “WholeGenomeFasta”.
-    You can also download sample raw files for a test. 
+  '''
+  install.packages(“~/Download/tReasure_1.0.0.tar.gz”, repo=NULL, type = “source”)
+  library(tReasure)
+  '''
+**STEP2. Download files contained genome index and sample raw data. **
+Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
+Download a bundle of genome index files and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta). Caution! Before moving, you should make a folder named “WholeGenomeFasta”.
+You can also download sample raw files for a test. 
 
- 	**STEP3. Download tReasure Rscript for analysis using Rscript execution.**
- 	For a standalone tReasure for window user, download script’s file (tReasure.R). 
-    Download a bundle of files contained Rscript (tReasure.R) and a batch file named shortcut_install.bat.
-    Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
-    3.  Preliminaries
+**STEP3. Download tReasure Rscript for analysis using Rscript execution.**
+For a standalone tReasure for window user, download script’s file (tReasure.R). 
+Download a bundle of files contained Rscript (tReasure.R) and a batch file named shortcut_install.bat.
+Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
+
+3.  Preliminaries
     3.1 install all the packages
     '''
     install.packages("gWidgets2")
@@ -96,8 +97,8 @@ Installation guide
 
 Start
 ---------------------------
-    1.  Using R or Rstudio
-    Open R or Rstudio and type on console
+   1.  Using R or Rstudio
+   Open R or Rstudio and type on console
     '''
     library(tReasure)
     tReasure()
