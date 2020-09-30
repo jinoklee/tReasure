@@ -42,7 +42,7 @@ library(tReasure)
 </pre>
 
 ### _**[Other methods]**_
-You can also install tReasure packages from local source. Download  syntax:[tReasure_1.0.0.tar.gz](https://www.dropbox.com/s/3vix75t5yh5okbp/tReasure_1.0.0.tar.gz?dl=0) and saved it on Download folders.Open R or Rstudio and type on console as below.
+You can also install tReasure packages from local source. Download  [tReasure_1.0.0.tar.gz](https://www.dropbox.com/s/3vix75t5yh5okbp/tReasure_1.0.0.tar.gz?dl=0) and saved it on Download folders.Open R or Rstudio and type on console as below.
 <pre>
 <code>
 install.packages(“~/Download/tReasure_1.0.0.tar.gz”, repo=NULL, type = “source”)
@@ -55,8 +55,8 @@ library(tReasure)
 ### _**STEP2. Download files contained genome index and sample raw data**_
 
 Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
-+ Download syntax:[a bundle of genome index files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0) and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta)._Caution! Before moving, you should make a folder named “WholeGenomeFasta”._
-+ You can also download syntax:[sample raw files](https://www.dropbox.com/s/iskwxurw06fjzkh/tReasure.R?dl=0) for a test. 
++ Download [a bundle of genome index files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0) and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta)._Caution! Before moving, you should make a folder named “WholeGenomeFasta”._
++ You can also download [sample raw files](https://www.dropbox.com/s/iskwxurw06fjzkh/tReasure.R?dl=0) for a test. 
 
 <br/>
 
