@@ -28,7 +28,7 @@ tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-fr
 
 <br/>
 
-### _**STEP1. Install the devtools package**_
+### **STEP1. Install the devtools package**
 
 To install tReasure package, start by installing the devtools package. Open R or Rstudio and type on console as below.
 <pre>
@@ -41,7 +41,7 @@ library(tReasure)
 </code>
 </pre>
 
-### _**[Other methods]**_
+### **[Other methods]**
 You can also install tReasure packages from local source. Download  [tReasure_1.0.0.tar.gz](https://www.dropbox.com/s/3vix75t5yh5okbp/tReasure_1.0.0.tar.gz?dl=0) and saved it on Download folders.Open R or Rstudio and type on console as below.
 <pre>
 <code>
@@ -52,15 +52,15 @@ library(tReasure)
 
 <br/>
 
-### _**STEP2. Download files contained genome index and sample raw data**_
+### **STEP2. Download files contained genome index and sample raw data**
 
-Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
+Before the start tReasure packages, you should download the genome index files what you want ( [hg38](https://www.dropbox.com/s/f9qefc0sjxfzjkl/hg38.zip?dl=0), [hg19](https://www.dropbox.com/s/2wlfv8oh1qq7vzh/hg19.zip?dl=0), [mm10](https://www.dropbox.com/s/6z86iaszuvuijy7/mm10.zip?dl=0) or all). 
 + Download [a bundle of genome index files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0) and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta)._Caution! Before moving, you should make a folder named “WholeGenomeFasta”._
 + You can also download [sample raw files](https://www.dropbox.com/s/iskwxurw06fjzkh/tReasure.R?dl=0) for a test. 
 
 <br/>
 
-### _**STEP3. Download tReasure Rscript for analysis using Rscript execution**_
+### **STEP3. Download tReasure Rscript for analysis using Rscript execution**
 
 For a standalone tReasure for window user, download script’s file. Download a bundle of files contained Rscript (syntax:[tReasure.R](https://www.dropbox.com/s/iskwxurw06fjzkh/tReasure.R?dl=0)) and a batch file named shortcut_install.bat.Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
 
