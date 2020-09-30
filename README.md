@@ -15,9 +15,9 @@
     4) Statistical analysis for differentially expressed tRNAs gene
     5) Visualization 
 
-<br/><br/>
+
   #### Workflow
-   ![Flow](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/flow.png?raw=true)<br/><br/>
+   ![Flow](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/flow.png?raw=true)
    
 <br/>
 <br/>
