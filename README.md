@@ -27,6 +27,7 @@ tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-fr
 
 
 <br/>
+
 ### _**STEP1. Install the devtools package**_
 
 To install tReasure package, start by installing the devtools package. Open R or Rstudio and type on console as below.
@@ -50,6 +51,7 @@ library(tReasure)
 </pre>
 
 <br/>
+
 ### _**STEP2. Download files contained genome index and sample raw data**_
 
 Before the start tReasure packages, you should download the genome index files what you want ( hg38, hg19, mm10 or all). 
@@ -57,6 +59,7 @@ Before the start tReasure packages, you should download the genome index files w
 + You can also download sample raw files for a test. 
 
 <br/>
+
 ### _**STEP3. Download tReasure Rscript for analysis using Rscript execution**_
 
 For a standalone tReasure for window user, download script’s file (tReasure.R). Download a bundle of files contained Rscript (tReasure.R) and a batch file named shortcut_install.bat.Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
