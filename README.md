@@ -44,7 +44,7 @@ library(tReasure)
 </code>
 </pre>
 
-### **[OR]**
+#### **OR,**
 You can also install tReasure packages from local source. Download  [tReasure_1.0.0.tar.gz](https://www.dropbox.com/s/3vix75t5yh5okbp/tReasure_1.0.0.tar.gz?dl=0) and saved it on Download folders. Open R or Rstudio and type on console as below.
 <pre>
 <code>
