@@ -29,9 +29,7 @@ tReasure (tRna Expression Analysis Software Utilizing R for Easy use) is user-fr
 
 ### _**STEP1. Install the devtools package**_
 
-To install tReasure package, start by installing the devtools package.
-
-Open R or Rstudio and type on console
+To install tReasure package, start by installing the devtools package. Open R or Rstudio and type on console as below.
 <pre>
 <code>
 install.packages(“devtools”)
@@ -43,9 +41,7 @@ library(tReasure)
 </pre>
 
 ### _**[Other methods]**_
-You can also install tReasure packages from local source. Download tReasure_1.0.0.tar.gz and saved on Download folders.
-
-Open R or Rstudio and type on console
+You can also install tReasure packages from local source. Download tReasure_1.0.0.tar.gz and saved it on Download folders.Open R or Rstudio and type on console as below.
 <pre>
 <code>
 install.packages(“~/Download/tReasure_1.0.0.tar.gz”, repo=NULL, type = “source”)
@@ -71,7 +67,7 @@ For a standalone tReasure for window user, download script’s file (tReasure.R)
 
 ## Preliminaries
 
-+  Install the required packages for tReasure
+Install the required packages for tReasure as below.
 <pre>
 <code>
 install.packages("gWidgets2")
@@ -95,7 +91,7 @@ BiocManager::install("edgeR")
 </code>
 </pre>
 
-+  Check that all the packages listed above have been installed correctly.
+Check that all the packages listed above have been installed correctly as below.
 <pre>
 <code>
 options(guiToolkit="RGtk2")
@@ -128,7 +124,7 @@ If you have successfully gone through the installation you are ready to use tRea
 
 #### Using R or Rstudio
 
-Open R or Rstudio and type on console
+Open R or Rstudio and type on console as below.
 <pre>
 <code>
 library(tReasure)
@@ -139,7 +135,7 @@ tReasure()
 #### Using Rscript 
 + For Window users  : Double click the icon of tReasure on the desktop.
 
-+ For Linux or MacOS users : Click on the tReasure and type on command
++ For Linux or MacOS users : Click on the tReasure and type on command as below.
 <pre>
 <code>
 Rscript tReasure.R
