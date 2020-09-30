@@ -42,7 +42,7 @@ library(tReasure)
 </pre>
 
 ### _**[Other methods]**_
-You can also install tReasure packages from local source. Download <span style= "color:red">tReasure_1.0.0.tar.gz</span> and saved it on Download folders.Open R or Rstudio and type on console as below.
+You can also install tReasure packages from local source. Download <span style= "color:red;">tReasure_1.0.0.tar.gz</span> and saved it on Download folders.Open R or Rstudio and type on console as below.
 <pre>
 <code>
 install.packages(“~/Download/tReasure_1.0.0.tar.gz”, repo=NULL, type = “source”)
