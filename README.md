@@ -44,7 +44,7 @@ Installation may take several minutes.
 + It automatically installs **tReasure package**.
 + It creates a folder named **tReasure_v1** on Documents. 
 + It creates **shortcut for tReasure** on Desktop (only Window).
-### **STEP 3.** Download the genome index as needed
+### **STEP 3.** Download the genome indices as needed
    > ##### Donwload : [a bundle of genome index files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0)
 + hg38 genome index is saved as default.
 + If you need another genome index files, download and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
