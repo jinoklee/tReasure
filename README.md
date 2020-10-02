@@ -67,9 +67,12 @@ Installation may take several minutes.
 ## Start
 ***
 #### Using Rscript 
-+ For Window users  : Double-click the icon of tReasure on Desktop.
++ For Window users  
+    : Double-click the icon of tReasure on Desktop.
 
-+ For Linux or MacOS users : Double-Click the file named **run.sh.command** on Documents/tReasure_v1
++ For Linux or MacOS users 
+    :  chmod 777 **run.sh.command** on Documents/tReasure_v1
+    :  Double-Click **run.sh.command** 
 
 
 #### Using R or Rstudio
