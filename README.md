@@ -34,7 +34,7 @@ tReasure is a package for the R computing environment and it is assumed that you
 ## Easy Install packages
 ### **Step 1. Download and unzip a file**
    #### Donwload : [easy_int_tReasrue_win_v1.0.zip](https://www.dropbox.com/s/gnq144mputz4fdm/easy_int_win_v1.0.zip?dl=0)
-### **Step 2. Double click the easy_int_win_v1.0.bat**
+### **Step 2. Double click a install batch file (easy_int_win_v1.0.bat)**
 Installation may take several munutes. 
 + It automatically install tReasure package 
 + It create shortcut for tReasure on Desktop. 
