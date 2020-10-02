@@ -34,10 +34,10 @@ tReasure is a package for the R computing environment and it is assumed that you
 ***
 
 ### **STEP 1.** Download and unzip a file
-   > ##### Window : [easy_int_tReasrue_win_v1.0.zip](https://www.dropbox.com/s/gnq144mputz4fdm/easy_int_win_v1.0.zip?dl=0)
+   > ##### Window : [tReasrue_v1_win.zip](https://www.dropbox.com/s/gnq144mputz4fdm/easy_int_win_v1.0.zip?dl=0)
    > ##### Linux/Mac OS : 
 ### **STEP 2.** Double-click a install file 
-   > ##### Window : easy_int_win_v1.0.bat
+   > ##### Window : int_win_v1.0.bat
    > ##### Linux/Mac OS : 
 Installation may take several munutes. 
 + It automatically installs **tReasure package**.
