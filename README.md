@@ -53,6 +53,16 @@ Installation may take several munutes.
 
 ## Start
 
+#### Using Rscript 
++ For Window users  : Double click the icon of tReasure on the desktop.
+
++ For Linux or MacOS users : Click on the tReasure and type on command as below.
+<pre>
+<code>
+Rscript tReasure.R
+</code>
+</pre>
+
 #### Using R or Rstudio
 
 Open R or Rstudio and type on console as below.
@@ -63,13 +73,5 @@ tReasure()
 </code>
 </pre>
 
-#### Using Rscript 
-+ For Window users  : Double click the icon of tReasure on the desktop.
 
-+ For Linux or MacOS users : Click on the tReasure and type on command as below.
-<pre>
-<code>
-Rscript tReasure.R
-</code>
-</pre>
 
