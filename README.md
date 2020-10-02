@@ -59,7 +59,7 @@ Installation may take several minutes.
 <br/>
 
 ### **STEP 4.(option)** Download Sample Tests as needed
-   > [small RNA seq fastq](https://www.dropbox.com/sh/zp7sg8frifih3vo/AAAbkJgn-QJ-TCJVIhjQC1ita?dl=0)
+   > ##### Donwload : [small RNA seq fastq](https://www.dropbox.com/sh/zp7sg8frifih3vo/AAAbkJgn-QJ-TCJVIhjQC1ita?dl=0)
 
 <br/>
 <br/>
