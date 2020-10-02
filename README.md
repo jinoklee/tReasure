@@ -30,6 +30,7 @@ tReasure is a package for the R computing environment and it is assumed that you
 
 <br/>
 
+Install source : https://github.com/jinoklee/tReasure_install.git
 
 ***
 
