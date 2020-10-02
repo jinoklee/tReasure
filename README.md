@@ -37,13 +37,13 @@ Install source : https://github.com/jinoklee/tReasure_install.git
 ### **STEP 1.** Download and unzip a file
    > ##### Window : [tReasrue_v1_win.zip](https://www.dropbox.com/s/gnq144mputz4fdm/easy_int_win_v1.0.zip?dl=0)
    > ##### Linux/Mac OS : [tReasure_v1_mac.zip]
-### **STEP 2.** Double-click a install file 
+### **STEP 2.** Double-click an install file 
    > ##### Window : int_win_v1.0.bat
    > ##### Linux/Mac OS : int_mac_v1.0.sh.command
-Installation may take several munutes. 
+Installation may take several minutes. 
 + It automatically installs **tReasure package**.
-+ It creates a folder named **tReasure_v1** on Document. 
-+ It creates **shortcut for tReasure** on Desktop (Only Window).
++ It creates a folder named **tReasure_v1** on Documents. 
++ It creates **shortcut for tReasure** on Desktop (only Window).
 ### **STEP 3.** Download the genome index as needed
    > ##### Donwload : [a bundle of genome index files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0)
 + hg38 genome index is saved as default.
