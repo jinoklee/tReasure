@@ -35,10 +35,10 @@ tReasure is a package for the R computing environment and it is assumed that you
 
 ### **STEP 1.** Download and unzip a file
    > ##### Window : [tReasrue_v1_win.zip](https://www.dropbox.com/s/gnq144mputz4fdm/easy_int_win_v1.0.zip?dl=0)
-   > ##### Linux/Mac OS : 
+   > ##### Linux/Mac OS : [tReasure_v1_mac.zip]
 ### **STEP 2.** Double-click a install file 
    > ##### Window : int_win_v1.0.bat
-   > ##### Linux/Mac OS : 
+   > ##### Linux/Mac OS : int_mac_v1.0.sh.command
 Installation may take several munutes. 
 + It automatically installs **tReasure package**.
 + It creates a folder named **tReasure_v1** on Document. 
@@ -56,12 +56,8 @@ Installation may take several munutes.
 #### Using Rscript 
 + For Window users  : Double click the icon of tReasure on the desktop.
 
-+ For Linux or MacOS users : Click on the tReasure and type on command as below.
-<pre>
-<code>
-Rscript tReasure.R
-</code>
-</pre>
++ For Linux or MacOS users : Double Click the files named "run.sh.command" on the Document/int_tReasure_v1.0
+
 
 #### Using R or Rstudio
 
