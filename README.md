@@ -67,7 +67,7 @@ Installation may take several minutes.
 ## Start
 ***
 #### Using Rscript 
-+ For Window users  
++ For Window users
     : Double-click the icon of tReasure on Desktop.
 
 + For Linux or MacOS users 
