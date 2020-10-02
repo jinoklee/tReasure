@@ -49,8 +49,6 @@ Installation may take several munutes.
 + If you need another genome index files, download and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
 
 
-***
-
 <br/>
 
 ## Start
