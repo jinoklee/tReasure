@@ -71,8 +71,7 @@ Installation may take several minutes.
     : Double-click the icon of tReasure on Desktop.
 
 + For Linux or MacOS users 
-    :  chmod 777 **run.sh.command** on Documents/tReasure_v1
-    :  Double-Click **run.sh.command** 
+    :  chmod 777 **run.sh.command** on Documents/tReasure_v1 and double-Click **run.sh.command** 
 
 
 #### Using R or Rstudio
