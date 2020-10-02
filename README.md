@@ -41,8 +41,8 @@ tReasure is a package for the R computing environment and it is assumed that you
    > ##### Linux/Mac OS : 
 Installation may take several munutes. 
 + It automatically installs **tReasure package**.
-+ It creates **shortcut for tReasure** on Desktop. 
 + It creates a folder named **tReasure_v1** on Document. 
++ It creates **shortcut for tReasure** on Desktop. (only Window)
 ### **STEP 3.** Download the genome index as needed
    > ##### Donwload : [a bundle of genome index files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0)
 + hg38 genome index is saved as default.
