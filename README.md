@@ -53,8 +53,8 @@ Installation may take several minutes.
 
 ### **STEP 3.** Download the genome indices as needed
    > ##### Donwload : [a bundle of genome indics files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0)
-+ hg38 genome index is saved as default.
-+ If you need another genome index files, download and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
++ hg38 genome indices are saved as default.
++ If you need another genome indices files, download and move the files inside tReasure packages folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
 
 
 <br/>
