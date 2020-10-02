@@ -29,7 +29,9 @@
 tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
 
 <br/>
-## For Window User
+
+### For Window User
+***
 
 ### **STEP 1.** Download and unzip a file
    ##### Donwload : [easy_int_tReasrue_win_v1.0.zip](https://www.dropbox.com/s/gnq144mputz4fdm/easy_int_win_v1.0.zip?dl=0)
@@ -43,8 +45,8 @@ Installation may take several munutes.
 + hg38 genome index is saved as default
 + If you need another genome index files, download and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
 
-## For Linux/Mac OS User
-
+### For Linux/Mac OS User
+***
 
 <br/>
 
