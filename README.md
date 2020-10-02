@@ -24,14 +24,13 @@
 <br/>
 
 
-## Installation guide
+## Easy installation guide
 
 tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
 
 <br/>
-<br/>
 
-## * Easy Install
+1. For Window User
 ### **STEP 1.** Download and unzip a file
    ##### Donwload : [easy_int_tReasrue_win_v1.0.zip](https://www.dropbox.com/s/gnq144mputz4fdm/easy_int_win_v1.0.zip?dl=0)
 ### **STEP 2.** Double-click a install batch file (easy_int_win_v1.0.bat)
@@ -45,112 +44,9 @@ Installation may take several munutes.
 + hg38 genome index is saved as default
 + If you need another genome index files, download and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
 
-
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
-<br/>
-
-### **Step 1. Install the devtools package**
-
-To install tReasure package, start by installing the devtools package. Open R or Rstudio and type on console as below.
-<pre>
-<code>
-install.packages(“devtools”)
-library(devtools)
-
-install_github(“jinoklee/tReasure”) 
-library(tReasure) 
-</code>
-</pre>
-
-#### **OR,**
-You can also install tReasure packages from local source. Download  [tReasure_1.0.0.tar.gz](https://www.dropbox.com/s/3vix75t5yh5okbp/tReasure_1.0.0.tar.gz?dl=0) and saved it on Download folders. Open R or Rstudio and type on console as below.
-<pre>
-<code>
-install.packages(“~/Download/tReasure_1.0.0.tar.gz”, repo=NULL, type = “source”)
-library(tReasure)
-</code>
-</pre>
-
-<br/>
-
-### **Step 2. Download files contained genome index and sample raw data**
-
-Before the start tReasure packages, you should download the genome index files what you want ( [hg38](https://www.dropbox.com/s/f9qefc0sjxfzjkl/hg38.zip?dl=0), [hg19](https://www.dropbox.com/s/2wlfv8oh1qq7vzh/hg19.zip?dl=0), [mm10](https://www.dropbox.com/s/6z86iaszuvuijy7/mm10.zip?dl=0) or all). 
-+ Download [a bundle of genome index files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0) and move the files inside tReasure package folder (~Documents/R/win-library/tReasure/WholeGenomeFasta). _Caution! Before moving, you should make a folder named “WholeGenomeFasta”._
-+ You can also download [sample raw files](https://www.dropbox.com/s/iskwxurw06fjzkh/tReasure.R?dl=0) for a test. 
-
-<br/>
-
-### **Step 3. Download tReasure Rscript for analysis using Rscript execution**
-
-For a standalone tReasure for window user, download script’s file. Download a bundle of files contained Rscript ([tReasure.R](https://www.dropbox.com/s/iskwxurw06fjzkh/tReasure.R?dl=0)) and a batch file named shortcut_install.bat.Click on the shortcut_install.bat, it creates a shortcut icon of tReasure on the desktop.
-
-<br/>
-<br/>
-<br/>
+2. For linux/Mac OS User
 
 
-## Preliminaries
-
-Install the required packages for tReasure as below.
-<pre>
-<code>
-install.packages("gWidgets2")
-install.packages("gWidgets2RGtk2")
-install.packages("cairoDevice")
-install.packages("plotrix")
-install.packages("tidyverse")
-install.packages("gridExtra")
-install.packages("ggplot2")
-install.packages("grid")
-install.packages("dplyr")
-install.packages("statmod")
-install.packages(“future”)
-
-if (!requireNamespace("BiocManager", quietly = TRUE))
-install.packages("BiocManager")
-BiocManager::install("QuasR")
-BiocManager::install("Rsubread")
-BiocManager::install("DESeq2")
-BiocManager::install("edgeR")
-</code>
-</pre>
-
-Check that all the packages listed above have been installed correctly as below.
-<pre>
-<code>
-options(guiToolkit="RGtk2")
-library(gWidgets2)
-library(gWidgets2RGtk2)
-library(cairoDevice)
-library(plotrix)
-library(tidyverse)
-library(gridExtra)
-library(ggplot2)
-library(grid)
-library(dplyr)
-library(QuasR)
-library(Rsubread)
-library(DESeq2)
-library(edgeR)
-library(statmod)
-library(future)
-plan(multiprocess) for Window or plan(multicore) for Linux
-</code>
-</pre>
-
-If you have successfully gone through the installation you are ready to use tReasure.
-
-<br/>
-<br/>
 <br/>
 
 ## Start
