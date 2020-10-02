@@ -40,7 +40,7 @@ tReasure is a package for the R computing environment and it is assumed that you
    > ##### Win : easy_int_win_v1.0.bat
    > ##### Linux/Mac OS : 
 Installation may take several munutes. 
-+ It automatically installs **tReasure package **
++ It automatically installs **tReasure package**
 + It creates **shortcut for tReasure** on Desktop. 
 + It creates a folder named **tReasure_v1** on Document 
 ### **STEP 3.** Download the genome index as needed
