@@ -56,7 +56,7 @@ Installation may take several munutes.
 #### Using Rscript 
 + For Window users  : Double-click the icon of tReasure on the desktop.
 
-+ For Linux or MacOS users : Double-Click the files named **run.sh.command** on Document/int_tReasure_v1.0
++ For Linux or MacOS users : Double-Click the files named **run.sh.command** on Document/tReasure_v1
 
 
 #### Using R or Rstudio
