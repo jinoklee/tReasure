@@ -56,9 +56,10 @@ Installation may take several minutes.
 + hg38 genome indices are saved as default.
 + If you need another genome indices files, download and move the files inside tReasure packages folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
 
-
-### **STEP 4. (option) ** Sample Tests
+<br/>
+### **STEP 4.(option)** Download Sample Tests as needed
 [small RNA seq fastq](https://www.dropbox.com/sh/zp7sg8frifih3vo/AAAbkJgn-QJ-TCJVIhjQC1ita?dl=0)
+
 <br/>
 <br/>
 
