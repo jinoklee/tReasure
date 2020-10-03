@@ -1,7 +1,7 @@
 
 <br/>
 <br/>
-![Flow](inst/extdata/tReasure.ico)
+!(https://github.com/jinoklee/tReasure/blob/master/inst/extdata/tReasure.ico)
 <br/>
 <br/>
 
