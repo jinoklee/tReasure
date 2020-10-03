@@ -36,7 +36,7 @@ Install source : https://github.com/jinoklee/tReasure_install.git
 ***
 
 ### **STEP 1.** Download and unzip a file
-   > ##### Window : [tReasrue_v1_win.zip](https://www.dropbox.com/s/apcypdvjq07emfj/tReasure_v1_win.zip?dl=0)
+   > ##### Window : [tReasrue_v1_win.zip](https://www.dropbox.com/s/uyacuct9q3khpul/tReasure_v1_win.zip?dl=0)
    > ##### Linux/Mac OS : [tReasure_v1_mac.zip](https://www.dropbox.com/s/2bo2npf3wga5cw6/tReasure_v1_mac.zip?dl=0)
    
 <br/>
