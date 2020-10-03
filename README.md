@@ -1,7 +1,7 @@
 
 <br/>
 <br/>
-![tReasure](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/tresure.png){: width="100", heith="100"}
+![image](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/tresure.png){: width="100", heigth="100"}
 <br/>
 <br/>
 
