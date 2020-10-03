@@ -2,7 +2,7 @@
 <br/>
 <br/>
 
-<img src = "https://github.com/jinoklee/tReasure/blob/master/inst/extdata/tresure.png", width="100px", heigth="100px">
+![](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/tresure.png =100x100)
 
 <br/>
 <br/>
