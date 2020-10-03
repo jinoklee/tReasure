@@ -1,7 +1,7 @@
 
 <br/>
 <br/>
-![image](inst/extdata/tresure.png)
+![tReasure](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/tresure.png = 100X100)
 <br/>
 <br/>
 
