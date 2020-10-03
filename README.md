@@ -1,7 +1,7 @@
 
 <br/>
 <br/>
-![image](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/tReasure.png)
+![image](inst/extdata/tresure.png)
 <br/>
 <br/>
 
