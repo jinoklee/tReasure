@@ -1,9 +1,9 @@
 Package: tReasure
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 1.0.1
+Version: 0.0.1
 Author: jinoklee
-Maintainer: The package maintainer <yourself@somewhere.net>
+Maintainer: The package maintainer <jinoklee.01@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
