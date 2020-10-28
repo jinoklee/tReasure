@@ -7,17 +7,10 @@ tReasure <- function(){
   #......................................................................................#
   # setting the PATH for TEST : system.file('', package="tReasure")
   #......................................................................................#
-
-  hg19.gtf <- system.file( "extdata", "hg19-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
-  hg38.gtf <- system.file( "extdata", "hg38-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
-  mm10.gtf <- system.file( "extdata", "mm10-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
-
-  hg19.annot <- system.file("extdata", "duplicate_tRNA_hg19.txt",package = "tReasure", mustWork = TRUE)
-  hg38.annot <- system.file("extdata", "duplicate_tRNA_hg38.txt",package = "tReasure", mustWork = TRUE)
-  mm10.annot <- system.file("extdata", "duplicate_tRNA_mm10.txt",package = "tReasure", mustWork = TRUE)
-
+  hg19.gtf <- system.file( "extdata", "hg19-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
+  hg38.gtf <- system.file( "extdata", "hg38-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
+  mm10.gtf <- system.file( "extdata", "mm10-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
   intro <- system.file("extdata", "intro.png", package = "tReasure", mustWork = TRUE)
-
   #......................................................................................#
   # function
   #......................................................................................#
@@ -114,7 +107,6 @@ tReasure <- function(){
     return(res)
   }
 
-
   volcano <- function(width, height, res){
     out <- read.delim("./stat/stat_trna_list.txt")
 
@@ -137,7 +129,7 @@ tReasure <- function(){
     png("./stat/plot/volcanoplot_trna%02d.png", height=height, width=width, res=res)
     p <- function(){
       ggplot(detRNA, aes(x = logFC, y = -log10(FDR)))+
-        geom_point(aes(col=Sig)) +
+        geom_point(size=3, aes(col=Sig)) +
         xlab(" log2 Fold Change") +
         ylab("-log10 Adjusted P value ") +
         geom_vline(xintercept = c(-fc,fc),col = "red",linetype = "dotted",size = 0.5) +
@@ -176,14 +168,14 @@ tReasure <- function(){
     rm <- as.character(trna$Names[!(trna$Names %in% su)])
 
     tRNA_aa_codon <- function(data, t){
-      out <- data.frame(aa_codon=substr(data,1,7))
+      out <- data.frame(aa_codon=substr(data,6,13))
+      out$aa_codon <- gsub("-$","", out$aa_codon)
       out <- data.frame(table(out$aa_codon))
-      outt <- transform(out, aa=substr(out$Var1,1,3), codon=substr(out$Var1,5,7))
-      outt$Sig <- rep(t,nrow(out))
-      outt$Var1 <- gsub("iMet-CA", "iMet-iCAT", outt$Var1)
-      outt$aa <- gsub("iMe","iMet", outt$aa)
-      outt$codon <- gsub("-CA","iCAT", outt$codon)
-      return(outt)
+      outt <- data.frame(do.call('rbind', strsplit(as.character(out$Var1), split = "-")))
+      colnames(outt) <- c("aa","codon")
+      out <- cbind(out,outt)
+      out$Sig <- rep(t,nrow(out))
+      return(out)
     }
 
 
@@ -206,12 +198,10 @@ tReasure <- function(){
 
     c$aa <- as.character(c$aa)
     c$codon <- as.character(c$codon)
-    c$Var1 <- gsub("iMet-CA","iMet-iCAT", c$Var1)
 
     c <- c %>% arrange(aa,codon)
 
     c$Freq[is.na(c$Freq)] <- 0
-
 
     base <- data.frame(Var1=c$Var1)
     base$Var1 <- as.character(base$Var1)
@@ -287,7 +277,7 @@ tReasure <- function(){
 
     aa_codon <- function(name){
       out <- data.frame(do.call('rbind', strsplit(as.character(name), "-")))
-      colnames(out) <- c("aa","codon")
+      colnames(out) <- c("trna","aa")
       out <- data.frame(out <- table(out$aa))
       return(out)
     }
@@ -315,10 +305,10 @@ tReasure <- function(){
   addHandlerUnrealize(window, handler = function(h,...) {
     val <- gconfirm("Really close window", parent=h$obj)
     if(as.logical(val)){
-      if(!dir.exists("apid")){
+      if(dir.exists("apid")){
         load("apid")
         stopFuture(apid)}
-      if(!dir.exists("bpid")){
+      if(dir.exists("bpid")){
         load("bpid")
         stopFuture(bpid)}
       dispose(window)
@@ -333,7 +323,7 @@ tReasure <- function(){
 
   # Sub window (Notebook)------------
   notebook <- gnotebook(container = mother)
-  gr0 <- ggroup(container = notebook, label ="  Introduction  ",expand = TRUE)
+  gr0 <- ggroup(container = notebook, label ="  Introduction  ")
   gr1 <- ggroup(container = notebook, label ="  Sample list  ", horizontal = FALSE)
   gr2 <- ggroup(container = notebook, label ="  Preprocessing  ",horizontal = FALSE)
   gr3 <- ggroup(container = notebook, label ="  Analysis  ",horizontal = FALSE)
@@ -360,14 +350,23 @@ tReasure <- function(){
   addSpace(tmp.1, 10)
   glabel(" Select a directory of FASTQ files : ", container = tmp.1, anchor = c(-1,0))
   addSpace(tmp.1, 10)
-
-  # option-------------------
   fq_dir <- gfilebrowse(text = " ", quote = FALSE, type = "selectdir", container = tmp.1)
   addSpace(tmp.1, 20)
 
-  make_button <- gbutton(" RUN ", container = tmp.1, expand = FALSE)
+  # glabel(" Define the group name : ", container = tmp.1, anchor = c(-1,0))
+  # addSpace(tmp.1, 10)
+  #
+  # smlyt <- gformlayout(container = tmp.1, spacing = 1.5)
+  # smc <- gedit("", initial.msg = "control", label = " Control ", container = smlyt)
+  # smt <- gedit("", initial.msg = "test", label = " Test ", container = smlyt)
 
-  tmp.11 <- gframe(" [OPTION] Load the sample list ", container = paned.1, horizontal = FALSE, spacing = 10) ; size(tmp.11) <- c(250,200)
+  addSpace(tmp.1, 20)
+
+  make_button <- gbutton(" RUN ", container = tmp.1)
+
+  # option-------------------
+
+  tmp.11 <- gframe(" [*OPTION] Load the sample list ", container = paned.1, horizontal = FALSE, spacing = 10) ; size(tmp.11) <- c(250,200)
   addSpace(tmp.11, 10)
 
   glabel(" Select a file of \n the pre-made sample list : ", container = tmp.11, anchor = c(-1,0))
@@ -405,13 +404,18 @@ tReasure <- function(){
       }
       if(length(fq_list)%%2 == 0){len = length(fq_list)/2}else{len=round(length(fq_list)/2)}
       sname <- gsub(paste(".","fastq", sep = ""), "", sfile)
+
       sample <- data.frame(FileName = fq_list,
                            SampleName = sname, Group = c(rep("control", length(fq_list)-len), rep("test", len)),
                            Batch = c(rep("NA", length(fq_list))))
+
       sample$Batch <- as.character(sample$Batch)
+      tbl[] <- sample
+
       SampleFile <- file.path(svalue(fq_dir), "sample.txt")
       write.table(sample, SampleFile, sep = "\t", quote = FALSE, row.names = FALSE)
-      tbl[] <- sample
+
+
       new_sample <- tbl[]
       write.table(new_sample, SampleFile, sep = "\t", quote = FALSE, row.names = FALSE)
       insert(st, " ", do.newline = TRUE)
@@ -455,8 +459,6 @@ tReasure <- function(){
     })
   })
 
-
-
   # gr2 : Preprocessing----------------
 
   # design-------------------
@@ -493,10 +495,8 @@ tReasure <- function(){
     if(file.exists("sample.txt") == FALSE & file.exists("*.fastq") == FALSE){
       gmessage("Warning: No file found matching sample list or fastq files")
     }else{
-
       insert(st, "", do.newline = TRUE)
-      insert(st,"[ START : preprocessing ]", do.newline = TRUE )
-      insert(st,"It takes several minutes to analyze. Please wait....", do.newline = TRUE )
+      insert(st,"[ START : Preprocessing ]", do.newline = TRUE )
       dir <- getwd()
 
       sam_trim <- file.path(dir,"trim","sample.txt")
@@ -510,7 +510,6 @@ tReasure <- function(){
       sFile2$FileName <- sub(paste0(".","fastq$"), paste0("_trim.","fastq"),sFile2$FileName)
 
       write.table(sFile2, sam_trim, sep = "\t", quote = FALSE, row.names = FALSE)
-
 
       # preprocessing future-------------------
 
@@ -536,7 +535,6 @@ tReasure <- function(){
         a <-future(preno())
 
       }
-
 
       # preprocessing status-------------------
 
@@ -566,12 +564,10 @@ tReasure <- function(){
       rest <- rest[-c(2,5,6),]
       res_trim <- gtable(data.frame(rest), container = ggr21)
       insert(st, "", do.newline = TRUE)
-      insert(st,"[ DONE : preprocessing! ] Click! Next tab of Analysis", do.newline = TRUE )
+      insert(st,"[ DONE : Preprocessing ] Click! Next tab of Analysis", do.newline = TRUE )
       insert(st, ".", do.newline = TRUE)
     }
   })
-
-
 
   # gr3 : Analysis-------------------
 
@@ -592,17 +588,28 @@ tReasure <- function(){
   # option-------------------
   glabel(" Select of genome assembly : ", container = tmp.3, anchor = c(-1,0))
   addSpace(tmp.3, 10)
-
   ref <- gradio(c("UCSC.hg19", "UCSC.hg38","UCSC.mm10"),container = tmp.3)
-  addSpace(tmp.3, 20)
+  addSpace(tmp.3, 10)
+  gseparator(horizontal = TRUE, container = tmp.3)
+  addSpace(tmp.3, 10)
+  glabel (" Or select files of user genome indexs \n  and annotation file: ", container = tmp.3, anchor = c(-1,0))
+  addSpace(tmp.3, 10)
+  selrefer_button <- gfilebrowse(text = " .fasta", quote =FALSE, type = "selectopen", container = tmp.3,
+                                 filter=list("*.fasta" = list(patterns = c("*.fasta", "*.fa")), "*.*" = list(patterns = c("*"))))
 
-  tmp.31 <- gframe(" [OPTION] Working directory ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.31) <- c(250,90)
+  selrefer_button <- gfilebrowse(text = " .gtf", quote =FALSE, type = "selectopen", container = tmp.3,
+                                 filter=list("*.gtf" = list(patterns = c("*.gtf")), "*.*" = list(patterns = c("*"))))
+  addSpring(tmp.3)
+  anl_button <- gbutton("RUN", container=tmp.3)
+
+  addSpace(pangr, 10)
+  tmp.31 <- gframe(" [*OPTION] Working directory ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.31) <- c(250,70)
   addSpace(tmp.31, 10)
 
   glabel(" Select the directory of the FASTQ files : ", container = tmp.31, anchor = c(-1,0))
   addSpace(tmp.31, 10)
 
-  tmp.32 <- gframe(" [OPTION] Load the readcounts files ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.32) <- c(250,120)
+  tmp.32 <- gframe(" [*OPTION] Load the readcounts files ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.32) <- c(250,120)
   addSpace(tmp.32, 10)
 
   glabel(" Select the file of readcounts : ", container = tmp.32, anchor = c(-1,0))
@@ -619,8 +626,6 @@ tReasure <- function(){
 
   selaa_button <- gfilebrowse(text = "Isoacceptor level", quote = FALSE, type = "open", container = tmp.32,
                               filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
-
-  anl_button <- gbutton("RUN", container=tmp.3)
 
 
   # handler --------------
@@ -649,39 +654,50 @@ tReasure <- function(){
   })
 
   addHandlerClicked(anl_button,handler = function(h, ...){
-    insert(st,"[ START : alignment & quantification of readcount ]", do.newline = TRUE )
-    insert(st,"It takes several minutes to analyze. Please wait....", do.newline = TRUE )
+    insert(st,"[ START : Alignment & Quantification of readcount ]", do.newline = TRUE )
     b <- svalue(fq_dir)
     c <- svalue(selfq_button)
 
-    if(
-      identical(b,character(0)) & identical(c,character(0))
-    ){
-      gmessage("Warning: Select a directory of FASTQ files")
-    }else{
-
-      if(identical(b,character(0))){
-        dir <- svalue(selfq_button)
-      }else{
-        dir <- getwd()
+    # download_refer
+    dw_refer <- function(url, sub, sub.zip){
+      R_path <- system.file( "extdata", package = "tReasure", mustWork = TRUE)
+      if(!dir.exists(file.path(R_path,"refer",sub))){
+        dir.create(file.path(R_path,"refer",sub), recursive = TRUE)
       }
+      Rsub_path <- file.path(R_path,"refer",sub)
+      if(!file.exists(file.path(Rsub_path, paste(sub,"fa",sep = ".")))){
+        insert(st, "Download and unzip genome indexes. It takes several minutes. Please wait....", do.newline = TRUE)
+        download.file(url, destfile = file.path(Rsub_path, sub.zip))
+        unzip(zipfile = file.path(Rsub_path, sub.zip), exdir= Rsub_path)
+        file.remove(file.path(Rsub_path, sub.zip))
+        insert(st, "Complete download", do.newline = TRUE)
+      }
+    }
 
-
-      if(svalue(ref) == "UCSC.hg19"){
-        hg19.fa <- system.file( "extdata", "WholeGenomeFasta/hg19/hg19.fa",package = "tReasure", mustWork = TRUE)
-        genome = hg19.fa
-        annot_ext = hg19.gtf
-        annot_dup <- read.delim(hg19.annot)
-      }else if(svalue(ref) == "UCSC.hg38"){
-        hg38.fa <- system.file( "extdata", "WholeGenomeFasta/hg38/hg38.fa",package = "tReasure", mustWork = TRUE)
-        genome = hg38.fa
-        annot_ext = hg38.gtf
-        annot_dup <- read.delim(hg38.annot)
-      }else{
-        mm10.fa<- system.file( "extdata", "WholeGenomeFasta/mm10/mm10.fa",package = "tReasure", mustWork = TRUE)
-        genome = mm10.fa
-        annot_ext = mm10.gtf
-        annot_dup <- read.delim(mm10.annot)
+    if(
+      identical(b,character(0)) & identical(c,character(0))){
+      gmessage("Warning: Select a directory of FASTQ files")}
+    else{
+      if(identical(b,character(0))){
+        dir <- svalue(selfq_button)}
+      else{dir <- getwd()}
+      if (identical(svalue(selrefer_button), character(0))){
+        if(identical(svalue(ref), "UCSC.hg19")){
+          url <- "http://dl.dropbox.com/s/mj8k4y65e1tbkr0/hg19.zip"
+          dw_refer(url, "hg19", "hg19.zip")
+          genome = system.file( "extdata", "refer/hg19/hg19.fa",package = "tReasure", mustWork = TRUE)
+          annot_ext = hg19.gtf
+        }else if(identical(svalue(ref), "UCSC.hg38")){
+          url <- "http://dl.dropbox.com/s/3nv55bz9524e1rx/hg38.zip"
+          dw_refer(url, "hg38", "hg38.zip")
+          genome = system.file( "extdata", "refer/hg38/hg38.fa",package = "tReasure", mustWork = TRUE)
+          annot_ext = hg38.gtf
+        }else{
+          url <- "http://dl.dropbox.com/s/6u0nq93pr4gbmih/mm10.zip"
+          dw_refer(url, "mm10", "mm10.zip")
+          genome = system.file( "extdata", "refer/mm10/mm10.fa",package = "tReasure", mustWork = TRUE)
+          annot_ext = mm10.gtf
+        }
       }
 
       sFile <- file.path(dir,"trim", "sample_trim.txt")
@@ -704,7 +720,7 @@ tReasure <- function(){
         for(i in sFile2$SampleName){
           a <- sFile2$FileName[grep(i, sFile2$SampleName)]
           Sys.sleep(10)
-          insert(st, paste("aligning   : ", a), do.newline = TRUE)
+          insert(st, paste("Aligning   : ", a), do.newline = TRUE)
           repeat{
             Sys.sleep(1)
             insert(st, ".", do.newline = FALSE)
@@ -714,8 +730,8 @@ tReasure <- function(){
           }
           insert(st, " ", do.newline = TRUE)
           a <- gsub(".fastq$","_*.bam",a)
-          insert(st, paste0("complete"), do.newline=TRUE)
         }
+        insert(st, paste0("complete"), do.newline=TRUE)
       }
 
       algin_status()
@@ -733,62 +749,24 @@ tReasure <- function(){
       bFile <- list.files(file.path(dir,"trim"), pattern = ".bam$", full.names = T)
 
       # tRNA level
-      readcount <- function(){
-        trna <- featureCounts(bFile, annot.ext = annot_ext, isGTFAnnotationFile=TRUE, GTF.attrType = "gene_id")
+      readcount <- function(trna, gene, output){
+        trna <- featureCounts(bFile, annot.ext = annot_ext, isGTFAnnotationFile=TRUE, GTF.featureType = "gene", GTF.attrType = gene)
         tname <- data.frame(do.call('rbind',strsplit(as.character(colnames(trna$counts)), split="[.]")))
         colnames(trna$counts) <- tname$X1
         tcount <- data.frame(Names= row.names(trna$counts),trna$counts)
-        write.table(tcount, file.path(dir,"readcount_trna.txt"), quote = F, sep = "\t")
-        write.table(trna$annotation,file.path("annotation_trna.txt"), quote = F, sep = "\t")
+        write.table(tcount, file.path(dir,paste0("readcount_",output,".txt")), quote = F, sep = "\t")
+        write.table(trna$annotation,file.path(paste0("annotation_",output,".txt")), quote = F, sep = "\t")
         return(tcount)
       }
 
+      tcount <- readcount(trna, "gene_id", "trna")
+      ccount <- readcount(decoder, "isodecoder", "isodecoder")
+      acount <- readcount(acceptor, "isoacceptor", "isoacceptor")
 
-      tcount <- readcount()
       gtable(tcount, container=RC_trna)
-
-      # Anticodon level
-      tcount$iso <- aa_codon_nn(rownames(tcount))
-      rownames(tcount) <- aa_codon_modi(rownames(tcount))
-
-      d_dup <- tcount[rownames(tcount)%in%rownames(annot_dup),]
-      d_uni <- tcount[!rownames(tcount)%in%rownames(annot_dup),]
-
-      d<-c()
-      t <- unique(d_dup$iso)
-      for(i in t){
-        c <- subset(tcount, iso == i)
-        sum <- colSums(c[,2:(ncol(c)-1)])
-        d <-rbind(d, sum)
-      }
-
-      d <- data.frame(d)
-      rownames(d) <- as.character(t)
-
-      iso <- rbind(d, d_uni[,2:(ncol(d_uni)-1)])
-      rownames(iso) <- gsub("tRNA-","",rownames(iso))
-
-      ccount <- data.frame(Name=rownames(iso), iso[,1:ncol(iso)])
-
-      write.table(ccount, "readcount_isodecoder.txt", quote = F, sep = "\t")
       gtable(ccount, container=RC_codon)
-
-      # Aminoacid level
-      iso$Name <- substr(rownames(iso), 1,7)
-      e<-c()
-      t <- unique(iso$Name)
-      for(i in t){
-        c <- subset(iso, Name == i)
-        sum <- colSums(c[,1:(ncol(c)-1)])
-        e <-rbind(e, sum)
-      }
-
-      e <- data.frame(e)
-      rownames(e) <- as.character(t)
-
-      acount <- data.frame(Names= rownames(e),e[,1:ncol(e)])
       gtable(acount, container=RC_aa)
-      write.table(acount, "readcount_isoacceptor.txt", quote = F, sep = "\t")
+
       insert(st, " ", do.newline = TRUE)
       insert(st,"[ DONE : alignment & quantification of readcount ] Click! Next tab of Preview ", do.newline = TRUE )
       insert(st, ".", do.newline = TRUE)
@@ -796,12 +774,10 @@ tReasure <- function(){
 
   })
 
-
-
-
   # gr4 : Preview--------------------
 
   # design--------------------
+  # left
   addSpace(gr4, 20)
   ggr41 <- ggroup(container = gr4,  spacing = 10); size(ggr41) <- c(896,532)
   addSpace(ggr41, 10)
@@ -811,25 +787,20 @@ tReasure <- function(){
   addSpace(tmp.4, 10)
 
   tmp.41 <- gframe( " Filtering : ", container = tmp.4, anchor =c(-1,0), horizontal = FALSE)
-  addSpace(tmp.41, 5)
-  tmp.411 <- ggroup(container = tmp.41, horizontal = TRUE)
-  cfil <- glabel("cpm value >=   ", container = tmp.411, anchor = c(-1,0))
-  size(cfil) <- c(110,21)
-  cfilv <- gcombobox(seq(0,10,by=1),container = tmp.411)
-  size(cfilv) <- c(125,21)
-  addSpace(tmp.411, 5)
-  tmp.412 <- ggroup(container = tmp.41, horizontal = TRUE)
-  sfil<- glabel("sample (%) >=  ", container = tmp.412, anchor = c(-1,0))
-  size(sfil) <- c(110,21)
-  sfilv <- gcombobox(seq(0,100, by=10),container = tmp.412)
-  size(sfilv) <- c(125,21)
-  addSpace(tmp.411, 5)
-  addSpace(tmp.41, 5)
+  addSpace(tmp.41, 10)
+  prelyt <- gformlayout(container = tmp.41, spacing = 1.5)
+  cfilv <- gcombobox(seq(0,10,by=1),label = "cpm value >=  ", container = prelyt)
+  sfil <- gcombobox(seq(0,100, by=10), label = "sample (%) >=  ", container = prelyt)
+  addSpace(tmp.41, 10)
 
+  addSpace(tmp.4, 20)
+  Pre_button <- gbutton("RUN", container = tmp.4)
+
+  # right
   Pre_view <- gnotebook(container = ggr41 ); size(Pre_view) <- c(700, 532)
   Pre_MDS <- ggroup(container = Pre_view, horizontal = FALSE, label=" MDS Plot ")
 
-  tmp.42 <- gframe(" [OPTION] Working directory ", container = paned.4, horizontal = FALSE, spacing = 10)
+  tmp.42 <- gframe(" [*OPTION] Working directory ", container = paned.4, horizontal = FALSE, spacing = 10)
   size(tmp.42) <- c(250,200)
   addSpace(tmp.42, 10)
   glabel(" Select the directory of the readcounts files :", container = tmp.42, anchor = c(-1,0))
@@ -838,9 +809,6 @@ tReasure <- function(){
   # option--------------------
   selrc_button <- gfilebrowse(text = "", quote = FALSE, type = "selectdir", container = tmp.42,
                               filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
-  addSpace(tmp.4, 20)
-
-  Pre_button <- gbutton("RUN", container = tmp.4)
 
   # handler--------------------
   addHandlerChanged(Pre_button, handler = function(h, ...){
@@ -1033,13 +1001,12 @@ tReasure <- function(){
   addSpace(ggr.53, 10)
   widget_list$fdr_s <- gcombobox(c("FDR", "Bonferroni","Benjamini-Hochberg"  ), container = ggr.53)
   addSpace(ggr.53, 10)
-  tmp.522 <- ggroup(container = ggr.53, horizontal = TRUE)
-  pval_label <-glabel(" Adj P.value  < : ", container = tmp.522, anchor=c(-1,0)); size(pval_label) <- c(115,21)
-  widget_list$pval <- gcombobox(c(0,0.001, 0.05, 0.01), container = tmp.522 ); size(widget_list$pval ) <- c(120,21)
-  tmp.523 <- ggroup(container = ggr.53, horizontal = TRUE)
-  FC_label<- glabel(" Fold change  > : ", container = tmp.523, anchor = c(-1,0)); size(FC_label) <- c(115,21)
-  widget_list$FC <- gcombobox(c(0,1,1.5,2),container = tmp.523); size(widget_list$FC) <- c(120,21)
-  addSpace(ggr.53, 30)
+
+  statlyt <- gformlayout(container = ggr.53, spacing = 1.5)
+  widget_list$pval <- gcombobox(c(0,0.001, 0.05, 0.01),label = "Adj P.value  < : ", container = statlyt)
+  widget_list$FC <- gcombobox(c(0,1,1.5,2),label = "Fold change  > : ", container = statlyt)
+
+  addSpace(ggr.53, 20)
 
   DE_view <- gnotebook(container = ggr51 ); size(DE_view) <- c(700, 532)
   DE_trna <- ggroup(container = DE_view, horizontal = FALSE, label=" tRNA level ")
@@ -1135,6 +1102,7 @@ tReasure <- function(){
   # Main window----------------------
 
   gtkMain()
+
 
 }
 
