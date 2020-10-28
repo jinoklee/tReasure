@@ -353,14 +353,6 @@ tReasure <- function(){
   fq_dir <- gfilebrowse(text = " ", quote = FALSE, type = "selectdir", container = tmp.1)
   addSpace(tmp.1, 20)
 
-  # glabel(" Define the group name : ", container = tmp.1, anchor = c(-1,0))
-  # addSpace(tmp.1, 10)
-  #
-  # smlyt <- gformlayout(container = tmp.1, spacing = 1.5)
-  # smc <- gedit("", initial.msg = "control", label = " Control ", container = smlyt)
-  # smt <- gedit("", initial.msg = "test", label = " Test ", container = smlyt)
-
-  addSpace(tmp.1, 20)
 
   make_button <- gbutton(" RUN ", container = tmp.1)
 

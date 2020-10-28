@@ -1,5 +1,3 @@
-
-rm(list=ls())
 #install.packages("statmod")
 options(guiToolkit="RGtk2")
 library(gWidgets2)
@@ -128,7 +126,6 @@ deseq_function <- function(count){
   return(res)
 }
 
-
 volcano <- function(width, height, res){
   out <- read.delim("./stat/stat_trna_list.txt")
 
@@ -162,7 +159,6 @@ volcano <- function(width, height, res){
   print(p())
   dev.off()
   save(p,pval,fc,detRNA,file="./stat/plot/Volcano_Plot.RData")
-
 }
 
 barplot <- function(width, height, res){
@@ -199,8 +195,8 @@ barplot <- function(width, height, res){
     out$Sig <- rep(t,nrow(out))
     return(out)
   }
-  
-  
+
+
   up <- tRNA_aa_codon(up, "Up_DEtRNA")
   dw <- tRNA_aa_codon(dw, "Down_DEtRNA")
   no <- tRNA_aa_codon(no, "Nonsig_DEtRNA")
@@ -209,20 +205,20 @@ barplot <- function(width, height, res){
   c <- rbind(up,dw, no, rm)
   c<- c[order(c$aa),]
   empty_bar <- 1
-  
+
   to_add <- data.frame(matrix(NA, empty_bar*nlevels(as.factor(c$aa)), ncol(c)))
   colnames(to_add) <- colnames(c)
   to_add$aa <- rep(levels(as.factor(c$aa)), each=empty_bar)
   to_add$codon <- paste("a", seq(1, nrow(to_add)))
   to_add$Var1 <- paste("a", seq(1, nrow(to_add)))
   c <- rbind(c, to_add)
-  
-  
+
+
   c$aa <- as.character(c$aa)
   c$codon <- as.character(c$codon)
-  
+
   c <- c %>% arrange(aa,codon)
-  
+
   c$Freq[is.na(c$Freq)] <- 0
 
   base <- data.frame(Var1=c$Var1)
@@ -292,10 +288,8 @@ pyramid <- function(width, height, res){
     up <- filter(out, logFC > fc, out$FDR <  pval)
   }
 
-
   dw <- as.character(dw$Name)
   up <- as.character(up$Name)
-
 
   aa_codon <- function(name){
     out <- data.frame(do.call('rbind', strsplit(as.character(name), "-")))
@@ -375,15 +369,6 @@ addSpace(tmp.1, 10)
 fq_dir <- gfilebrowse(text = " ", quote = FALSE, type = "selectdir", container = tmp.1)
 addSpace(tmp.1, 20)
 
-# glabel(" Define the group name : ", container = tmp.1, anchor = c(-1,0))
-# addSpace(tmp.1, 10)
-# 
-# smlyt <- gformlayout(container = tmp.1, spacing = 1.5)
-# smc <- gedit("", initial.msg = "control", label = " Control ", container = smlyt)
-# smt <- gedit("", initial.msg = "test", label = " Test ", container = smlyt)
-
-addSpace(tmp.1, 20)
-
 make_button <- gbutton(" RUN ", container = tmp.1)
 
 # option-------------------
@@ -426,17 +411,6 @@ addHandlerChanged(make_button, handler = function(h,...){
     }
     if(length(fq_list)%%2 == 0){len = length(fq_list)/2}else{len=round(length(fq_list)/2)}
     sname <- gsub(paste(".","fastq", sep = ""), "", sfile)
-
-    # if(identical(svalue(smc),character(0))){
-    #   control = "control"
-    # }else{
-    #   control =svalue(smc)
-    # }
-    # if(identical(svalue(smt),character(0))){
-    #   test = "test"
-    # }else{
-    #   test = svalue(smt)
-    # }
 
     sample <- data.frame(FileName = fq_list,
                          SampleName = sname, Group = c(rep("control", length(fq_list)-len), rep("test", len)),
@@ -491,7 +465,6 @@ addHandlerChanged(sel_button, handler = function(h,...){
     insert(st, ".", do.newline = TRUE)
   })
 })
-
 
 
 # gr2 : Preprocessing----------------
@@ -607,7 +580,6 @@ addHandlerClicked(trim_button, handler = function(h,...){
 })
 
 
-
 # gr3 : Analysis-------------------
 
 # design-------------------
@@ -665,9 +637,6 @@ selco_button <- gfilebrowse(text = "Isodecoder level", quote = FALSE, type = "op
 
 selaa_button <- gfilebrowse(text = "Isoacceptor level", quote = FALSE, type = "open", container = tmp.32,
                             filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
-
-
-
 
 # handler --------------
 addHandlerChanged(selfq_button, handler = function(h,...){
@@ -1050,14 +1019,6 @@ statlyt <- gformlayout(container = ggr.53, spacing = 1.5)
 widget_list$pval <- gcombobox(c(0,0.001, 0.05, 0.01),label = "Adj P.value  < : ", container = statlyt)
 widget_list$FC <- gcombobox(c(0,1,1.5,2),label = "Fold change  > : ", container = statlyt)
 
-
-
-# tmp.522 <- ggroup(container = ggr.53, horizontal = TRUE)
-# pval_label <-glabel(" Adj P.value  < : ", container = tmp.522, anchor=c(-1,0)); size(pval_label) <- c(115,21)
-# widget_list$pval <- gcombobox(c(0,0.001, 0.05, 0.01), container = tmp.522 ); size(widget_list$pval ) <- c(120,21)
-# tmp.523 <- ggroup(container = ggr.53, horizontal = TRUE)
-# FC_label<- glabel(" Fold change  > : ", container = tmp.523, anchor = c(-1,0)); size(FC_label) <- c(115,21)
-# widget_list$FC <- gcombobox(c(0,1,1.5,2),container = tmp.523); size(widget_list$FC) <- c(120,21)
 addSpace(ggr.53, 20)
 
 DE_view <- gnotebook(container = ggr51 ); size(DE_view) <- c(700, 532)
