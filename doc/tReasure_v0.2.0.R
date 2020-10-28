@@ -605,10 +605,10 @@ gseparator(horizontal = TRUE, container = tmp.3)
 addSpace(tmp.3, 10)
 glabel (" Or select files of user genome indexs \n  and annotation file: ", container = tmp.3, anchor = c(-1,0))
 addSpace(tmp.3, 10)
-selrefer_button <- gfilebrowse(text = " .fasta", quote =FALSE, type = "selectopen", container = tmp.3,
+selrefer_button <- gfilebrowse(text = " .fasta", quote =FALSE, type = "open", container = tmp.3,
                                filter=list("*.fasta" = list(patterns = c("*.fasta", "*.fa")), "*.*" = list(patterns = c("*"))))
 
-selrefer_button <- gfilebrowse(text = " .gtf", quote =FALSE, type = "selectopen", container = tmp.3,
+selgtf_button <- gfilebrowse(text = " .gtf", quote =FALSE, type = "open", container = tmp.3,
                                filter=list("*.gtf" = list(patterns = c("*.gtf")), "*.*" = list(patterns = c("*"))))
 addSpring(tmp.3)
 anl_button <- gbutton("RUN", container=tmp.3)
@@ -708,6 +708,9 @@ addHandlerClicked(anl_button,handler = function(h, ...){
         genome = system.file( "extdata", "refer/mm10/mm10.fa",package = "tReasure", mustWork = TRUE)
         annot_ext = mm10.gtf
       }
+    }else{
+      genome = svalue(selrefer_button)
+      annot_ext = svalue(selgtf_button)
     }
 
     sFile <- file.path(dir,"trim", "sample_trim.txt")
