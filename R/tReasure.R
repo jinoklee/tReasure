@@ -185,7 +185,11 @@ tReasure <- function(){
     rm <- tRNA_aa_codon(rm, "filter")
     rm$Freq <- rep(0, nrow(rm))
     c <- rbind(up,dw, no, rm)
+    c <- c %>% mutate_if(is.factor, as.character)
     c<- c[order(c$aa),]
+    n <- length(grep("iMet", c$aa))
+    c$codon[grep("iMet", c$aa)] <- rep("iCAT", n)
+    c$Var1 <- gsub("iMet-CAT","iMet-iCAT", c$Var1)
     empty_bar <- 1
 
     to_add <- data.frame(matrix(NA, empty_bar*nlevels(as.factor(c$aa)), ncol(c)))
@@ -205,8 +209,6 @@ tReasure <- function(){
 
     base <- data.frame(Var1=c$Var1)
     base$Var1 <- as.character(base$Var1)
-    n <- length(grep("iMet", base$Var1))
-    base$Var1[grep("iMet", base$Var1)] <- rep("iMet-iCAT", n)
     base_data <- data.frame(Var1= base[!duplicated(base$Var1),])
     out <- data.frame(do.call('rbind',strsplit(as.character(base_data$Var1), split="-")))
 
@@ -235,7 +237,7 @@ tReasure <- function(){
     p <- function(){
       ggplot(c, aes(x=codon, y=Freq, fill=Sig))+
         geom_bar( stat="identity")+
-        scale_fill_manual(values=c("Up_DEtRNA"="#EF8A62", "Down_DEtRNA"="#67A9CF", "Nonsig_DEtRNA"="grey89", filter="white"), breaks = c("Up_DEtRNA","Non_DEtRNA","Down_DEtRNA"))+
+        scale_fill_manual(values=c("Up_DEtRNA"="#EF8A62", "Down_DEtRNA"="#67A9CF", "Non_DEtRNA"="grey89", filter="white"), breaks = c("Up_DEtRNA","Non_DEtRNA","Down_DEtRNA"))+
         scale_x_discrete(limits=unique(c$codon))+
         theme_minimal()+
         scale_y_continuous(breaks = seq(0,max(c$Freq),2))+
@@ -243,7 +245,7 @@ tReasure <- function(){
               panel.grid.major.x = element_blank(),
               legend.position = "top")+
         ylab("Frequency")+
-        xlab("Aminoacid : codon")+
+        xlab("Aminoacid : Anticodon")+
         #annotate("text",x=rep(1, max(c$Freq)/2), y=seq(2,max(c$Freq),2), label=c("2","4","6","8","10","12","14"), color="black", size = 3)+
         geom_text(data=b1_data, aes(x = title, y = -1.5, label=aa), colour ="black", size=3, fontface="bold", inherit.aes = FALSE)+
         geom_segment(data=b1_data, aes(x=start, y = -1.1, xend=end, yend=-1.1), colour="black", alpha=1, size=1,inherit.aes = FALSE)+

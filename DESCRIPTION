@@ -1,12 +1,29 @@
 Package: tReasure
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.2.0
-Author: jinoklee
-Maintainer: The package maintainer <jinoklee.01@gmail.com>
+Version: 0.2.1
+Author: c(person("jinoklee", email = "jinoklee.01@gmail.com"),person("minholee", email = "MinhoLee@dgu.edu"),person("Yeun-Jun Chung", email = "yejun@catholic.ac.kr"))
+Maintainer: jinoklee <jinoklee.01@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports:
+  dplyr,
+  ggplot2,
+  grid,
+  gridExtra,
+  plotrix,
+  tidyverse,
+  dplyr,
+  statmod,
+  QuasR,
+  Rsubread,
+  edgeR,
+  DESeq2,
+  future,
+  gWidgets2,
+  gWidgets2RGtk2,
+  cairoDevice
 RoxygenNote: 7.1.1
