@@ -679,7 +679,7 @@ tReasure <- function(){
         }
       }else{
         genome = svalue(selrefer_button)
-        annot_ext = svalue(selgtf_button)
+        annot_ext = svalue(selregtf_button)
       }
 
       sFile <- file.path(dir,"trim", "sample_trim.txt")
