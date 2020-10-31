@@ -18,6 +18,7 @@ plan(multiprocess)
 library(statmod)
 #plan(multicore)
 
+
 #......................................................................................#
 # setting the PATH for TEST : system.file('', package="tReasure")
 #......................................................................................#
@@ -708,30 +709,31 @@ addHandlerClicked(anl_button,handler = function(h, ...){
       proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 2 --best", clObj = NULL)
       return(proj)
     }
-    bow <- future(bowtie())
+    #bow <- future(bowtie())
+
 
     # alignment status----------------------
 
-    algin_status <- function(){
-      for(i in sFile2$SampleName){
-        a <- sFile2$FileName[grep(i, sFile2$SampleName)]
-        Sys.sleep(10)
-        insert(st, paste("Aligning   : ", a), do.newline = TRUE)
-        repeat{
-          Sys.sleep(1)
-          insert(st, ".", do.newline = FALSE)
-          dir <- getwd()
-          list <- list.files(file.path(dir,"trim"), pattern=".bam$", full.names = TRUE)
-          if(length(grep(i, list))>0)break
-        }
-        insert(st, " ", do.newline = TRUE)
-        a <- gsub(".fastq$","_*.bam",a)
-      }
-      insert(st, paste0("complete"), do.newline=TRUE)
-    }
+    # algin_status <- function(){
+    #   for(i in sFile2$SampleName){
+    #     a <- sFile2$FileName[grep(i, sFile2$SampleName)]
+    #     Sys.sleep(10)
+    #     insert(st, paste("Aligning   : ", a), do.newline = TRUE)
+    #     repeat{
+    #       Sys.sleep(1)
+    #       insert(st, ".", do.newline = FALSE)
+    #       dir <- getwd()
+    #       list <- list.files(file.path(dir,"trim"), pattern=".bam$", full.names = TRUE)
+    #       if(length(grep(i, list))>0)break
+    #     }
+    #     insert(st, " ", do.newline = TRUE)
+    #     a <- gsub(".fastq$","_*.bam",a)
+    #   }
+    #   insert(st, paste0("complete"), do.newline=TRUE)
+    # }
 
-    algin_status()
-    projt <- value(bow)
+    #algin_status()
+    projt <- bowtie()
 
     alinstat <- data.frame(Names=row.names(alignmentStats(projt)),alignmentStats(projt))
     write.table(alinstat, "./trim/alignment_stat.txt",sep = "\t")
@@ -1101,3 +1103,6 @@ asave <- gbutton(" Save ", container = tmp.63,expand=TRUE, fill="x", handler= fu
 # Main window----------------------
 
 gtkMain()
+
+
+

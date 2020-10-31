@@ -18,6 +18,7 @@ plan(multiprocess)
 library(statmod)
 #plan(multicore)
 
+
 #......................................................................................#
 # setting the PATH for TEST : system.file('', package="tReasure")
 #......................................................................................#
@@ -31,6 +32,7 @@ stopFuture <- function(x){
   tools::pskill(x,signal = tools::SIGTERM)
   tools::pskill(x,signal = tools::SIGKILL)
 }
+
 
 edge_function <- function(count){
   rownames(count) <- count$Names
@@ -139,7 +141,6 @@ volcano <- function(width, height, res){
   print(p())
   dev.off()
   save(p,pval,fc,detRNA,file="./stat/plot/Volcano_Plot.RData")
-
 }
 
 barplot <- function(width, height, res){
@@ -271,10 +272,8 @@ pyramid <- function(width, height, res){
     up <- filter(out, logFC > fc, out$FDR <  pval)
   }
 
-
   dw <- as.character(dw$Names)
   up <- as.character(up$Names)
-
 
   aa_codon <- function(name){
     out <- data.frame(do.call('rbind', strsplit(as.character(name), "-")))
@@ -353,7 +352,6 @@ glabel(" Select a directory of FASTQ files : ", container = tmp.1, anchor = c(-1
 addSpace(tmp.1, 10)
 fq_dir <- gfilebrowse(text = " ", quote = FALSE, type = "selectdir", container = tmp.1)
 addSpace(tmp.1, 20)
-
 
 make_button <- gbutton(" RUN ", container = tmp.1)
 
@@ -452,6 +450,7 @@ addHandlerChanged(sel_button, handler = function(h,...){
   })
 })
 
+
 # gr2 : Preprocessing----------------
 
 # design-------------------
@@ -504,6 +503,7 @@ addHandlerClicked(trim_button, handler = function(h,...){
 
     write.table(sFile2, sam_trim, sep = "\t", quote = FALSE, row.names = FALSE)
 
+
     # preprocessing future-------------------
 
     pre <- function(){
@@ -528,6 +528,7 @@ addHandlerClicked(trim_button, handler = function(h,...){
       a <-future(preno())
 
     }
+
 
     # preprocessing status-------------------
 
@@ -562,6 +563,7 @@ addHandlerClicked(trim_button, handler = function(h,...){
   }
 })
 
+
 # gr3 : Analysis-------------------
 
 # design-------------------
@@ -590,7 +592,7 @@ addSpace(tmp.3, 10)
 selrefer_button <- gfilebrowse(text = " .fasta", quote =FALSE, type = "open", container = tmp.3,
                                filter=list("*.fasta" = list(patterns = c("*.fasta", "*.fa")), "*.*" = list(patterns = c("*"))))
 
-selregtf_button <- gfilebrowse(text = " .gtf", quote =FALSE, type = "open", container = tmp.3,
+selgtf_button <- gfilebrowse(text = " .gtf", quote =FALSE, type = "open", container = tmp.3,
                                filter=list("*.gtf" = list(patterns = c("*.gtf")), "*.*" = list(patterns = c("*"))))
 addSpring(tmp.3)
 anl_button <- gbutton("RUN", container=tmp.3)
@@ -619,7 +621,6 @@ selco_button <- gfilebrowse(text = "Isodecoder level", quote = FALSE, type = "op
 
 selaa_button <- gfilebrowse(text = "Isoacceptor level", quote = FALSE, type = "open", container = tmp.32,
                             filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
-
 
 # handler --------------
 addHandlerChanged(selfq_button, handler = function(h,...){
@@ -679,17 +680,20 @@ addHandlerClicked(anl_button,handler = function(h, ...){
         url <- "http://dl.dropbox.com/s/mj8k4y65e1tbkr0/hg19.zip"
         dw_refer(url, "hg19", "hg19.zip")
         genome = system.file( "extdata", "refer/hg19/hg19.fa",package = "tReasure", mustWork = TRUE)
-        annot_ext = system.file( "extdata/gtf", "hg19-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
+        annot_ext = system.file( "extdata/Hsapi19", "hg19-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
+        annot_dup = system.file( "extdata/Hsapi19", "hg19-mature-tRNAs.tsv", package = "tReasure", mustWork = TRUE)
       }else if(identical(svalue(ref), "UCSC.hg38")){
         url <- "http://dl.dropbox.com/s/3nv55bz9524e1rx/hg38.zip"
         dw_refer(url, "hg38", "hg38.zip")
         genome = system.file( "extdata", "refer/hg38/hg38.fa",package = "tReasure", mustWork = TRUE)
-        annot_ext = system.file( "extdata/gtf", "hg38-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
+        annot_ext = system.file( "extdata/Hsapi38", "hg38-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
+        annot_dup = system.file( "extdata/Hsapi38", "hg38-mature-tRNAs.tsv", package = "tReasure", mustWork = TRUE)
       }else{
         url <- "http://dl.dropbox.com/s/6u0nq93pr4gbmih/mm10.zip"
         dw_refer(url, "mm10", "mm10.zip")
         genome = system.file( "extdata", "refer/mm10/mm10.fa",package = "tReasure", mustWork = TRUE)
-        annot_ext = system.file( "extdata/gtf", "mm10-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
+        annot_ext = system.file( "extdata/Mmusc10", "mm10-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
+        annot_dup = system.file( "extdata/Mmusc10", "mm10-mature-tRNAs.tsv", package = "tReasure", mustWork = TRUE)
       }
     }else{
       genome = svalue(selrefer_button)
@@ -708,30 +712,33 @@ addHandlerClicked(anl_button,handler = function(h, ...){
       proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 2 --best", clObj = NULL)
       return(proj)
     }
-    bow <- future(bowtie())
+    bow <- bowtie()
 
     # alignment status----------------------
 
-    algin_status <- function(){
-      for(i in sFile2$SampleName){
-        a <- sFile2$FileName[grep(i, sFile2$SampleName)]
-        Sys.sleep(10)
-        insert(st, paste("Aligning   : ", a), do.newline = TRUE)
-        repeat{
-          Sys.sleep(1)
-          insert(st, ".", do.newline = FALSE)
-          dir <- getwd()
-          list <- list.files(file.path(dir,"trim"), pattern=".bam$", full.names = TRUE)
-          if(length(grep(i, list))>0)break
-        }
-        insert(st, " ", do.newline = TRUE)
-        a <- gsub(".fastq$","_*.bam",a)
-      }
-      insert(st, paste0("complete"), do.newline=TRUE)
-    }
+    # algin_status <- function(){
+    #   for(i in sFile2$SampleName){
+    #     a <- sFile2$FileName[grep(i, sFile2$SampleName)]
+    #     Sys.sleep(10)
+    #     insert(st, paste("Aligning   : ", a), do.newline = TRUE)
+    #     repeat{
+    #       Sys.sleep(1)
+    #       insert(st, ".", do.newline = FALSE)
+    #       dir <- getwd()
+    #       list <- list.files(file.path(dir,"trim"), pattern=".bam$", full.names = TRUE)
+    #       if(length(grep(i, list))>0)break
+    #     }
+    #     insert(st, " ", do.newline = TRUE)
+    #     a <- gsub(".fastq$","_*.bam",a)
+    #   }
+    #   insert(st, paste0("complete"), do.newline=TRUE)
+    # }
+    #
+    # algin_status()
+    projt <- bow
 
-    algin_status()
-    projt <- value(bow)
+    #status <- future(algin_status())
+    #projt <- bowtie()
 
     alinstat <- data.frame(Names=row.names(alignmentStats(projt)),alignmentStats(projt))
     write.table(alinstat, "./trim/alignment_stat.txt",sep = "\t")
@@ -755,18 +762,51 @@ addHandlerClicked(anl_button,handler = function(h, ...){
     tcount <- readcount(trna, "gene_id", "trna")
     gtable(tcount, container=RC_trna)
 
-    ccount <- readcount(decoder, "isodecoder", "isodecoder")
+    # anticodon level
+    tcount$iso <- gsub("-\\d{1,3}$", "",rownames(tcount)) # chr12:tRNA-AA-codon-n1
+    tcount$iso <- gsub("^chr.*:", "", tcount$iso) # tRNA-AA-codon-n1
+
+    anno <- read.delim(annot_dup)
+    anno$trna <- gsub("_:",":", anno$trna)
+    dup <- anno[which(duplicated(anno$seq)|duplicated(anno$seq, fromLast = T)),]
+    d_dup <- tcount[tcount$Names %in% dup$trna,]
+    d_uni <- tcount[!tcount$Names %in% dup$trna,]
+    d_uni$Names <- gsub("^chr.*:", "", d_uni$Names)
+
+    d<-c()
+    t <- unique(d_dup$iso)
+    for ( i in t){
+      c <- subset(tcount, iso == i)
+      sum <- colSums(c[,2:(ncol(c)-1)])
+      d <-rbind(d, sum)
+    }
+    d <- data.frame(Names = as.character(t), d)
+
+    ccount <- rbind(d, d_uni[,-ncol(d_uni)])
+
+    write.table(ccount, "readcount_isodecoder.txt", quote = F, sep = "\t", row.names = F)
     gtable(ccount, container=RC_codon)
 
-    acount <- readcount(acceptor, "isoacceptor", "isoacceptor")
-    gtable(acount, container=RC_aa)
+    # aminoacid level
+    ccount$Names <- substr(ccount$Names, 1, 9)
+    ccount$Names <- gsub("-$","", ccount$Names)
 
+    e<-c()
+    t <- unique(ccount$Names)
+    for(i in t){
+      c <- subset(ccount, Names == i)
+      sum <- colSums(c[,2:(ncol(c))])
+      e <-rbind(e, sum)
+    }
+    acount <- data.frame(Names = as.character(t), e)
+    gtable(acount, container=RC_aa)
+    write.table(acount, "readcount_isoacceptor.txt", quote = F, sep = "\t", row.names = F)
     insert(st, " ", do.newline = TRUE)
     insert(st,"[ DONE : alignment & quantification of readcount ] Click! Next tab of Preview ", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
   }
-
 })
+
 
 # gr4 : Preview--------------------
 
@@ -1101,3 +1141,7 @@ asave <- gbutton(" Save ", container = tmp.63,expand=TRUE, fill="x", handler= fu
 # Main window----------------------
 
 gtkMain()
+
+
+
+

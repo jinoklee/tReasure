@@ -7,10 +7,9 @@ tReasure <- function(){
   #......................................................................................#
   # setting the PATH for TEST : system.file('', package="tReasure")
   #......................................................................................#
-  hg19.gtf <- system.file( "extdata", "hg19-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
-  hg38.gtf <- system.file( "extdata", "hg38-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
-  mm10.gtf <- system.file( "extdata", "mm10-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
-  intro <- system.file("extdata", "intro.png", package = "tReasure", mustWork = TRUE)
+
+    intro <- system.file("extdata", "intro.png", package = "tReasure", mustWork = TRUE)
+
   #......................................................................................#
   # function
   #......................................................................................#
@@ -19,23 +18,8 @@ tReasure <- function(){
     tools::pskill(x,signal = tools::SIGKILL)
   }
 
-  aa_codon_nn <- function(name){
-    name <- gsub("[.]","-", name)
-    out <- data.frame(do.call('rbind', strsplit(as.character(name), "-")))
-    colnames(out) <- c("chr", "trna","aa","anti_c","n1","n2")
-    out <- transform(out, iso=paste(out$aa, out$anti_c, out$n1, sep = "-"))
-    return(out$iso)
-  }
-
-  aa_codon_modi <- function(name){
-    name <- gsub("[.]","-", name)
-    out <- data.frame(do.call('rbind', strsplit(as.character(name), "-")))
-    colnames(out) <- c("chr", "trna","aa","anti_c","n1","n2")
-    out <- transform(out, iso=paste(out$trna, out$aa, out$anti_c, out$n1, out$n2, sep = "-"))
-    return(out$iso)
-  }
-
   edge_function <- function(count){
+    rownames(count) <- count$Names
     sFile<- read.delim("sample.txt")
     case <- factor(sFile$Group)
     case <- relevel(case, ref="control")
@@ -44,9 +28,9 @@ tReasure <- function(){
     coef = nlevels(batch)+1
     }else{design <- model.matrix(~case)
     coef = 2}
-    rownames(design) <- colnames(count)
+    rownames(design) <- colnames(count)[-1]
 
-    y <- DGEList(count, group = case)
+    y <- DGEList(count[,-1], group = case)
     y <- calcNormFactors(y)
     y <- estimateDisp(y, design, robust = TRUE)
 
@@ -73,18 +57,19 @@ tReasure <- function(){
     colnames(out_fdr)[ncol(out_fdr)] <- "FDR"
 
     out <- cbind(out_fdr[,], Bonferroni = out_bonf$Bonferroni, Benjamini=out_bh$Benjamini)
-    out <- data.frame(Name = rownames(out), out[,])
+    out <- data.frame(Names = rownames(out), out[,])
     return(out)
   }
 
   deseq_function <- function(count){
+    rownames(count) <- count$Names
     sFile<- read.delim("sample.txt")
     colData  <- sFile[,c("Group","Batch")]
     colnames(colData) <- c("condition","type")
     colData$condition <- factor(colData$condition)
     colData$type <- factor(colData$type)
 
-    dds <-DESeqDataSetFromMatrix(countData = count, colData = colData , design = ~ condition)
+    dds <-DESeqDataSetFromMatrix(countData = count[,-1], colData = colData , design = ~ condition)
 
     dds$condition <- factor(dds$condition, levels=c("control","test"))
     dds <- DESeq(dds)
@@ -103,7 +88,7 @@ tReasure <- function(){
 
     res <- cbind(res_fdr[,], Bonferroni = res_bonf$Bonferroni, Benjamini=res_bh$Benjamini)
     colnames(res)[2] <- "logFC"
-    res <- data.frame(Name = rownames(res), res[,])
+    res <- data.frame(Names = rownames(res), res[,])
     return(res)
   }
 
@@ -111,32 +96,32 @@ tReasure <- function(){
     out <- read.delim("./stat/stat_trna_list.txt")
 
     if(svalue(widget_list$fdr_s) == "Bejamini-Hochberg"){
-      outt <- select(out, Name, logFC, Benjamini)
+      outt <- select(out, Names, logFC, Benjamini)
       colnames(outt)[ncol(outt)]<-"FDR"
     }else if(svalue(widget_list$fdr_s) == "Bonferroni"){
-      outt <- select(out, Name, logFC, Bonferroni)
+      outt <- select(out, Names, logFC, Bonferroni)
       colnames(outt)[ncol(outt)]<-"FDR"
     }else{
-      outt <- select(out, Name, logFC, FDR)
+      outt <- select(out, Names, logFC, FDR)
     }
 
     pval <- svalue(widget_list$pval)
     fc <- svalue(widget_list$FC)
 
 
-    detRNA <- mutate(outt, Sig=ifelse(outt$FDR<= pval & outt$logFC <= -fc, "Down_DEtRNA", ifelse(outt$FDR <= pval & outt$logFC>= fc,"Up_DEtRNA", "Nonsig_DEtRNA")))
+    detRNA <- mutate(outt, Sig=ifelse(outt$FDR<= pval & outt$logFC <= -fc, "Down_DEtRNA", ifelse(outt$FDR <= pval & outt$logFC>= fc,"Up_DEtRNA", "Non_DEtRNA")))
 
     png("./stat/plot/volcanoplot_trna%02d.png", height=height, width=width, res=res)
     p <- function(){
       ggplot(detRNA, aes(x = logFC, y = -log10(FDR)))+
-        geom_point(size=3, aes(col=Sig)) +
+        geom_point(size=1.5, aes(col=Sig)) +
         xlab(" log2 Fold Change") +
         ylab("-log10 Adjusted P value ") +
         geom_vline(xintercept = c(-fc,fc),col = "red",linetype = "dotted",size = 0.5) +
         geom_hline(yintercept = c(-log10(pval)),col = "red", linetype = "dotted",size = 0.5) +
         theme_classic()+
         theme(legend.position = "top")+
-        scale_colour_manual(values = c("Nonsig_DEtRNA"="grey89", "Up_DEtRNA"="tomato","Down_DEtRNA"="#67A9CF"))}
+        scale_colour_manual(values = c("Non_DEtRNA"="grey89", "Up_DEtRNA"="tomato","Down_DEtRNA"="#67A9CF"))}
     print(p())
     dev.off()
     save(p,pval,fc,detRNA,file="./stat/plot/Volcano_Plot.RData")
@@ -161,9 +146,9 @@ tReasure <- function(){
       up <- filter(out, logFC > fc, out$FDR < pval)
     }
 
-    dw <- as.character(dw$Name)
-    up <- as.character(up$Name)
-    no <- as.character(out$Name[!(out$Name %in% c(dw,up))])
+    dw <- as.character(dw$Names)
+    up <- as.character(up$Names)
+    no <- as.character(out$Names[!(out$Names %in% c(dw,up))])
     su <- c(up, dw,no)
     rm <- as.character(trna$Names[!(trna$Names %in% su)])
 
@@ -181,7 +166,7 @@ tReasure <- function(){
 
     up <- tRNA_aa_codon(up, "Up_DEtRNA")
     dw <- tRNA_aa_codon(dw, "Down_DEtRNA")
-    no <- tRNA_aa_codon(no, "Nonsig_DEtRNA")
+    no <- tRNA_aa_codon(no, "Non_DEtRNA")
     rm <- tRNA_aa_codon(rm, "filter")
     rm$Freq <- rep(0, nrow(rm))
     c <- rbind(up,dw, no, rm)
@@ -273,8 +258,8 @@ tReasure <- function(){
     }
 
 
-    dw <- as.character(dw$Name)
-    up <- as.character(up$Name)
+    dw <- as.character(dw$Names)
+    up <- as.character(up$Names)
 
 
     aa_codon <- function(name){
@@ -680,17 +665,17 @@ tReasure <- function(){
           url <- "http://dl.dropbox.com/s/mj8k4y65e1tbkr0/hg19.zip"
           dw_refer(url, "hg19", "hg19.zip")
           genome = system.file( "extdata", "refer/hg19/hg19.fa",package = "tReasure", mustWork = TRUE)
-          annot_ext = hg19.gtf
+          annot_ext = system.file( "extdata/gtf", "hg19-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
         }else if(identical(svalue(ref), "UCSC.hg38")){
           url <- "http://dl.dropbox.com/s/3nv55bz9524e1rx/hg38.zip"
           dw_refer(url, "hg38", "hg38.zip")
           genome = system.file( "extdata", "refer/hg38/hg38.fa",package = "tReasure", mustWork = TRUE)
-          annot_ext = hg38.gtf
+          annot_ext = system.file( "extdata/gtf", "hg38-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
         }else{
           url <- "http://dl.dropbox.com/s/6u0nq93pr4gbmih/mm10.zip"
           dw_refer(url, "mm10", "mm10.zip")
           genome = system.file( "extdata", "refer/mm10/mm10.fa",package = "tReasure", mustWork = TRUE)
-          annot_ext = mm10.gtf
+          annot_ext = system.file( "extdata/gtf", "mm10-mature-tRNAs.gtf", package = "tReasure", mustWork = TRUE)
         }
       }else{
         genome = svalue(selrefer_button)
@@ -734,9 +719,6 @@ tReasure <- function(){
       algin_status()
       projt <- value(bow)
 
-      #status <- future(algin_status())
-      #projt <- bowtie()
-
       alinstat <- data.frame(Names=row.names(alignmentStats(projt)),alignmentStats(projt))
       write.table(alinstat, "./trim/alignment_stat.txt",sep = "\t")
 
@@ -751,17 +733,18 @@ tReasure <- function(){
         tname <- data.frame(do.call('rbind',strsplit(as.character(colnames(trna$counts)), split="[.]")))
         colnames(trna$counts) <- tname$X1
         tcount <- data.frame(Names= row.names(trna$counts),trna$counts)
-        write.table(tcount, file.path(dir,paste0("readcount_",output,".txt")), quote = F, sep = "\t")
+        write.table(tcount, file.path(dir,paste0("readcount_",output,".txt")), quote = F, sep = "\t", row.names = F)
         write.table(trna$annotation,file.path(paste0("annotation_",output,".txt")), quote = F, sep = "\t")
         return(tcount)
       }
 
       tcount <- readcount(trna, "gene_id", "trna")
-      ccount <- readcount(decoder, "isodecoder", "isodecoder")
-      acount <- readcount(acceptor, "isoacceptor", "isoacceptor")
-
       gtable(tcount, container=RC_trna)
+
+      ccount <- readcount(decoder, "isodecoder", "isodecoder")
       gtable(ccount, container=RC_codon)
+
+      acount <- readcount(acceptor, "isoacceptor", "isoacceptor")
       gtable(acount, container=RC_aa)
 
       insert(st, " ", do.newline = TRUE)
@@ -828,6 +811,7 @@ tReasure <- function(){
 
     # tRNA levels
     filter_gene <- function(count){
+      rownames(count) <- count$Names
       count<- count[,colnames(count) %in% sFile$SampleName]
       x <- DGEList(count, group = sFile$Group)
       isexpr <- rowSums(cpm(x) > 1) >= 90*nrow(sFile)/100
@@ -839,9 +823,13 @@ tReasure <- function(){
     filter_c <- filter_gene(ccount)
     filter_a <- filter_gene(acount)
 
-    write.table(filter_t$counts, "filtered_readcount_trna.txt",sep = "\t", quote = F)
-    write.table(filter_c$counts, "filtered_readcount_isodecoder.txt",sep = "\t", quote = F)
-    write.table(filter_a$counts, "filtered_readcount_isoacceptor.txt",sep = "\t", quote = F)
+    filter_tt <- data.frame(Names = rownames(filter_t), filter_t$counts)
+    filter_cc <- data.frame(Names = rownames(filter_c), filter_c$counts)
+    filter_aa <- data.frame(Names = rownames(filter_a), filter_a$counts)
+
+    write.table(filter_tt, "filtered_readcount_trna.txt",sep = "\t", quote = F, row.names = F)
+    write.table(filter_cc, "filtered_readcount_isodecoder.txt",sep = "\t", quote = F, row.names = F)
+    write.table(filter_aa, "filtered_readcount_isoacceptor.txt",sep = "\t", quote = F, row.names = F)
 
     y <- calcNormFactors(filter_t)
     cols <- as.character(sFile$Group)
@@ -956,9 +944,9 @@ tReasure <- function(){
     stat_codon[] <- c_out
     stat_aa[] <- a_out
 
-    write.table(t_out, "./stat/stat_trna_list.txt", sep="\t", quote = FALSE)
-    write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE)
-    write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE)
+    write.table(t_out, "./stat/stat_trna_list.txt", sep="\t", quote = FALSE, row.names = F)
+    write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE, row.names = F)
+    write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE, row.names = F)
     insert(st, " ", do.newline = TRUE)
     insert(st,"[ Save : the result files of satistical analysis ] Adjust the threshold value.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
@@ -982,9 +970,9 @@ tReasure <- function(){
     stat_codon[] <- c_out
     stat_aa[] <- a_out
 
-    write.table(t_out, "./stat/stat_trna_list.txt", sep="\t", quote = FALSE)
-    write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE)
-    write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE)
+    write.table(t_out, "./stat/stat_trna_list.txt", sep="\t", quote = FALSE, row.names = F)
+    write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE, row.names = F)
+    write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE, row.names = F)
     insert(st, " ", do.newline = TRUE)
     insert(st,"[ Save : the result files of satistical analysis ] Adjust the threshold value.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
