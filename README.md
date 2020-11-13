@@ -15,14 +15,6 @@
     5) Visualization 
 
 
-  #### Workflow
-   ![Flow](https://github.com/jinoklee/tReasure/blob/master/inst/extdata/flow.png?raw=true)
-   
-<br/>
-<br/>
-<br/>
-
-
 ## Installation guide
 ***
 tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
