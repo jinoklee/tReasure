@@ -326,12 +326,12 @@ size(mother) <- c(1000,740)
 # Sub window (Notebook)------------
 notebook <- gnotebook(container = mother)
 gr0 <- ggroup(container = notebook, label ="  Introduction  ")
-gr1 <- ggroup(container = notebook, label ="  Sample list  ", horizontal = FALSE)
-gr2 <- ggroup(container = notebook, label ="  Preprocessing  ",horizontal = FALSE)
-gr3 <- ggroup(container = notebook, label ="  Analysis  ",horizontal = FALSE)
-gr4 <- ggroup(container = notebook, label ="  Preview   ",horizontal = FALSE)
-gr5 <- ggroup(container = notebook, label ="  DEtRNA list ",horizontal = FALSE)
-gr6 <- ggroup(container = notebook, label ="  Plot ",horizontal = FALSE)
+gr1 <- ggroup(container = notebook, label ="  Loading Samples  ", horizontal = FALSE)
+gr2 <- ggroup(container = notebook, label ="  Quality Control  ",horizontal = FALSE)
+gr3 <- ggroup(container = notebook, label ="  Alignment & Counting  ",horizontal = FALSE)
+gr4 <- ggroup(container = notebook, label ="  Filtering   ",horizontal = FALSE)
+gr5 <- ggroup(container = notebook, label ="  DEtRNA Detection ",horizontal = FALSE)
+gr6 <- ggroup(container = notebook, label ="  Visualiztion ",horizontal = FALSE)
 child <- gframe("  Progress  ", container = mother, horizontal = FALSE)
 size(child) <- c(1000,100)
 st <- gtext("  ",container = child)
@@ -356,11 +356,11 @@ fq_dir <- gfilebrowse(text = " ", quote = FALSE, type = "selectdir", container =
 addSpace(tmp.1, 20)
 
 
-make_button <- gbutton(" RUN ", container = tmp.1)
+make_button <- gbutton("RUN", container = tmp.1)
 
 # option-------------------
 
-tmp.11 <- gframe(" [*OPTION] Load the sample list ", container = paned.1, horizontal = FALSE, spacing = 10) ; size(tmp.11) <- c(250,200)
+tmp.11 <- gframe(" [*OPTION] Loading the sample list ", container = paned.1, horizontal = FALSE, spacing = 10) ; size(tmp.11) <- c(250,200)
 addSpace(tmp.11, 10)
 
 glabel(" Select a file of \n the pre-made sample list : ", container = tmp.11, anchor = c(-1,0))
@@ -386,7 +386,7 @@ addHandlerChanged(fq_dir, handler = function(h,...){
 addHandlerChanged(make_button, handler = function(h,...){
   b <- svalue(fq_dir)
   if(identical(b,character(0))){
-    gmessage("Warning: Select a directory of FASTQ files")
+    gmessage("Warning : Select a directory of FASTQ files")
   }else{
     fq_list <- list.files(svalue(fq_dir), pattern = "fastq", full=TRUE)
     if(length(grep("trim",fq_list)) == 0){
@@ -415,7 +415,7 @@ addHandlerChanged(make_button, handler = function(h,...){
     insert(st, " ", do.newline = TRUE)
     insert(st, "Complete making the sample list.", do.newline = TRUE)
     if(length(grep("control", new_sample$Group)) < 2 | length(grep("test", new_sample$Group)) < 2){
-      insert(st, "[WARNNING] There should be at least 2 samples per group for differentially expression analysis ")
+      insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis")
     }
     insert(st, ".", do.newline = TRUE)
   }
@@ -437,8 +437,8 @@ addHandlerChanged(sel_button, handler = function(h,...){
   insert(st, " ", do.newline = TRUE)
   insert(st, "Complete loading the sample list.", do.newline = TRUE)
   if(length(grep("control", sample2$Group)) < 2 | length(grep("test", sample2$Group)) < 2){
-    insert(st, "[WARNNING] There should be at least 2 samples per group for differentially expression analysis ")}
-  insert(st, "Click! Next tab of Preprocessing. ", do.newline = TRUE)
+    insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis ")}
+  insert(st, "Click! Next tab of Quality Control. ", do.newline = TRUE)
   # save update sample list
   addHandlerChanged(tbl, handler = function(h, ...){
     new_sample <- tbl[]
@@ -447,7 +447,7 @@ addHandlerChanged(sel_button, handler = function(h,...){
     insert(st, " ", do.newline = TRUE)
     insert(st, "Complete making the sample list.", do.newline = TRUE)
     if(length(grep("control", new_sample$Group)) < 2 | length(grep("test", new_sample$Group)) < 2){
-      insert(st, "[WARNNING] There should be at least 2 samples per group for differentially expression analysis ")
+      insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis")
     }
     insert(st, ".", do.newline = TRUE)
   })
@@ -460,7 +460,7 @@ addSpace(gr2, 20)
 ggr21 <- ggroup(container = gr2,  spacing = 10); size(ggr21) <- c(896,532)
 addSpace(ggr21, 10)
 paned.2 <- gpanedgroup(container = ggr21, horizontal = FALSE, spacing = 10)
-tmp.2 <- gframe("  Trimming  ", container = paned.2, horizontal = FALSE, spacing = 10); size(tmp.2) <- c(250,532)
+tmp.2 <- gframe("  Settings  ", container = paned.2, horizontal = FALSE, spacing = 10); size(tmp.2) <- c(250,532)
 addSpace(tmp.2, 10)
 
 # option-------------------
@@ -487,10 +487,10 @@ trim_button <- gbutton("RUN", container = tmp.2, expand = FALSE)
 # handler-------------------
 addHandlerClicked(trim_button, handler = function(h,...){
   if(file.exists("sample.txt") == FALSE & file.exists("*.fastq") == FALSE){
-    gmessage("Warning: No file found matching sample list or fastq files")
+    gmessage("Warning : No file found matching sample list or fastq files")
   }else{
     insert(st, "", do.newline = TRUE)
-    insert(st,"[ START : Preprocessing ]", do.newline = TRUE )
+    insert(st,"Start : Quality Control", do.newline = TRUE )
     dir <- getwd()
 
     sam_trim <- file.path(dir,"trim","sample.txt")
@@ -536,14 +536,14 @@ addHandlerClicked(trim_button, handler = function(h,...){
       for(i in sFile2$SampleName){
         a <- sFile1$FileName[grep(i, sFile2$SampleName)]
         t <- sFile2$FileName[grep(i, sFile2$SampleName)]
-        insert(st, paste("filtering : ", a), do.newline = TRUE)
+        insert(st, paste("Filtering : ", a), do.newline = TRUE)
         repeat{
           Sys.sleep(1)
           insert(st, ".", do.newline = FALSE)
           if(file.exists(t) == TRUE) break
         }
         insert(st, " ", do.newline = TRUE)
-        insert(st, paste("complete "), do.newline=TRUE)
+        insert(st, paste("Complete "), do.newline=TRUE)
       }
     }
 
@@ -558,7 +558,7 @@ addHandlerClicked(trim_button, handler = function(h,...){
     rest <- rest[-c(2,5,6),]
     res_trim <- gtable(data.frame(rest), container = ggr21)
     insert(st, "", do.newline = TRUE)
-    insert(st,"[ DONE : Preprocessing ] Click! Next tab of Analysis", do.newline = TRUE )
+    insert(st,"Done : Quality Control. Click! Next tab of Alignmnet & Counting", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
   }
 })
@@ -571,7 +571,7 @@ ggr31 <- ggroup(container = gr3,  spacing = 10); size(ggr31) <- c(896,532)
 addSpace(ggr31, 10)
 paned.3 <- gpanedgroup(container = ggr31, horizontal = FALSE, spacing = 10)
 pangr <- ggroup(container = paned.3, horizontal =FALSE)
-tmp.3 <- gframe("  Alignment & Read count  ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.3) <- c(250,260)
+tmp.3 <- gframe("  Settings  ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.3) <- c(250,260)
 addSpace(tmp.3, 10)
 
 RC_view <- gnotebook(container = ggr31 ); size(RC_view) <- c(700, 500)
@@ -580,13 +580,13 @@ RC_codon <- ggroup(container = RC_view, horizontal = FALSE, label = " Isodecoder
 RC_aa <- ggroup(container = RC_view, horizontal = FALSE, label = "Isoacceptor level")
 
 # option-------------------
-glabel(" Select of genome assembly : ", container = tmp.3, anchor = c(-1,0))
+glabel(" Genome assembly : ", container = tmp.3, anchor = c(-1,0))
 addSpace(tmp.3, 10)
 ref <- gradio(c("UCSC.hg19", "UCSC.hg38","UCSC.mm10"),container = tmp.3)
 addSpace(tmp.3, 10)
 gseparator(horizontal = TRUE, container = tmp.3)
 addSpace(tmp.3, 10)
-glabel (" Or select files of user genome indexs \n  and annotation file: ", container = tmp.3, anchor = c(-1,0))
+glabel (" Or select user genome assembly \n  and annotation file: ", container = tmp.3, anchor = c(-1,0))
 addSpace(tmp.3, 10)
 selrefer_button <- gfilebrowse(text = " .fasta", quote =FALSE, type = "open", container = tmp.3,
                                filter=list("*.fasta" = list(patterns = c("*.fasta", "*.fa")), "*.*" = list(patterns = c("*"))))
@@ -648,7 +648,7 @@ addHandlerChanged(selaa_button,handler = function(h, ...){
 })
 
 addHandlerClicked(anl_button,handler = function(h, ...){
-  insert(st,"[ START : Alignment & Quantification of readcount ]", do.newline = TRUE )
+  insert(st,"Start : Alignment & Counting of reads", do.newline = TRUE )
   b <- svalue(fq_dir)
   c <- svalue(selfq_button)
 
@@ -664,13 +664,13 @@ addHandlerClicked(anl_button,handler = function(h, ...){
       download.file(url, destfile = file.path(Rsub_path, sub.zip))
       unzip(zipfile = file.path(Rsub_path, sub.zip), exdir= Rsub_path)
       file.remove(file.path(Rsub_path, sub.zip))
-      insert(st, "Complete download", do.newline = TRUE)
+      insert(st, "Complete download.", do.newline = TRUE)
     }
   }
 
   if(
     identical(b,character(0)) & identical(c,character(0))){
-    gmessage("Warning: Select a directory of FASTQ files")}
+    gmessage("Warning : Select a directory of FASTQ files")}
   else{
     if(identical(b,character(0))){
       dir <- svalue(selfq_button)}
@@ -764,7 +764,7 @@ addHandlerClicked(anl_button,handler = function(h, ...){
     gtable(acount, container=RC_aa)
 
     insert(st, " ", do.newline = TRUE)
-    insert(st,"[ DONE : alignment & quantification of readcount ] Click! Next tab of Preview ", do.newline = TRUE )
+    insert(st,"Done : Alignment & Counting of reads. Click! Next tab of Filtering ", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
   }
 
@@ -782,7 +782,7 @@ tmp.4 <- gframe("  Preview  ", container = paned.4, horizontal = FALSE, spacing 
 size(tmp.4) <- c(250,284)
 addSpace(tmp.4, 10)
 
-tmp.41 <- gframe( " Filtering : ", container = tmp.4, anchor =c(-1,0), horizontal = FALSE)
+tmp.41 <- gframe( " Settings : ", container = tmp.4, anchor =c(-1,0), horizontal = FALSE)
 addSpace(tmp.41, 10)
 prelyt <- gformlayout(container = tmp.41, spacing = 1.5)
 cfilv <- gcombobox(seq(0,10,by=1),label = "cpm value >=  ", container = prelyt)
@@ -808,7 +808,7 @@ selrc_button <- gfilebrowse(text = "", quote = FALSE, type = "selectdir", contai
 
 # handler--------------------
 addHandlerChanged(Pre_button, handler = function(h, ...){
-  insert(st,"[ MDS plots ]", do.newline = TRUE )
+  insert(st,"MDS plots", do.newline = TRUE )
   b <- svalue(selrc_button)
   if(identical(b,character(0))){invisible()
   }else{
@@ -857,7 +857,7 @@ addHandlerChanged(Pre_button, handler = function(h, ...){
   gimage("./stat/plot/plotMDS.png", container = Pre_MDS)
 
   insert(st, " ", do.newline = TRUE)
-  insert(st,"[ Save : MDS_plot is done as png format ] Click! Next tab of DEtRNA list ", do.newline = TRUE )
+  insert(st,"Done : Filtering. Click! Next tab of DEtRNA Detection ", do.newline = TRUE )
   insert(st, ".", do.newline = TRUE)
 })
 
@@ -939,13 +939,13 @@ b_plot <- ggraphics(container = Plot_codon)
 p_plot <- ggraphics(container = Plot_aa)
 
 # Statistical Option --------------------
-statedgeR_button <- gbutton ("EdgeR RUN", container = tmp.51)
+statedgeR_button <- gbutton ("RUN EdgeR", container = tmp.51)
 
-statdeseq_button <- gbutton("DEseq RUN", container = tmp.52)
+statdeseq_button <- gbutton("RUN DEseq", container = tmp.52)
 
 # Statistical handler --------------------
 addHandlerClicked(statedgeR_button, handler = function(h, ...){
-  insert(st,"[ Statistical analysis  : EdgeR ]", do.newline = TRUE )
+  insert(st,"Statistical analysis  : EdgeR", do.newline = TRUE )
   insert(st,"It takes a few minutes. Please wait....", do.newline = TRUE )
 
   tcount <- read.delim("filtered_readcount_trna.txt")
@@ -964,12 +964,12 @@ addHandlerClicked(statedgeR_button, handler = function(h, ...){
   write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE, row.names = F)
   write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE, row.names = F)
   insert(st, " ", do.newline = TRUE)
-  insert(st,"[ Save : the result files of satistical analysis ] Adjust the threshold value.", do.newline = TRUE )
+  insert(st,"Done : Satistical analysis. Set the threshold value.", do.newline = TRUE )
   insert(st, ".", do.newline = TRUE)
 })
 
 addHandlerClicked(statdeseq_button, handler = function(h,...){
-  insert(st,"[ Statistical analysis  : DESeq2 ]", do.newline = TRUE )
+  insert(st,"Statistical analysis  : DESeq2", do.newline = TRUE )
   dir <- getwd()
   if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
     dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
@@ -990,7 +990,7 @@ addHandlerClicked(statdeseq_button, handler = function(h,...){
   write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE, row.names = F)
   write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE, row.names = F)
   insert(st, " ", do.newline = TRUE)
-  insert(st,"[ Save : the result files of satistical analysis ] Adjust the threshold value.", do.newline = TRUE )
+  insert(st,"Done : Satistical analysis. Set the threshold value.", do.newline = TRUE )
   insert(st, ".", do.newline = TRUE)
 })
 
@@ -1079,7 +1079,7 @@ addHandlerClicked(DE_button, handler = function(h, ...){
   p_plot <- gimage("./stat/plot/pyramid_isoaccepter01.png", container = Plot_aa)
 
   insert(st, " ", do.newline = TRUE)
-  insert(st,"[ Save : the plots of satistical analysis] Click! Next tab of Plot", do.newline = TRUE )
+  insert(st,"Done : the plots of DEtRNA Detection. Click! Next tab of Visualization ", do.newline = TRUE )
   insert(st, ".", do.newline = TRUE)
 })
 
