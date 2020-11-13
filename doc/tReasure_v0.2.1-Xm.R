@@ -755,12 +755,17 @@ addHandlerClicked(anl_button,handler = function(h, ...){
 
     tcount <- readcount(trna, "gene_id", "trna")
     gtable(tcount, container=RC_trna)
+    insert(st, " ", do.newline = TRUE)
+    insert(st,"Done : Counting of individual tRNAs", do.newline = TRUE )
 
     ccount <- readcount(decoder, "isodecoder", "isodecoder")
     gtable(ccount, container=RC_codon)
+    insert(st, " ", do.newline = TRUE)
+    insert(st,"Done : Counting of isodecoders", do.newline = TRUE )
 
     acount <- readcount(acceptor, "isoacceptor", "isoacceptor")
     gtable(acount, container=RC_aa)
+    insert(st,"Done : Counting of isoacceptors", do.newline = TRUE )
 
     insert(st, " ", do.newline = TRUE)
     insert(st,"Done : Alignment & Counting of reads. Click! Next tab of Filtering.", do.newline = TRUE )
