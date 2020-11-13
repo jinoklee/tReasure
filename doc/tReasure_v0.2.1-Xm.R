@@ -415,7 +415,7 @@ addHandlerChanged(make_button, handler = function(h,...){
     insert(st, " ", do.newline = TRUE)
     insert(st, "Complete making the sample list.", do.newline = TRUE)
     if(length(grep("control", new_sample$Group)) < 2 | length(grep("test", new_sample$Group)) < 2){
-      insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis")
+      insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis.")
     }
     insert(st, ".", do.newline = TRUE)
   }
@@ -437,8 +437,8 @@ addHandlerChanged(sel_button, handler = function(h,...){
   insert(st, " ", do.newline = TRUE)
   insert(st, "Complete loading the sample list.", do.newline = TRUE)
   if(length(grep("control", sample2$Group)) < 2 | length(grep("test", sample2$Group)) < 2){
-    insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis ")}
-  insert(st, "Click! Next tab of Quality Control. ", do.newline = TRUE)
+    insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis.")}
+  insert(st, "Click! Next tab of Quality Control.", do.newline = TRUE)
   # save update sample list
   addHandlerChanged(tbl, handler = function(h, ...){
     new_sample <- tbl[]
@@ -447,7 +447,7 @@ addHandlerChanged(sel_button, handler = function(h,...){
     insert(st, " ", do.newline = TRUE)
     insert(st, "Complete making the sample list.", do.newline = TRUE)
     if(length(grep("control", new_sample$Group)) < 2 | length(grep("test", new_sample$Group)) < 2){
-      insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis")
+      insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis.")
     }
     insert(st, ".", do.newline = TRUE)
   })
@@ -543,7 +543,6 @@ addHandlerClicked(trim_button, handler = function(h,...){
           if(file.exists(t) == TRUE) break
         }
         insert(st, " ", do.newline = TRUE)
-        insert(st, paste("Complete "), do.newline=TRUE)
       }
     }
 
@@ -558,7 +557,7 @@ addHandlerClicked(trim_button, handler = function(h,...){
     rest <- rest[-c(2,5,6),]
     res_trim <- gtable(data.frame(rest), container = ggr21)
     insert(st, "", do.newline = TRUE)
-    insert(st,"Done : Quality Control. Click! Next tab of Alignmnet & Counting", do.newline = TRUE )
+    insert(st,"Done : Quality Control. Click! Next tab of Alignment & Counting.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
   }
 })
@@ -764,7 +763,7 @@ addHandlerClicked(anl_button,handler = function(h, ...){
     gtable(acount, container=RC_aa)
 
     insert(st, " ", do.newline = TRUE)
-    insert(st,"Done : Alignment & Counting of reads. Click! Next tab of Filtering ", do.newline = TRUE )
+    insert(st,"Done : Alignment & Counting of reads. Click! Next tab of Filtering.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
   }
 
@@ -808,7 +807,6 @@ selrc_button <- gfilebrowse(text = "", quote = FALSE, type = "selectdir", contai
 
 # handler--------------------
 addHandlerChanged(Pre_button, handler = function(h, ...){
-  insert(st,"MDS plots", do.newline = TRUE )
   b <- svalue(selrc_button)
   if(identical(b,character(0))){invisible()
   }else{
@@ -857,7 +855,7 @@ addHandlerChanged(Pre_button, handler = function(h, ...){
   gimage("./stat/plot/plotMDS.png", container = Pre_MDS)
 
   insert(st, " ", do.newline = TRUE)
-  insert(st,"Done : Filtering. Click! Next tab of DEtRNA Detection ", do.newline = TRUE )
+  insert(st,"Done : Filtering. Click! Next tab of DEtRNA Detection.", do.newline = TRUE )
   insert(st, ".", do.newline = TRUE)
 })
 
@@ -872,7 +870,7 @@ addSpace(ggr51, 10)
 paned.5 <- gpanedgroup(container = ggr51, horizontal = FALSE, spacing = 10)
 
 ggr52 <- gnotebook(container=paned.5, tab.pos  = 3) ; size(ggr52) <- c(250, 200)
-stat2 <- ggroup(container = ggr52, label = " DEseq ")
+stat2 <- ggroup(container = ggr52, label = " DEseq2 ")
 stat1 <- ggroup(container = ggr52, label = " EdgeR ")
 
 tmp.51 <- gframe("  Statics  ", container = stat1, horizontal = FALSE, spacing = 10); size(tmp.51) <- c(235,150)
@@ -941,7 +939,7 @@ p_plot <- ggraphics(container = Plot_aa)
 # Statistical Option --------------------
 statedgeR_button <- gbutton ("RUN EdgeR", container = tmp.51)
 
-statdeseq_button <- gbutton("RUN DEseq", container = tmp.52)
+statdeseq_button <- gbutton("RUN DESeq2", container = tmp.52)
 
 # Statistical handler --------------------
 addHandlerClicked(statedgeR_button, handler = function(h, ...){
@@ -964,7 +962,7 @@ addHandlerClicked(statedgeR_button, handler = function(h, ...){
   write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE, row.names = F)
   write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE, row.names = F)
   insert(st, " ", do.newline = TRUE)
-  insert(st,"Done : Satistical analysis. Set the threshold value.", do.newline = TRUE )
+  insert(st,"Done : Statistical analysis. Set the threshold value.", do.newline = TRUE )
   insert(st, ".", do.newline = TRUE)
 })
 
@@ -990,7 +988,7 @@ addHandlerClicked(statdeseq_button, handler = function(h,...){
   write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE, row.names = F)
   write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE, row.names = F)
   insert(st, " ", do.newline = TRUE)
-  insert(st,"Done : Satistical analysis. Set the threshold value.", do.newline = TRUE )
+  insert(st,"Done : Statistical analysis. Set the threshold value.", do.newline = TRUE )
   insert(st, ".", do.newline = TRUE)
 })
 
@@ -1079,7 +1077,7 @@ addHandlerClicked(DE_button, handler = function(h, ...){
   p_plot <- gimage("./stat/plot/pyramid_isoaccepter01.png", container = Plot_aa)
 
   insert(st, " ", do.newline = TRUE)
-  insert(st,"Done : the plots of DEtRNA Detection. Click! Next tab of Visualization ", do.newline = TRUE )
+  insert(st,"Done : The plots of DEtRNA Detection. Click! Next tab of Visualization.", do.newline = TRUE )
   insert(st, ".", do.newline = TRUE)
 })
 
