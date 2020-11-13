@@ -30,13 +30,13 @@ tReasure is a package for the R computing environment and it is assumed that you
 <br/>
 <br/>
 
-Install source : https://github.com/jinoklee/tReasure_install.git
+Install source : 
 
 ***
 
 ### **STEP 1.** Download and unzip a file
-   > ##### Window : [tReasrue_v1_win.zip](https://www.dropbox.com/s/uyacuct9q3khpul/tReasure_v1_win.zip?dl=0)
-   > ##### Linux/Mac OS : [tReasure_v1_mac.zip](https://www.dropbox.com/s/2bo2npf3wga5cw6/tReasure_v1_mac.zip?dl=0)
+   > ##### Window : [tReasrue_v1_win.zip]
+   > ##### Linux/Mac OS : [tReasure_v1_mac.zip]
    
 <br/>
 
@@ -51,15 +51,14 @@ Installation may take several minutes.
 <br/>
 
 ### **STEP 3.** Download the genome indices as needed
-   > ##### Donwload : [a bundle of genome indics files](https://www.dropbox.com/sh/1aikvdszjlvncic/AADzL8G55ayI3lRfzZ6LYjvPa?dl=0)
+   > ##### Donwload : [a bundle of genome indics files]
 + hg38 genome indices are saved as default.
-+ If you need another genome indices files, download and move the files inside tReasure packages folder (~Documents/R/win-library/tReasure/WholeGenomeFasta).
++ If you need another genome indices files, download and move the files inside tReasure packages folder
 
 <br/>
 
 ### **STEP 4.(option)** Download Sample Tests as needed
-   > ##### Donwload : [small RNA seq fastq](https://www.dropbox.com/sh/zp7sg8frifih3vo/AAAbkJgn-QJ-TCJVIhjQC1ita?dl=0)
-
+   > ##### Donwload : [small RNA seq fastq]
 <br/>
 <br/>
 
