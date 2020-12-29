@@ -663,7 +663,7 @@ addHandlerClicked(anl_button,handler = function(h, ...){
       download.file(url, destfile = file.path(Rsub_path, sub.zip))
       unzip(zipfile = file.path(Rsub_path, sub.zip), exdir= Rsub_path)
       file.remove(file.path(Rsub_path, sub.zip))
-      insert(st, "Complete download.", do.newline = TRUE)
+      insert(st, "Complete downloaded.", do.newline = TRUE)
     }
   }
 

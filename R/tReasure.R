@@ -311,12 +311,12 @@ tReasure <- function(){
   # Sub window (Notebook)------------
   notebook <- gnotebook(container = mother)
   gr0 <- ggroup(container = notebook, label ="  Introduction  ")
-  gr1 <- ggroup(container = notebook, label ="  Sample list  ", horizontal = FALSE)
-  gr2 <- ggroup(container = notebook, label ="  Preprocessing  ",horizontal = FALSE)
-  gr3 <- ggroup(container = notebook, label ="  Analysis  ",horizontal = FALSE)
-  gr4 <- ggroup(container = notebook, label ="  Preview   ",horizontal = FALSE)
-  gr5 <- ggroup(container = notebook, label ="  DEtRNA list ",horizontal = FALSE)
-  gr6 <- ggroup(container = notebook, label ="  Plot ",horizontal = FALSE)
+  gr1 <- ggroup(container = notebook, label ="  Loading Samples  ", horizontal = FALSE)
+  gr2 <- ggroup(container = notebook, label ="  Quality Control  ",horizontal = FALSE)
+  gr3 <- ggroup(container = notebook, label ="  Alignment & Counting  ",horizontal = FALSE)
+  gr4 <- ggroup(container = notebook, label ="  Filtering   ",horizontal = FALSE)
+  gr5 <- ggroup(container = notebook, label ="  DEtRNA Detection ",horizontal = FALSE)
+  gr6 <- ggroup(container = notebook, label ="  Visualiztion ",horizontal = FALSE)
   child <- gframe("  Progress  ", container = mother, horizontal = FALSE)
   size(child) <- c(1000,100)
   st <- gtext("  ",container = child)
@@ -445,7 +445,7 @@ tReasure <- function(){
   ggr21 <- ggroup(container = gr2,  spacing = 10); size(ggr21) <- c(896,532)
   addSpace(ggr21, 10)
   paned.2 <- gpanedgroup(container = ggr21, horizontal = FALSE, spacing = 10)
-  tmp.2 <- gframe("  Trimming  ", container = paned.2, horizontal = FALSE, spacing = 10); size(tmp.2) <- c(250,532)
+  tmp.2 <- gframe("  Settings  ", container = paned.2, horizontal = FALSE, spacing = 10); size(tmp.2) <- c(250,532)
   addSpace(tmp.2, 10)
 
   # option-------------------
@@ -475,7 +475,7 @@ tReasure <- function(){
       gmessage("Warning: No file found matching sample list or fastq files")
     }else{
       insert(st, "", do.newline = TRUE)
-      insert(st,"[ START : Preprocessing ]", do.newline = TRUE )
+      insert(st,"Start : Quality Control", do.newline = TRUE )
       dir <- getwd()
 
       sam_trim <- file.path(dir,"trim","sample.txt")
@@ -521,7 +521,7 @@ tReasure <- function(){
         for(i in sFile2$SampleName){
           a <- sFile1$FileName[grep(i, sFile2$SampleName)]
           t <- sFile2$FileName[grep(i, sFile2$SampleName)]
-          insert(st, paste("filtering : ", a), do.newline = TRUE)
+          insert(st, paste("Filtering : ", a), do.newline = TRUE)
           repeat{
             Sys.sleep(1)
             insert(st, ".", do.newline = FALSE)
@@ -543,7 +543,7 @@ tReasure <- function(){
       rest <- rest[-c(2,5,6),]
       res_trim <- gtable(data.frame(rest), container = ggr21)
       insert(st, "", do.newline = TRUE)
-      insert(st,"[ DONE : Preprocessing ] Click! Next tab of Analysis", do.newline = TRUE )
+      insert(st,"Done : Quality Control. Click! Next tab of Alignment & Counting.", do.newline = TRUE )
       insert(st, ".", do.newline = TRUE)
     }
   })
@@ -556,7 +556,7 @@ tReasure <- function(){
   addSpace(ggr31, 10)
   paned.3 <- gpanedgroup(container = ggr31, horizontal = FALSE, spacing = 10)
   pangr <- ggroup(container = paned.3, horizontal =FALSE)
-  tmp.3 <- gframe("  Alignment & Read count  ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.3) <- c(250,260)
+  tmp.3 <- gframe("  Settings  ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.3) <- c(250,260)
   addSpace(tmp.3, 10)
 
   RC_view <- gnotebook(container = ggr31 ); size(RC_view) <- c(700, 500)
@@ -565,13 +565,13 @@ tReasure <- function(){
   RC_aa <- ggroup(container = RC_view, horizontal = FALSE, label = "Isoacceptor level")
 
   # option-------------------
-  glabel(" Select of genome assembly : ", container = tmp.3, anchor = c(-1,0))
+  glabel(" Genome assembly : ", container = tmp.3, anchor = c(-1,0))
   addSpace(tmp.3, 10)
   ref <- gradio(c("UCSC.hg19", "UCSC.hg38","UCSC.mm10"),container = tmp.3)
   addSpace(tmp.3, 10)
   gseparator(horizontal = TRUE, container = tmp.3)
   addSpace(tmp.3, 10)
-  glabel (" Or select files of user genome indexs \n  and annotation file: ", container = tmp.3, anchor = c(-1,0))
+  glabel (" Or select user genome assembly \n  and annotation file: ", container = tmp.3, anchor = c(-1,0))
   addSpace(tmp.3, 10)
   selrefer_button <- gfilebrowse(text = " .fasta", quote =FALSE, type = "open", container = tmp.3,
                                  filter=list("*.fasta" = list(patterns = c("*.fasta", "*.fa")), "*.*" = list(patterns = c("*"))))
@@ -633,7 +633,7 @@ tReasure <- function(){
   })
 
   addHandlerClicked(anl_button,handler = function(h, ...){
-    insert(st,"[ START : Alignment & Quantification of readcount ]", do.newline = TRUE )
+    insert(st,"Start : Alignment & Counting of reads", do.newline = TRUE )
     b <- svalue(fq_dir)
     c <- svalue(selfq_button)
 
@@ -740,15 +740,20 @@ tReasure <- function(){
 
       tcount <- readcount(trna, "gene_id", "trna")
       gtable(tcount, container=RC_trna)
+      insert(st, " ", do.newline = TRUE)
+      insert(st,"Done : Counting of individual tRNAs", do.newline = TRUE )
 
       ccount <- readcount(decoder, "isodecoder", "isodecoder")
       gtable(ccount, container=RC_codon)
+      insert(st, " ", do.newline = TRUE)
+      insert(st,"Done : Counting of isodecoders", do.newline = TRUE )
 
       acount <- readcount(acceptor, "isoacceptor", "isoacceptor")
       gtable(acount, container=RC_aa)
+      insert(st,"Done : Counting of isoacceptors", do.newline = TRUE )
 
       insert(st, " ", do.newline = TRUE)
-      insert(st,"[ DONE : alignment & quantification of readcount ] Click! Next tab of Preview ", do.newline = TRUE )
+      insert(st,"Done : Alignment & Counting of reads. Click! Next tab of Filtering.", do.newline = TRUE )
       insert(st, ".", do.newline = TRUE)
     }
 
@@ -766,7 +771,7 @@ tReasure <- function(){
   size(tmp.4) <- c(250,284)
   addSpace(tmp.4, 10)
 
-  tmp.41 <- gframe( " Filtering : ", container = tmp.4, anchor =c(-1,0), horizontal = FALSE)
+  tmp.41 <- gframe( " Settings : ", container = tmp.4, anchor =c(-1,0), horizontal = FALSE)
   addSpace(tmp.41, 10)
   prelyt <- gformlayout(container = tmp.41, spacing = 1.5)
   cfilv <- gcombobox(seq(0,10,by=1),label = "cpm value >=  ", container = prelyt)
@@ -792,7 +797,6 @@ tReasure <- function(){
 
   # handler--------------------
   addHandlerChanged(Pre_button, handler = function(h, ...){
-    insert(st,"[ MDS plots ]", do.newline = TRUE )
     b <- svalue(selrc_button)
     if(identical(b,character(0))){invisible()
     }else{
@@ -841,7 +845,7 @@ tReasure <- function(){
     gimage("./stat/plot/plotMDS.png", container = Pre_MDS)
 
     insert(st, " ", do.newline = TRUE)
-    insert(st,"[ Save : MDS_plot is done as png format ] Click! Next tab of DEtRNA list ", do.newline = TRUE )
+    insert(st,"Done : Filtering. Click! Next tab of DEtRNA Detection.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
   })
 
@@ -856,7 +860,7 @@ tReasure <- function(){
   paned.5 <- gpanedgroup(container = ggr51, horizontal = FALSE, spacing = 10)
 
   ggr52 <- gnotebook(container=paned.5, tab.pos  = 3) ; size(ggr52) <- c(250, 200)
-  stat2 <- ggroup(container = ggr52, label = " DEseq ")
+  stat2 <- ggroup(container = ggr52, label = " DEseq2 ")
   stat1 <- ggroup(container = ggr52, label = " EdgeR ")
 
   tmp.51 <- gframe("  Statics  ", container = stat1, horizontal = FALSE, spacing = 10); size(tmp.51) <- c(235,150)
@@ -923,13 +927,13 @@ tReasure <- function(){
   p_plot <- ggraphics(container = Plot_aa)
 
   # Statistical Option --------------------
-  statedgeR_button <- gbutton ("EdgeR RUN", container = tmp.51)
+  statedgeR_button <- gbutton ("RUN EdgeR", container = tmp.51)
 
-  statdeseq_button <- gbutton("DEseq RUN", container = tmp.52)
+  statdeseq_button <- gbutton("RUN DESeq2", container = tmp.52)
 
   # Statistical handler --------------------
   addHandlerClicked(statedgeR_button, handler = function(h, ...){
-    insert(st,"[ Statistical analysis  : EdgeR ]", do.newline = TRUE )
+    insert(st,"Statistical analysis  : EdgeR", do.newline = TRUE )
     insert(st,"It takes a few minutes. Please wait....", do.newline = TRUE )
 
     tcount <- read.delim("filtered_readcount_trna.txt")
@@ -948,12 +952,12 @@ tReasure <- function(){
     write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE, row.names = F)
     write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE, row.names = F)
     insert(st, " ", do.newline = TRUE)
-    insert(st,"[ Save : the result files of satistical analysis ] Adjust the threshold value.", do.newline = TRUE )
+    insert(st,"Done : Statistical analysis. Set the threshold value.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
   })
 
   addHandlerClicked(statdeseq_button, handler = function(h,...){
-    insert(st,"[ Statistical analysis  : DESeq2 ]", do.newline = TRUE )
+    insert(st,"Statistical analysis  : DESeq2", do.newline = TRUE )
     dir <- getwd()
     if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
       dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
@@ -974,7 +978,7 @@ tReasure <- function(){
     write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE, row.names = F)
     write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE, row.names = F)
     insert(st, " ", do.newline = TRUE)
-    insert(st,"[ Save : the result files of satistical analysis ] Adjust the threshold value.", do.newline = TRUE )
+    insert(st,"Done : Statistical analysis. Set the threshold value.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
   })
 
@@ -1063,7 +1067,7 @@ tReasure <- function(){
     p_plot <- gimage("./stat/plot/pyramid_isoaccepter01.png", container = Plot_aa)
 
     insert(st, " ", do.newline = TRUE)
-    insert(st,"[ Save : the plots of satistical analysis] Click! Next tab of Plot", do.newline = TRUE )
+    insert(st,"Done : The plots of DEtRNA Detection. Click! Next tab of Visualization.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
   })
 
