@@ -1,7 +1,7 @@
 Package: tReasure
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.2.1
+Title: tReasure
+Version: 0.3.1
 Author: c(person("jinoklee", email = "jinoklee.01@gmail.com"),person("minholee", email = "MinhoLee@dgu.edu"),person("Yeun-Jun Chung", email = "yejun@catholic.ac.kr"))
 Maintainer: jinoklee <jinoklee.01@gmail.com>
 Description: More about what it does (maybe more than one line)
@@ -10,20 +10,24 @@ License: MIT LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-  dplyr,
+  gWidgets2,
+  gWidgets2RGtk2,
+  cairoDevice,
+  QuasR,
+  Rsubread,
+  edgeR,
   ggplot2,
   grid,
   gridExtra,
   plotrix,
   tidyverse,
+  stringr,
+  Rsamtools,
+  seqinr,
+  ShortRead,
+  tidyverse,
   dplyr,
-  statmod,
-  QuasR,
-  Rsubread,
-  edgeR,
   DESeq2,
   future,
-  gWidgets2,
-  gWidgets2RGtk2,
-  cairoDevice
+  statmod
 RoxygenNote: 7.1.1
