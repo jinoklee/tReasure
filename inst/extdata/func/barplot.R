@@ -1,5 +1,5 @@
 barplot <- function(width, height, res){
-  trna <- read.delim("readcount_isodecoder.txt")
+  trna <- read.delim("./rc/readcount_isodecoders.txt")
   out <- read.delim("./stat/stat_isodecoder_list.txt")
 
   pval <- svalue(widget_list$pval)
@@ -16,11 +16,14 @@ barplot <- function(width, height, res){
     up <- filter(out, logFC > fc, out$FDR < pval)
   }
 
+  # dw <- filter(out, logFC < -1.5, out$Benjamini < 0.5)
+  # up <- filter(out, logFC > 1.5, out$Benjamini < 0.5)
+
   dw <- as.character(dw$Names)
   up <- as.character(up$Names)
   no <- as.character(out$Names[!(out$Names %in% c(dw,up))])
   su <- c(up, dw,no)
-  rm <- as.character(trna$Names[!(trna$Names %in% su)])
+  #rm <- as.character(trna$Names[!(trna$Names %in% su)])
 
   tRNA_aa_codon <- function(data, t){
     out <- data.frame(aa_codon=substr(data,6,13))
@@ -37,9 +40,9 @@ barplot <- function(width, height, res){
   up <- tRNA_aa_codon(up, "Up_DEtRNA")
   dw <- tRNA_aa_codon(dw, "Down_DEtRNA")
   no <- tRNA_aa_codon(no, "Non_DEtRNA")
-  rm <- tRNA_aa_codon(rm, "filter")
-  rm$Freq <- rep(0, nrow(rm))
-  c <- rbind(up,dw, no, rm)
+  #rm <- tRNA_aa_codon(rm, "filter")
+  #rm$Freq <- rep(0, nrow(rm))
+  c <- rbind(up,dw, no)
   c <- c %>% mutate_if(is.factor, as.character)
   c<- c[order(c$aa),]
   n <- length(grep("iMet", c$aa))
@@ -88,7 +91,6 @@ barplot <- function(width, height, res){
   b2_data<- b2_data[!grepl("^a", b2_data$codon),]
 
   png("./stat/plot/barplot_isodecoder%02d.png", height=height, width=width, res=res)
-
   p <- function(){
     ggplot(c, aes(x=codon, y=Freq, fill=Sig))+
       geom_bar( stat="identity")+
@@ -107,5 +109,6 @@ barplot <- function(width, height, res){
       geom_text(data=b2_data, aes(x = title, y= -0.45, label=codon), size=3, colour = "black", angle=90, inherit.aes = FALSE)}
   print(p())
   dev.off()
+  #ggsave("./stat/plot/barplot_isodecoder%02d.png")
   save(p, pval,fc, c, file="./stat/plot/Bar_Plot.RData")
 }

@@ -1,5 +1,5 @@
 pyramid <- function(width, height, res){
-  trna <- read.delim("readcount_isodecoder.txt")
+  trna <- read.delim("./rc/readcount_isodecoders.txt")
   out <- read.delim("./stat/stat_isoacceptor_list.txt")
   pval <- svalue(widget_list$pval)
   fc <- svalue(widget_list$FC)
@@ -37,6 +37,6 @@ pyramid <- function(width, height, res){
 
   p <- function(){pyramid.plot(geneplot$Down_DEtRNA, geneplot$Up_DEtRNA,labels= geneplot$Var1,lxcol="#67A9CF", rxcol="#EF8A62",unit = "Freqency",gap=0.3, space=0.15, top.labels = c("Down_DEtRNAs", "tRNA-AA","Up_DEtRNAs"),laxlab=c(0,1,2,3), raxlab=c(0,1,2,3))}
   print(p())
-  graphics.off()
+  dev.off()
   save(p, geneplot, file="./stat/plot/Pyramid_Plot.RData")
 }
