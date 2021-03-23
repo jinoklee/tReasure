@@ -10,11 +10,8 @@ License: MIT LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-  gWidgets2,
-  gWidgets2RGtk2,
   cairoDevice,
   QuasR,
-  Rsubread,
   edgeR,
   ggplot2,
   grid,
@@ -25,7 +22,6 @@ Imports:
   Rsamtools,
   seqinr,
   ShortRead,
-  tidyverse,
   dplyr,
   DESeq2,
   future,
