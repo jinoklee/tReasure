@@ -1,7 +1,7 @@
 anl_align_nomul <- function(h,...){
-  insert(st,"Start : Alignment & Counting of reads", do.newline = TRUE )
+  insert(st,"Start : Alignment & Read Counting", do.newline = TRUE )
   dir <- svalue(fq_dir)
-  c <- svalue(selfq_button)
+  #c <- svalue(selfq_button)
 
   # download_refer
   dw_refer <- function(url, sub, sub.zip){
@@ -17,12 +17,12 @@ anl_align_nomul <- function(h,...){
     }
   }
 
-  if(
-    identical(dir,character(0)) & identical(c,character(0))){
-    gmessage("Warning : Select a directory of FASTQ files")}
-  else{
-    if(identical(dir,character(0))){
-      dir <- svalue(selfq_button)}else{dir <- getwd()}
+  # if(
+  #   identical(dir,character(0)) & identical(c,character(0))){
+  #   gmessage("Warning : Select a directory of FASTQ files")}
+  # else{
+    # if(identical(dir,character(0))){
+    #   dir <- svalue(selfq_button)}else{dir <- getwd()}
 
 
     # if(svalue(gsel_button) == "Homo sapiens (hg38 - GRCh38 Dec 2013)"){
@@ -76,7 +76,8 @@ anl_align_nomul <- function(h,...){
 
     # QC
     #insert(st,"Start : QC", do.newline = TRUE )
-    #qQCReport(projt_pre, pdfFilename = "./pre/qc_report.pdf", useSampleNames = TRUE)
+    save(projt_pre, file = "./pre/premappingQC.RData")
+    # qQCReport(projt_pre, pdfFilename = "./pre/qc_report.pdf", useSampleNames = TRUE)
 
     # remove reads(premature-tRNAs, non_tRNAs)
     insert(st, ".", do.newline = TRUE)
@@ -101,8 +102,8 @@ anl_align_nomul <- function(h,...){
     # Readcounting
     insert(st,"counting", do.newline = TRUE )
     anl_rc(ref_name)
-    insert(st,"Done : Alignment & Counting of reads. Click! Next tab of Filtering.", do.newline = TRUE )
+    insert(st,"Done : Alignment & Read Counting. Click! Next tab of Filtering.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)
 
   }
-}
+#}

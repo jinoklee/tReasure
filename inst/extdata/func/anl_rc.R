@@ -4,48 +4,30 @@ anl_rc <- function(ref_name){
   bamlist <- list.files(workDir, pattern = "\\.bam$", recursive = T)
   bamlist <- basename(bamlist)
 
-  # predic tRNADB ID
-  cluinfo <-  read.table(system.file("extdata", file.path("refer",ref_name, "GtRNAdb_clusterInfo.txt"),
-                                     package = "tReasure",mustWork = TRUE), sep = "\t", fill = T,header = T)
-  cluinfo <- cluinfo[, c(1,2,4)]
-
-
   rc_df <- function(dfbn){
-    out <- data.frame(do.call('rbind', strsplit(as.character(dfbn$seqnames), split = ":")))
-    out$X1 <- gsub("^chr\\d{1,3}|^chr\\D{1}|^chr\\d{1,2}_\\D.*\\.", "", out$X1)
-    out$X1 <- gsub(".tRNA", "trna", out$X1)
-    out$X1 <- gsub("tRNA", "trna", out$X1)
-    out$X1 <- paste(out$X3, out$X1, sep = ".")
-    out <- data.frame(tRNAscan.SE.ID= out$X1)
-    dfbn <- cbind(out, dfbn[,c(1:3)])
-    dfbn <- dfbn[,-5]
-    colnames(dfbn)[4] <- "Counts"
+    chr <- data.frame(stringr::str_split_fixed(dfbn$seqnames, "[.]", 2))
+    out <- data.frame(stringr::str_split_fixed(chr$X2, "_", 4))
+    out$X1 <- paste(chr$X1, out$X1,sep = ".")
+    colnames(out) <- c("tRNAscan.SE.id","GtRNAdb.id","Iso","Confidence")
+    dfbn <- cbind(out, dfbn[,-1])
     return(dfbn)
   }
 
   dfbn1 <- idxstatsBam(file.path(workDir,bamlist[1]))
-  dfbn <- rc_df(dfbn1)
-  dfbn <- dfbn[,c(1,2)]
+  dfbn1 <- dfbn1[,c("seqnames"), drop = F]
 
   for ( bn in bamlist){
     df <- idxstatsBam(file.path(workDir,bn))
-    df <- rc_df(df)
-    colnames(df)[4] <- gsub("\\_.*","",bn)
-    dfbn <- left_join(dfbn, df)
+    df <- df[,c("seqnames", "mapped")]
+    colnames(df)[2] <- gsub("\\_.*","",bn)
+    dfbn1 <- full_join(dfbn1, df)
   }
 
-  write.table(dfbn, file.path(dir,"rc", "readcount_all_tRNAs.txt"), sep = "\t", row.names = F, quote = F)
+  dfbn <- rc_df(dfbn1)
+  write.table(dfbn, file.path(dir,"rc", "readcount_all_tRNAs.txt"), sep = "\t", row.names = F, col.names = T, quote = F)
 
-  id <- data.frame(do.call('rbind', strsplit(as.character(dfbn$tRNAscan.SE.ID), split= "-")))
-  dfbn$tRNAscan.SE.ID <- id$X1
-
-  dfbn <- dfbn[dfbn$tRNAscan.SE.ID%in%cluinfo$tRNAscan.SE.ID,]
-  dfbn <- left_join(cluinfo, dfbn)
-
-  write.table(dfbn[,-c(1,3,4,5)], file.path(dir,"rc", "readcount_highconfidence_tRNAs.txt"), sep = "\t", row.names = F, quote = F)
-
-
-  tcount <- dfbn[,-c(1,3,4,5)]
+  hi <- filter(dfbn, Confidence =="high")
+  tcount <- hi[,-c(1,3,4)]
   colnames(tcount)[1] <- "Name"
 
   write.table(tcount,file.path(dir,"rc","readcount_trnas.txt"), sep = "\t", row.names = F, quote = F)
@@ -56,20 +38,17 @@ anl_rc <- function(ref_name){
 
 
   ## isodecoder
-  sdfbn <- dfbn[,-c(1,2,4,5)]
-  clu <- c()
-  uni_clu <- unique(sdfbn$iso)
-  for (i in uni_clu){
-    dd <- sdfbn[grep(i, sdfbn$iso), ]
-    if(nrow(dd) > 1){
-      d <- colSums(dd[,-c(1)])
-    }else{
-      d <- data.frame(dd[,-c(1)])
+  clu<- c()
+  for (i in unique(hi$Iso)){
+    df <- hi[grep(i, hi$Iso), -c(1:4)]
+    if(nrow(df) > 1){
+      df <- colSums(df)
     }
-    clu <- rbind(clu, d)
+    df$Name <- i
+    df <- data.frame(df)
+    clu <- rbind(clu, df)
   }
-  ccount <- data.frame(iso = uni_clu, clu)
-  colnames(ccount )[1] <- "Name"
+  ccount <- clu[,c(ncol(clu), seq(1,ncol(clu)-1))]
   write.table(ccount ,file.path(dir,"rc", "readcount_isodecoders.txt"), sep = "\t", row.names = F, quote = F)
   gtable(ccount, container=RC_codon)
   insert(st, " ", do.newline = TRUE)
@@ -77,24 +56,21 @@ anl_rc <- function(ref_name){
 
 
   ## isoacceptor
-  aa <- c()
-  sdfbn$iso <- gsub("\\-\\d{1,2}.*", "", sdfbn$iso)
-  uni_aa <- unique(sdfbn$iso)
-  for (i in uni_aa){
-    dd <- sdfbn[grep(i, sdfbn$iso), ]
-    if(nrow(dd) > 1){
-      d <- colSums(dd[,-1])
-    }else{
-      d <- data.frame(dd[,-1])
+  acount <- data.frame(Name=substr(ccount$Name, 1,12), ccount[,-1])
+  clu <- c()
+  for( k in unique(acount$Name)){
+    df <- acount[grep(k, acount$Name),-1]
+    if(nrow(df)>1){
+      df <- colSums(df)
     }
-    aa <- rbind(aa, d)
+    df$Name <- k
+    df <- data.frame(df)
+    clu <- rbind(clu,df)
   }
 
-  aa <- data.frame(Name= uni_aa, aa)
-  acount <- aa
+  acount <- clu[,c(ncol(clu), seq(1,ncol(clu)-1))]
   write.table(acount,file.path(dir,"rc", "readcount_isoacceptors.txt"), sep = "\t", row.names = F, quote = F)
   gtable(acount, container=RC_aa)
   insert(st,"Done : Counting of isoacceptors", do.newline = TRUE )
-
   insert(st, " ", do.newline = TRUE)
 }

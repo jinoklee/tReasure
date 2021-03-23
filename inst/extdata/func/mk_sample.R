@@ -17,6 +17,7 @@ mk_sample <- function(h,...){
                          SampleName = as.character(sname),
                          Group = c("control", "test",rep("NA", (length(fq_list)-2))),
                          Batch = c(rep("NA", length(fq_list))))
+    sample$Group <- as.factor(sample$Group)
     sample$Batch <- as.character(sample$Batch)
     tbl[] <- sample
 

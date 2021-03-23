@@ -64,9 +64,8 @@ anl_filter <- function(h,...){
   }
   print(p())
   dev.off()
-  gimage("./stat/plot/plotMDS.png", container = mds_plot)
   save(p,y,cols, file = "./stat/plot/MDS_plot.RData")
   insert(st, " ", do.newline = TRUE)
-  insert(st,"Done : Filtering. Click! Next tab of Exploration.", do.newline = TRUE )
+  insert(st,"Done : Filtering. Click! Next tab of DEtRNA Detection.", do.newline = TRUE )
   insert(st, ".", do.newline = TRUE)
 }
