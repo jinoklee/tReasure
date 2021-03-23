@@ -72,9 +72,9 @@ notebook <- gnotebook(container = mother)
 gr0 <- ggroup(container = notebook, label ="  Introduction  ")
 gr1 <- ggroup(container = notebook, label ="  Uploading Samples  ", horizontal = FALSE)
 gr2 <- ggroup(container = notebook, label ="  Quality Control  ",horizontal = FALSE)
-gr3 <- ggroup(container = notebook, label ="  Alignment & Counting  ",horizontal = FALSE)
+gr3 <- ggroup(container = notebook, label ="  Alignment & Read Counting  ",horizontal = FALSE)
 gr4 <- ggroup(container = notebook, label ="  Filtering   ",horizontal = FALSE)
-gr5 <- ggroup(container = notebook, label ="  Exploration   ",horizontal = FALSE)
+# gr5 <- ggroup(container = notebook, label ="  Exploration   ",horizontal = FALSE)
 gr6 <- ggroup(container = notebook, label ="  DEtRNA Detection ",horizontal = FALSE)
 gr7 <- ggroup(container = notebook, label ="  Visualization ",horizontal = FALSE)
 child <- gframe("  Progress  ", container = mother, horizontal = FALSE)
@@ -115,10 +115,6 @@ tbl <- gdf(data.frame(FileName=I(list("Path/samplename.fastq", NA, NA)),
                       SampleName=I(list("samplename", NA, NA)),
                       Group=I(list("control", NA, NA)),
                       Batch=I(list("batch I", NA, NA))), container = ggr1, multiple = FALSE)
-
-#
-# tbl <- gdf(data.frame(FileName=c("Path/samplename.fastq"),SampleName=c("samplename"),
-#                       Group=c("control"), Batch=c("batch I")), container = ggr1, multiple = FALSE)
 
 
 addHandlerChanged(fq_dir, handler = function(h,...){
@@ -167,7 +163,7 @@ trim_button <- gbutton("RUN", container = tmp.2, expand = FALSE, handler = anl_t
 
 
 #-------------------------------------------------------------------------------------
-#  gr3. Alignment & Counting
+#  gr3. Alignment & Read Counting
 #......................................................................................
 addSpace(gr3, 20)
 ggr31 <- ggroup(container = gr3,  spacing = 10); size(ggr31) <- c(896,532)
@@ -244,11 +240,11 @@ addSpace(tmp.3, 20)
 anl_button <- gbutton("RUN", container=tmp.3, handler = anl_align_nomul)
 
 addSpace(pangr, 10)
-tmp.31 <- gframe(" [*OPTION] Working directory ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.31) <- c(250,70)
-addSpace(tmp.31, 10)
-
-glabel(" Select the directory of the FASTQ files : ", container = tmp.31, anchor = c(-1,0))
-addSpace(tmp.31, 10)
+# tmp.31 <- gframe(" [*OPTION] Working directory ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.31) <- c(250,70)
+# addSpace(tmp.31, 10)
+#
+# glabel(" Select the directory of the FASTQ files : ", container = tmp.31, anchor = c(-1,0))
+# addSpace(tmp.31, 10)
 
 tmp.32 <- gframe(" [*OPTION] Load the readcounts files ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.32) <- c(250,120)
 addSpace(tmp.32, 10)
@@ -256,8 +252,8 @@ addSpace(tmp.32, 10)
 glabel(" Select the file of readcounts : ", container = tmp.32, anchor = c(-1,0))
 addSpace(tmp.32, 10)
 
-selfq_button <- gfilebrowse(text = "", quote = FALSE, type = "selectdir", container = tmp.31,
-                            filter=list("*.fa" = list(patterns = c("*.fa")), "*.*" = list(patterns = c("*"))))
+# selfq_button <- gfilebrowse(text = "", quote = FALSE, type = "selectdir", container = tmp.31,
+#                             filter=list("*.fa" = list(patterns = c("*.fa")), "*.*" = list(patterns = c("*"))))
 
 seltrn_button <- gfilebrowse(text = "tRNA level", quote = FALSE, type = "open", container = tmp.32,
                              filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
@@ -269,14 +265,14 @@ selaa_button <- gfilebrowse(text = "Isoacceptor level", quote = FALSE, type = "o
                             filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
 
 
-addHandlerChanged(selfq_button, handler = function(h,...){
-  setwd(svalue(selfq_button))
-  dir <- getwd()
-  if(!dir.exists(paste(dir, "/pre", sep = ""))){
-    dir.create(paste(dir, "/pre", sep = ""), recursive = TRUE)}
-  if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
-    dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
-})
+# addHandlerChanged(selfq_button, handler = function(h,...){
+#   setwd(svalue(selfq_button))
+#   dir <- getwd()
+#   if(!dir.exists(paste(dir, "/pre", sep = ""))){
+#     dir.create(paste(dir, "/pre", sep = ""), recursive = TRUE)}
+#   if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
+#     dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
+# })
 
 addHandlerChanged(seltrn_button, handler = function(h,...){
   tcount <- read.delim(svalue(seltrn_button))
@@ -326,13 +322,13 @@ f_kep <- gtable(data.frame(No.reads=c("total", "keep", "remove")),container = gg
 #-------------------------------------------------------------------------------------
 #  gr5. Exploration
 #......................................................................................
-addSpace(gr5, 20)
-ggr51 <- ggroup(container = gr5, spacing = 10, fill=TRUE); #size(ggr51) <- c(996,550)
-addSpace(ggr51, 10)
-mds_view <- gnotebook(container = ggr51, spacing = 10, fill=TRUE, expand=TRUE); #size(mds_view) <- c(950, 550)
-mds_plot <- ggroup(container = mds_view, horizontal = FALSE, label = " MDS plot ")
-addSpace(ggr51, 10)
-addSpace(gr5, 20)
+# addSpace(gr5, 20)
+# ggr51 <- ggroup(container = gr5, spacing = 10, fill=TRUE); #size(ggr51) <- c(996,550)
+# addSpace(ggr51, 10)
+# mds_view <- gnotebook(container = ggr51, spacing = 10, fill=TRUE, expand=TRUE); #size(mds_view) <- c(950, 550)
+# mds_plot <- ggroup(container = mds_view, horizontal = FALSE, label = " MDS plot ")
+# addSpace(ggr51, 10)
+# addSpace(gr5, 20)
 
 
 #-------------------------------------------------------------------------------------
@@ -455,7 +451,7 @@ addSpace(gr7, 20)
 ggr71 <- ggroup(container = gr7,  spacing = 10); size(ggr71) <- c(996,550)
 addSpace(ggr71, 10)
 Plot_view <- gnotebook(container = ggr71,spacing = 10, expand=TRUE ); #size(Plot_view) <- c(950, 550)
-devs <- lapply(c("Plot_trnas", "Plot_isodecoders", "Plot_isoacceptors"), function(i) ggraphics(container = Plot_view, visible = TRUE, label = as.character(i)))
+devs <- lapply(c("MDS plot","Plot_trnas", "Plot_isodecoders", "Plot_isoacceptors"), function(i) ggraphics(container = Plot_view, visible = TRUE, label = as.character(i)))
 
 # Plot viewe handler--------------------
 addSpace(ggr71, 10)
@@ -464,9 +460,12 @@ addHandlerChanged(Plot_view, handler = function(h,...){
   visible(gg) <- TRUE
   #print(p())
   if(h$page.no == "1"){
+    load("./stat/plot/MDS_plot.RData")
+    print(p())
+  }else if(h$page.no == "2" ){
     load("./stat/plot/Volcano_Plot.RData")
     print(p())
-  }else if(h$page.no == "2"){
+  }else if(h$page.no == "3"){
     load("./stat/plot/Bar_Plot.RData")
     print(p())
   }else{
