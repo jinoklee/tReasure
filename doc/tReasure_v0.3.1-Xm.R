@@ -50,7 +50,7 @@ source(system.file("extdata", "func/barplot.R", package = "tReasure", mustWork =
 #......................................................................................#
 window <- gwindow("tReasure")
 addHandlerUnrealize(window, handler = function(h,...) {
-  val <- gconfirm("Really close window", parent=h$obj)
+  val <- gconfirm("Are you sure you want to exit tReausre?", parent=h$obj)
   if(as.logical(val)){
     if(dir.exists("apid")){
       load("apid")

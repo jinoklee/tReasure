@@ -17,17 +17,6 @@ anl_align <- function(h,...){
     }
   }
 
-  # if(
-  #   identical(dir,character(0)) & identical(c,character(0))){
-  #   gmessage("Warning : Select a directory of FASTQ files")}
-  # else{
-  #   if(identical(dir,character(0))){
-  #     dir <- svalue(selfq_button)}else{dir <- getwd()}
-
-
-    # if(svalue(gsel_button) == "Homo sapiens (hg38 - GRCh38 Dec 2013)"){
-    #   ref_name <- "Hsapi38"
-    # }
 
     ref_name <- cl_name$fa[grep(svalue(gsel_button),cl_name$P4)]
 
@@ -133,4 +122,4 @@ anl_align <- function(h,...){
     insert(st, ".", do.newline = TRUE)
 
   }
-#}
+
