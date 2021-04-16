@@ -19,26 +19,25 @@
 tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
 
 <br/>  
-Install source : [download]
 
-### **Method 1.** Install tReasure from GitHub   
-#### Oepn Rstuido or R and type as below 
+#### **[Method 1]** Install tReasure from GitHub   
+##### Oepn Rstuido or R and type as below 
 ~~~
 install.packages("devtools")
 library("devtools")
 devtools::install_github("jinoklee/tReasure")
 ~~~~
-Note. Select the gWidgets2GRk2 for a GUI toolkit  
+***Note*** Select the gWidgets2GRk2 for a GUI toolkit  
 
-### ** Method 2.** Install tReasure from source  
-#### **STEP 1.** Download and unzip a file
-   > ##### Windows : [tReasrue_win.zip]
-   > ##### Linux/Mac OS : [tReasure_src.zip]   
+#### **[Method 2]** Install tReasure from source  
+##### **STEP 1.** Download and unzip a file
+   > ###### Windows : [tReasrue_win.zip]
+   > ###### Linux/Mac OS : [tReasure_src.zip]   
 
-#### **STEP 2.** Double-click an install-file  
-   > ##### Window : install_win_v1.0.bat
-   > ##### Mac OS : install_mac_v1.0.sh.command
-   > ##### Linux : open commnad window and type as below   
+##### **STEP 2.** Double-click an install-file  
+   > ###### Window : install_win_v1.0.bat
+   > ###### Mac OS : install_mac_v1.0.sh.command
+   > ###### Linux : open commnad window and type as below   
    ~~~   
    sh install_linx_v1.0.sh.command
    ~~~   
@@ -51,14 +50,14 @@ Installation may take several minutes.
 <br/>
 
 ## Start   
-### **Method 1.** In case downloading tReasure from GitHub   
-#### Oepn Rstuido or R and type as below  
+#### **[Method 1]** In case downloading tReasure from GitHub   
+##### Oepn Rstuido or R and type as below  
 ~~~
 library(tReasure)
 tReasure()
 ~~~   
 
-#### **Method 2.** In case downloading tReasrue from source 
+#### **[Method 2]** In case downloading tReasrue from source 
 + For Windows
     : Double-click the icon of tReasure on Desktop.
 
