@@ -71,7 +71,7 @@ Installation may take several minutes.
 
 
 ### SAMPLE DATA  
-* Human breast cancer [Download](http://treasure.pmrc.re.kr/data/sample/sample.zip)  
+* Human breast cancer [Download](https://www.dropbox.com/s/x3624bzbahllo86/sample.zip?dl=0)  
 
 
 
