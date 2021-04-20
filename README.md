@@ -25,20 +25,28 @@ tReasure is a package for the R computing environment and it is assumed that you
     library("devtools")
     devtools::install_github("jinoklee/tReasure")
     
+   ***Note*** If the descriptioin shows as below during the installation, choose 1 
     
-   ***Note*** Select the gWidgets2GRk2 for a GUI toolkit  
+    
+    Select a GUI toolkit
+        1: gWidgets2RGK2
+        2: gWidtets2ticltk
+    
 
-### **Method 2. Install tReasure from source**  
+### **Method 2. Install tReasure from source**   
+    In case, addtional R tools (http://www.r-project.org) must be installed.
+    The difference from installing with GitHub is that it is installed as a standalone tools
+
    **STEP 1.** Download and unzip a file
    + Windows: [tReasrue_win.zip]
    + Linux/Mac OS: [tReasure_src.zip]      
 
    **STEP 2.** Double-click or type on command window an install-file  
-   + Windows: install_win_v1.0.bat
-   + Mac OS: install_mac_v1.0.sh.command
+   + Windows: install_win.bat
+   + Mac OS: install.sh.command
    + Linux: open commnad window and type as below       
         ~~~   
-        sh install_linx_v1.0.sh.command
+        sh install_src_v1.sh
         ~~~   
 
 Installation may take several minutes. 
