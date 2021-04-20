@@ -77,8 +77,10 @@ Installation may take several minutes.
     
 <br/>   
 
+## User Manual
+* [Download]
 
-### Sample data  
+## Sample data  
 * Human breast cancer [Download](https://www.dropbox.com/sh/phkerfxxq3jmgo9/AAC3sR1rWWo5DsTZAD3_VUANa?dl=0)  
 
 
