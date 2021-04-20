@@ -1,7 +1,7 @@
 Package: tReasure
 Type: Package
 Title: tReasure
-Version: 0.3.1
+Version: 1.0.0
 Author: c(person("jinoklee", email = "jinoklee.01@gmail.com"),person("minholee", email = "MinhoLee@dgu.edu"),person("Yeun-Jun Chung", email = "yejun@catholic.ac.kr"))
 Maintainer: jinoklee <jinoklee.01@gmail.com>
 Description: More about what it does (maybe more than one line)
