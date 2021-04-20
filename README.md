@@ -39,7 +39,7 @@ tReasure is a package for the R computing environment and it is assumed that you
 
    **STEP 1.** Download and unzip a file
    + Windows: tReasrue_win.zip [Download](doc/install/tReasure_win.zip)
-   + Linux/Mac OS: [tReasure_src.zip]      
+   + Linux/Mac OS: tReasure_src.zip [Download](doc/insta;;/tReasure_src.zip)     
 
    **STEP 2.** Double-click or type on command window an install-file  
    + Windows: install_win.bat
