@@ -431,7 +431,7 @@ tReasure <- function(){
       sapply (chars, doone, cigar)
     }
     fun <- function(x){
-      tid <- gsub("\\s.*","" ,data.frame(id(x))[,1])
+      tid <- gsub("\\s.*","" ,data.frame(vctrs::vec_group_id(x))[,1])
       x[tid%in%df$qname]
     }
 
