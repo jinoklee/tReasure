@@ -24,7 +24,7 @@ anl_rm <- function(ref_name){
 
   # function ---------
   mfun <- function(x){
-    tid <- gsub("\\s.*","" ,data.frame(id(x))[,1])
+    tid <- gsub("\\s.*","" ,data.frame(ShortRead::id(x))[,1])
     x[tid%in%tb1$qname]
   }
   matcher <- function(pattern, x) {
@@ -42,7 +42,7 @@ anl_rm <- function(ref_name){
     sapply (chars, doone, cigar)
   }
   fun <- function(x){
-    tid <- gsub("\\s.*","" ,data.frame(id(x))[,1])
+    tid <- gsub("\\s.*","" ,data.frame(ShortRead::id(x))[,1])
     x[tid%in%df$qname]
   }
 
