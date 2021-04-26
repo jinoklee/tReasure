@@ -60,7 +60,7 @@ Installation may take several minutes.
 ### **Method 1. In case downloading tReasure from GitHub**  : Open Rstuido or R and type as below  
   
     
-    library(tReasure)
+    library("tReasure")
     tReasure()
        
 
