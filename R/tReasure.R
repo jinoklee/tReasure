@@ -413,7 +413,7 @@ tReasure <- function(){
 
     # function ---------
     mfun <- function(x){
-      tid <- gsub("\\s.*","" ,data.frame(vctrs::vec_group_id(x))[,1])
+      tid <- gsub("\\s.*","" ,data.frame(ShortRead::id(x))[,1])
       x[tid%in%tb1$qname]
     }
     matcher <- function(pattern, x) {
@@ -431,7 +431,7 @@ tReasure <- function(){
       sapply (chars, doone, cigar)
     }
     fun <- function(x){
-      tid <- gsub("\\s.*","" ,data.frame(vctrs::vec_group_id(x))[,1])
+      tid <- gsub("\\s.*","" ,data.frame(ShortRead::id(x))[,1])
       x[tid%in%df$qname]
     }
 
@@ -447,6 +447,7 @@ tReasure <- function(){
       tb1$refname <- gsub("\\::.*", "", tb1$rname)
       sname <- sub("\\_.*", "", bn)
       fq <- file.path(workDir, paste0(sname, "_trim", ".fastq"))
+
       # cigar ------------
       con <- unique(c(grep("D",tb1$cigar),grep("I", tb1$cigar)))
       if(length(con) == 0 ){
@@ -462,6 +463,7 @@ tReasure <- function(){
       }
       df <- left_join(tb1, len)
       df <- filter(df, end <= (df$reflen-44))
+
       filterFastq(fq, destinations = file.path(dir, "post", paste0(sname,  "_trim_mature.fastq")), filter =fun , compress= FALSE)
       insert(st, paste("Completed : ", paste0(sub("\\_.*", "", bn),  "_trim_mature.fastq")), do.newline = TRUE)
     }
