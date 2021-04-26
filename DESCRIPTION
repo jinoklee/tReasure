@@ -11,19 +11,14 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   cairoDevice,
-  QuasR,
-  edgeR,
   ggplot2,
   grid,
   gridExtra,
   plotrix,
   tidyverse,
   stringr,
-  Rsamtools,
   seqinr,
-  ShortRead,
   dplyr,
-  DESeq2,
   future,
   statmod
 RoxygenNote: 7.1.1
