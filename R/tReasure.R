@@ -413,7 +413,7 @@ tReasure <- function(){
 
     # function ---------
     mfun <- function(x){
-      tid <- gsub("\\s.*","" ,data.frame(id(x))[,1])
+      tid <- gsub("\\s.*","" ,data.frame(vctrs::vec_group_id(x))[,1])
       x[tid%in%tb1$qname]
     }
     matcher <- function(pattern, x) {
