@@ -4,6 +4,21 @@
 #' @return tReasure window
 #' @export
 tReasure <- function(){
+  # install
+  if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+  bpkg <- c("QuasR","DESeq2","edgeR", "Rsamtools","seqinr","ShortRead")
+
+  ibpak <- function(bpkg){
+    new.pkg <- bpkg[!(bpkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg))
+      BiocManager::install(new.pkg)
+    sapply(bpkg, require, character.only = TRUE)
+  }
+
+  ibpak(bpkg)
+
   # libraray
   pkg <- c("gWidgets2","gWidgets2RGtk2","cairoDevice","plotrix","tidyverse",
            "gridExtra","ggplot2","grid","dplyr","statmod","future", "stringr",
