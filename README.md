@@ -83,6 +83,8 @@ Installation may take several minutes.
 ## Sample data  
 * Human breast cancer [Download](https://www.dropbox.com/sh/phkerfxxq3jmgo9/AAC3sR1rWWo5DsTZAD3_VUANa?dl=0)  
 
-
+## Tutorial videos
+ * Installation and setup [ Click  ] 
+ * Full version of analysis [ Click ](https://www.dropbox.com/s/2oueoevis9fhqlv/Analysis.tReasure.mkv?dl=0)   
 
 
