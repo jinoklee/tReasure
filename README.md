@@ -80,10 +80,10 @@ Installation may take several minutes.
 ## User Manual
 * [Download](doc/tReasure-UserManual.pdf)
 
-## Sample data  
+## Sample Data  
 * Human breast cancer [Download](https://www.dropbox.com/sh/phkerfxxq3jmgo9/AAC3sR1rWWo5DsTZAD3_VUANa?dl=0)  
 
-## Tutorial videos
+## Tutorial Videos
  * Installation and setup [ Click ! ](https://www.dropbox.com/s/4n6uz5bxvf1w9e2/Installaion.tReasure.mkv?dl=0) 
  * Full version of analysis [ Click ! ](https://www.dropbox.com/s/2oueoevis9fhqlv/Analysis.tReasure.mkv?dl=0)   
 
