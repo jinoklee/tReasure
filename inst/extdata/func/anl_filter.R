@@ -24,14 +24,6 @@ anl_filter <- function(h,...){
     return(x)
   }
 
-  filter_gene <- function(count){
-    rownames(count) <- count$Name
-    count<- count[,colnames(count) %in% sFile$SampleName]
-    x <- DGEList(count, group = sFile$Group)
-    isexpr <- rowSums(cpm(x) > 1) >= 90*nrow(sFile)/100
-    x <- x[isexpr,]
-    return(x)
-  }
 
   filter_t <- filter_gene(tcount)
   filter_c <- filter_gene(ccount)

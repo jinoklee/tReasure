@@ -11,24 +11,40 @@ anl_trim <-  function(h,...){
     sam_trim <- sub(".txt", "_trim.txt", sam_trim)
 
     sFile1 <- read.delim("sample.txt", header = TRUE, as.is = TRUE)
-    sFile2 <- sFile1[,c("FileName","SampleName")]
 
+    sFileq <- sFile1[,c("FileName","SampleName")]
+    sFileq$FileName <- file.path(dir, 'pre', sFileq$SampleName)
+    sFileq$FileName <- gsub("$","_qc.fastq", sFileq$FileName)
+
+    sFile2 <- sFile1[,c("FileName","SampleName")]
     sFile2$FileName <- file.path(dir, 'pre', sFile2$SampleName)
-    sFile2$FileName <- gsub("$",".fastq", sFile2$FileName)
-    sFile2$FileName <- sub(paste0(".","fastq$"), paste0("_trim.","fastq"),sFile2$FileName)
+    sFile2$FileName <- gsub("$","_trim.fastq", sFile2$FileName)
 
     write.table(sFile2, sam_trim, sep = "\t", quote = FALSE, row.names = FALSE)
 
     # preprocessing future-------------------
+    for( i in sFile1$FileName){
+      bi <- gsub(paste0(dir, "/"), "",i)
+      f <- FastqStreamer(i,readerBlockSize=1000)
+      while(length(fq <- yield(f))) {
+        qPerBase = as(quality(fq), "matrix")
+        qcount = rowSums( qPerBase <= as.numeric(svalue(q)))
+        qcount[is.na(qcount)] = 0
+        writeFastq(fq[qcount == 0],
+                   file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", bi))), mode="a")}
+      }
 
     pre <- function(){
       apid <- Sys.getpid()
       save(apid, file = file.path(dir,"apid"))
-      resa <- preprocessReads(filename = sFile1$FileName,outputFilename = sFile2$FileName,
+      resa <- preprocessReads(filename = sFileq$FileName,outputFilename = sFile2$FileName,
                               minLength = minLength, Rpattern = aseq)
       return(resa)}
 
-    preno <- function(){resno <- preprocessReads(filename = sFile1$FileName, outputFilename = sFile2$FileName,
+    preno <- function(){
+      apid <- Sys.getpid()
+      save(apid, file = file.path(dir,"apid"))
+      resno <- preprocessReads(filename = sFileq$FileName, outputFilename = sFile2$FileName,
                                                  minLength = minLength)
     return(resno)}
 
@@ -37,7 +53,7 @@ anl_trim <-  function(h,...){
       minLength = as.numeric(svalue(min))
       a <- future(pre())
     }else if(svalue(adapt) =="Illumina universal adapter"){
-      aseq <- "AGATCGGAAGAG"
+      aseq <- "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"
       a <- future(pre())
     }else if(svalue(adapt) =="SOLiD Adapter"){
       aseq <- "CGCCTTGGCCGTACAGCAG"
@@ -50,8 +66,19 @@ anl_trim <-  function(h,...){
     # preprocessing status-------------------
 
     preprocess_status <- function(){
-      for(i in sFile2$SampleName){
+      for(i in sFileq$SampleName){
         a <- sFile1$FileName[grep(i, sFile2$SampleName)]
+        t <- sFileq$FileName[grep(i, sFile2$SampleName)]
+        insert(st, paste("QC : ", a), do.newline = TRUE)
+        repeat{
+          Sys.sleep(1)
+          insert(st, ".", do.newline = FALSE)
+          if(file.exists(t) == TRUE) break
+        }
+        insert(st, " ", do.newline = TRUE)
+      }
+      for(i in sFile2$SampleName){
+        a <- sFileq$FileName[grep(i, sFile2$SampleName)]
         t <- sFile2$FileName[grep(i, sFile2$SampleName)]
         insert(st, paste("Filtering : ", a), do.newline = TRUE)
         repeat{
