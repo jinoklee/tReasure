@@ -16,7 +16,7 @@ anl_filter <- function(h,...){
   acount <- read.table(file.path(dir, "rc","readcount_isoacceptors.txt"), header = T)
 
   filter_gene <- function(count){
-    rownames(count) <- count$Names
+    rownames(count) <- count$Name
     count <- count[,colnames(count) %in% sFile$SampleName]
     x <- DGEList(count, group = sFile$Group)
     isexpr <- rowSums(cpm(x) > svalue(cfilv)) >= svalue(sfil)*nrow(sFile)/100
