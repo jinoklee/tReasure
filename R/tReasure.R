@@ -93,7 +93,6 @@ tReasure <- function(){
     insert(st, "Complete uploading the sample list.", do.newline = TRUE)
     if(length(grep("control", sample2$Group)) < 2 | length(grep("test", sample2$Group)) < 2){
       insert(st, "Warnning : There should be at least 2 samples per group for differentially expression analysis.")}
-    #insert(st, "Click! Next tab of Quality Control.", do.newline = TRUE)
     # save update sample list
     addHandlerChanged(tbl, handler = function(h, ...){
       new_sample <- tbl[]
@@ -117,24 +116,38 @@ tReasure <- function(){
       sam_trim <- sub(".txt", "_trim.txt", sam_trim)
 
       sFile1 <- read.delim("sample.txt", header = TRUE, as.is = TRUE)
-      sFile2 <- sFile1[,c("FileName","SampleName")]
 
+      sFileq <- sFile1[,c("FileName","SampleName")]
+      sFileq$FileName <- file.path(dir, 'pre', sFileq$SampleName)
+      sFileq$FileName <- gsub("$","_qc.fastq", sFileq$FileName)
+
+      sFile2 <- sFile1[,c("FileName","SampleName")]
       sFile2$FileName <- file.path(dir, 'pre', sFile2$SampleName)
-      sFile2$FileName <- gsub("$",".fastq", sFile2$FileName)
-      sFile2$FileName <- sub(paste0(".","fastq$"), paste0("_trim.","fastq"),sFile2$FileName)
+      sFile2$FileName <- gsub("$","_trim.fastq", sFile2$FileName)
 
       write.table(sFile2, sam_trim, sep = "\t", quote = FALSE, row.names = FALSE)
 
       # preprocessing future-------------------
 
+      for( i in sFile1$FileName){
+        bi <- gsub(paste0(dir, "/"), "",i)
+        f <- FastqStreamer(i,readerBlockSize=1000)
+        while(length(fq <- yield(f))) {
+          qPerBase = as(quality(fq), "matrix")
+          qcount = rowSums( qPerBase <= as.numeric(svalue(q)))
+          qcount[is.na(qcount)] = 0
+          writeFastq(fq[qcount == 0],
+                     file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", bi))), mode="a")
+        }}
+
       pre <- function(){
         apid <- Sys.getpid()
         save(apid, file = file.path(dir,"apid"))
-        resa <- preprocessReads(filename = sFile1$FileName,outputFilename = sFile2$FileName,
+        resa <- preprocessReads(filename = sFileq$FileName,outputFilename = sFile2$FileName,
                                 minLength = minLength, Rpattern = aseq)
         return(resa)}
 
-      preno <- function(){resno <- preprocessReads(filename = sFile1$FileName, outputFilename = sFile2$FileName,
+      preno <- function(){resno <- preprocessReads(filename = sFileq$FileName, outputFilename = sFile2$FileName,
                                                    minLength = minLength)
       return(resno)}
 
@@ -143,7 +156,7 @@ tReasure <- function(){
         minLength = as.numeric(svalue(min))
         a <- future(pre())
       }else if(svalue(adapt) =="Illumina universal adapter"){
-        aseq <- "AGATCGGAAGAG"
+        aseq <- "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"
         a <- future(pre())
       }else if(svalue(adapt) =="SOLiD Adapter"){
         aseq <- "CGCCTTGGCCGTACAGCAG"
@@ -156,8 +169,20 @@ tReasure <- function(){
       # preprocessing status-------------------
 
       preprocess_status <- function(){
-        for(i in sFile2$SampleName){
+        for(i in sFileq$SampleName){
           a <- sFile1$FileName[grep(i, sFile2$SampleName)]
+          t <- sFileq$FileName[grep(i, sFile2$SampleName)]
+          insert(st, paste("QC : ", a), do.newline = TRUE)
+          repeat{
+            Sys.sleep(1)
+            insert(st, ".", do.newline = FALSE)
+            if(file.exists(t) == TRUE) break
+          }
+          insert(st, " ", do.newline = TRUE)
+        }
+
+        for(i in sFile2$SampleName){
+          a <- sFileq$FileName[grep(i, sFile2$SampleName)]
           t <- sFile2$FileName[grep(i, sFile2$SampleName)]
           insert(st, paste("Filtering : ", a), do.newline = TRUE)
           repeat{
@@ -179,6 +204,9 @@ tReasure <- function(){
       write.table(rest, "./pre/trim_res.txt", sep="\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
       rest <- rest[-c(2,5,6),]
       res_trim <- gtable(data.frame(rest), container = ggr21)
+      #
+      file.remove(sFileq$FileName)
+      #
       insert(st, "", do.newline = TRUE)
       insert(st,"Done : Quality Control. Click! Next tab of Alignment & Counting.", do.newline = TRUE )
       insert(st, ".", do.newline = TRUE)
@@ -188,7 +216,6 @@ tReasure <- function(){
   anl_align <- function(h,...){
     insert(st,"Start : Alignment & Read Counting", do.newline = TRUE )
     dir <- svalue(fq_dir)
-    # c <- svalue(selfq_button)
     insert(st, paste("check genome.... "), do.newline = TRUE)
     # download_refer
     dw_refer <- function(url, sub, sub.zip){
@@ -227,7 +254,6 @@ tReasure <- function(){
 
     # alignment status----------------------
 
-
     algin_status_pre <- function(){
       for(i in sFile2$SampleName){
         a <- sFile2$FileName[grep(i, sFile2$SampleName)]
@@ -253,7 +279,6 @@ tReasure <- function(){
     write.table(alinstat, "./pre/preproccessing_align_stat.txt",sep = "\t")
 
     # QC
-    #insert(st,"Start : QC", do.newline = TRUE )
     save(projt_pre, file = "./pre/premappingQC.RData")
     #qQCReport(projt_pre, pdfFilename = "./pre/qc_report.pdf", useSampleNames = TRUE)
 
@@ -491,15 +516,6 @@ tReasure <- function(){
       count <- count[,colnames(count) %in% sFile$SampleName]
       x <- DGEList(count, group = sFile$Group)
       isexpr <- rowSums(cpm(x) > svalue(cfilv)) >= svalue(sfil)*nrow(sFile)/100
-      x <- x[isexpr,]
-      return(x)
-    }
-
-    filter_gene <- function(count){
-      rownames(count) <- count$Name
-      count<- count[,colnames(count) %in% sFile$SampleName]
-      x <- DGEList(count, group = sFile$Group)
-      isexpr <- rowSums(cpm(x) > 1) >= 90*nrow(sFile)/100
       x <- x[isexpr,]
       return(x)
     }
