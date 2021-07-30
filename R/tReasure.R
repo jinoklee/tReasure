@@ -137,8 +137,9 @@ tReasure <- function(){
           qcount = rowSums( qPerBase <= as.numeric(svalue(q)))
           qcount[is.na(qcount)] = 0
           writeFastq(fq[qcount == 0],
-                     file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", bi))), mode="a")
-        }}
+                     file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(bi)))), mode="a")
+        }
+        }
 
       pre <- function(){
         apid <- Sys.getpid()
