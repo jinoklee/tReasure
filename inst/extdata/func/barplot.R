@@ -1,12 +1,13 @@
 barplot <- function(width, height, res){
   trna <- read.delim("./rc/readcount_isodecoders.txt")
   out <- read.delim("./stat/stat_isodecoder_list.txt")
+  de <- read.delim("./stat/DEisodecoder_list.txt")
 
   pval <- svalue(widget_list$pval)
   fc <- svalue(widget_list$FC)
 
   if(svalue(widget_list$fdr_s) == "Benjamini-Hochberg"){
-    dw <- filter(out, logFC < -pval, out$Benjamini < pval)
+    dw <- filter(out, logFC < -fc, out$Benjamini < pval)
     up <- filter(out, logFC > fc, out$Benjamini < pval)
   }else if(svalue(widget_list$fdr_s) =="Bonferroni"){
     dw <- filter(out, logFC < -fc, out$Bonferroni< pval)
@@ -16,8 +17,7 @@ barplot <- function(width, height, res){
     up <- filter(out, logFC > fc, out$FDR < pval)
   }
 
-  # dw <- filter(out, logFC < -1.5, out$Benjamini < 0.5)
-  # up <- filter(out, logFC > 1.5, out$Benjamini < 0.5)
+
 
   dw <- as.character(dw$Names)
   up <- as.character(up$Names)

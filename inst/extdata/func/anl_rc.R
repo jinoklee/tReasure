@@ -9,7 +9,7 @@ anl_rc <- function(ref_name){
     out <- data.frame(stringr::str_split_fixed(chr$X2, "_", 4))
     out$X1 <- paste(chr$X1, out$X1,sep = ".")
     colnames(out) <- c("tRNAscan.SE.id","GtRNAdb.id","Iso","Confidence")
-    dfbn <- cbind(out, dfbn[,-1])
+    dfbn <- cbind(out, subset(dfbn, select = -seqnames))
     return(dfbn)
   }
 
@@ -48,6 +48,7 @@ anl_rc <- function(ref_name){
     df <- data.frame(df)
     clu <- rbind(clu, df)
   }
+
   ccount <- clu[,c(ncol(clu), seq(1,ncol(clu)-1))]
   write.table(ccount ,file.path(dir,"rc", "readcount_isodecoders.txt"), sep = "\t", row.names = F, quote = F)
   gtable(ccount, container=RC_codon)
