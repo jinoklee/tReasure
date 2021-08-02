@@ -128,7 +128,6 @@ tReasure <- function(){
       write.table(sFile2, sam_trim, sep = "\t", quote = FALSE, row.names = FALSE)
 
       # preprocessing future-------------------
-
       qnumber <- as.numeric(svalue(q))
       qf <- function(){
         for( i in sFile1$FileName){

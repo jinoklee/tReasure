@@ -17,7 +17,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
   BiocManager::install(version = "3.12")
 
-bpkg <- c("QuasR","DESeq2","edgeR", "Rsamtools","seqinr","ShortRead")
+bpkg <- c("pillar","QuasR","DESeq2","edgeR", "Rsamtools","seqinr","ShortRead")
 
 ibpak <- function(bpkg){
   new.pkg <- bpkg[!(bpkg %in% installed.packages()[, "Package"])]

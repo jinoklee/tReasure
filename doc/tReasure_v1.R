@@ -240,11 +240,6 @@ addSpace(tmp.3, 20)
 anl_button <- gbutton("RUN", container=tmp.3, handler = anl_align)
 
 addSpace(pangr, 10)
-# tmp.31 <- gframe(" [*OPTION] Working directory ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.31) <- c(250,70)
-# addSpace(tmp.31, 10)
-#
-# glabel(" Select the directory of the FASTQ files : ", container = tmp.31, anchor = c(-1,0))
-# addSpace(tmp.31, 10)
 
 tmp.32 <- gframe(" [*OPTION] Load the readcounts files ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.32) <- c(250,120)
 addSpace(tmp.32, 10)
@@ -264,15 +259,6 @@ selco_button <- gfilebrowse(text = "Isodecoder level", quote = FALSE, type = "op
 selaa_button <- gfilebrowse(text = "Isoacceptor level", quote = FALSE, type = "open", container = tmp.32,
                             filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
 
-
-# addHandlerChanged(selfq_button, handler = function(h,...){
-#   setwd(svalue(selfq_button))
-#   dir <- getwd()
-#   if(!dir.exists(paste(dir, "/pre", sep = ""))){
-#     dir.create(paste(dir, "/pre", sep = ""), recursive = TRUE)}
-#   if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
-#     dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
-# })
 
 addHandlerChanged(seltrn_button, handler = function(h,...){
   tcount <- read.delim(svalue(seltrn_button))
