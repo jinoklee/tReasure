@@ -130,6 +130,8 @@ tReasure <- function(){
       # preprocessing future-------------------
 
       qf <- future(
+        # qpid <- Sys.getpid()
+        # save(qpid, file = file.path(dir,"qpid"))
         for( i in sFile1$FileName){
           f <- FastqStreamer(i,readerBlockSize=1000)
           while(length(fq <- yield(f))){
