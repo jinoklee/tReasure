@@ -15,7 +15,7 @@
     5) Visualization 
 
 ## Installation       
-tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
+tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). Also, addtional R tools (http://www.r-project.org) must be installed. tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
 
 <br/>   
 
@@ -34,7 +34,6 @@ tReasure is a package for the R computing environment and it is assumed that you
     
 
 ### **Method 2. Install tReasure from source**   
-    In case, addtional R tools (http://www.r-project.org) must be installed.
     The difference from installing with GitHub is that it is installed as a standalone tools
 
    **STEP 1.** Download and unzip a file
