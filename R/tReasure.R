@@ -8,7 +8,7 @@ tReasure <- function(){
   if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-  bpkg <- c("QuasR","DESeq2","edgeR", "Rsamtools","seqinr","ShortRead")
+  bpkg <- c("pillar","QuasR","DESeq2","edgeR", "Rsamtools","seqinr","ShortRead")
 
   ibpak <- function(bpkg){
     new.pkg <- bpkg[!(bpkg %in% installed.packages()[, "Package"])]
@@ -83,7 +83,7 @@ tReasure <- function(){
     setwd(sampath)
     dir <- getwd()
     if(!dir.exists(paste(dir, "/pre", sep = ""))){
-      dir.create(paste(dir, "/prep", sep = ""), recursive = TRUE)}
+      dir.create(paste(dir, "/pre", sep = ""), recursive = TRUE)}
     if(!dir.exists(paste(dir, "/stat/plot", sep = ""))){
       dir.create(paste(dir, "/stat/plot", sep = ""), recursive = TRUE)}
 
@@ -169,16 +169,16 @@ tReasure <- function(){
         apid <- Sys.getpid()
         save(apid, file = file.path(dir,"apid"))
         resa <- preprocessReads(filename = sFileq$FileName,outputFilename = sFile2$FileName,
-                                minLength = minLength, Rpattern = aseq)
+                                minLength = 10, Rpattern = aseq)
         return(resa)}
 
       preno <- function(){resno <- preprocessReads(filename = sFileq$FileName, outputFilename = sFile2$FileName,
-                                                   minLength = minLength)
+                                                   minLength = 10)
       return(resno)}
 
       if(svalue(adapt) == "Illumina smallRNA 3' adapter"){
         aseq <- "TGGAATTCTCGGGTGCCAAGG"
-        minLength = as.numeric(svalue(min))
+        #minLength = as.numeric(svalue(min))
         a <- future(pre())
       }else if(svalue(adapt) =="Illumina universal adapter"){
         aseq <- "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"
