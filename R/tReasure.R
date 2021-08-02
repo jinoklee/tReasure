@@ -231,7 +231,7 @@ tReasure <- function(){
   anl_align <- function(h,...){
     insert(st,"Start : Alignment & Read Counting", do.newline = TRUE )
     dir <- svalue(fq_dir)
-    insert(st, paste("check genome.... "), do.newline = TRUE)
+    insert(st, paste("Check genome.... "), do.newline = TRUE)
     # download_refer
     dw_refer <- function(url, sub, sub.zip){
       R_path <- system.file( "extdata", package = "tReasure", mustWork = TRUE)

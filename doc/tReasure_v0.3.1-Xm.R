@@ -82,12 +82,13 @@ anl_trim <-  function(h,...){
     #                file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(bi)))), mode="a")}
     # }
 
+    qnum <- svalue(q)
     qf <- future(
       for( i in sFile1$FileName){
         f <- FastqStreamer(i,readerBlockSize=1000)
         while(length(fq <- yield(f))){
           qPerBase = as(quality(fq), "matrix")
-          qcount = rowSums( qPerBase <= as.numeric(svalue(q)))
+          qcount = rowSums( qPerBase <= qnum)
           qcount[is.na(qcount)] = 0
           writeFastq(fq[qcount == 0],
                      file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(i)))), mode="a")}}
@@ -97,7 +98,7 @@ anl_trim <-  function(h,...){
       for(i in sFileq$SampleName){
         a <- sFile1$FileName[grep(i, sFile2$SampleName)]
         t <- sFileq$FileName[grep(i, sFile2$SampleName)]
-        insert(st, paste("QC : ", a), do.newline = TRUE)
+        insert(st, paste("Screen : ", a), do.newline = TRUE)
         repeat{
           Sys.sleep(1)
           insert(st, ".", do.newline = FALSE)
@@ -108,26 +109,23 @@ anl_trim <-  function(h,...){
     }
 
     qc_status()
-    qres <- value(qf)
-
 
     pre <- function(){
       apid <- Sys.getpid()
       save(apid, file = file.path(dir,"apid"))
       resa <- preprocessReads(filename = sFileq$FileName,outputFilename = sFile2$FileName,
-                              minLength = minLength, Rpattern = aseq)
+                              minLength = 10, Rpattern = aseq)
       return(resa)}
 
     preno <- function(){
       apid <- Sys.getpid()
       save(apid, file = file.path(dir,"apid"))
       resno <- preprocessReads(filename = sFileq$FileName, outputFilename = sFile2$FileName,
-                               minLength = minLength)
+                               minLength = 10)
       return(resno)}
 
     if(svalue(adapt) == "Illumina smallRNA 3' adapter"){
       aseq <- "TGGAATTCTCGGGTGCCAAGG"
-      minLength = as.numeric(svalue(min))
       a <- future(pre())
     }else if(svalue(adapt) =="Illumina universal adapter"){
       aseq <- "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"
@@ -143,17 +141,6 @@ anl_trim <-  function(h,...){
     # preprocessing status-------------------
 
     preprocess_status <- function(){
-      # for(i in sFileq$SampleName){
-      #   a <- sFile1$FileName[grep(i, sFile2$SampleName)]
-      #   t <- sFileq$FileName[grep(i, sFile2$SampleName)]
-      #   insert(st, paste("QC : ", a), do.newline = TRUE)
-      #   repeat{
-      #     Sys.sleep(1)
-      #     insert(st, ".", do.newline = FALSE)
-      #     if(file.exists(t) == TRUE) break
-      #   }
-      #   insert(st, " ", do.newline = TRUE)
-      # }
       for(i in sFile2$SampleName){
         a <- sFileq$FileName[grep(i, sFile2$SampleName)]
         t <- sFile2$FileName[grep(i, sFile2$SampleName)]
