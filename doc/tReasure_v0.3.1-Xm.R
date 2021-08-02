@@ -84,14 +84,13 @@ anl_trim <-  function(h,...){
 
     qf <- future(
       for( i in sFile1$FileName){
-        bi <- gsub(paste0(dir, "/"), "",i)
         f <- FastqStreamer(i,readerBlockSize=1000)
         while(length(fq <- yield(f))){
           qPerBase = as(quality(fq), "matrix")
           qcount = rowSums( qPerBase <= as.numeric(svalue(q)))
           qcount[is.na(qcount)] = 0
           writeFastq(fq[qcount == 0],
-                     file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(bi)))), mode="a")}}
+                     file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(i)))), mode="a")}}
     )
 
     qc_status <- function(){
