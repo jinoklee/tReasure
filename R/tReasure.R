@@ -129,9 +129,7 @@ tReasure <- function(){
 
       # preprocessing future-------------------
 
-      qf <- future(
-        # qpid <- Sys.getpid()
-        # save(qpid, file = file.path(dir,"qpid"))
+      qf <- function(){
         for( i in sFile1$FileName){
           f <- FastqStreamer(i,readerBlockSize=1000)
           while(length(fq <- yield(f))){
@@ -140,7 +138,14 @@ tReasure <- function(){
             qcount[is.na(qcount)] = 0
             writeFastq(fq[qcount == 0],
                        file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(i)))), mode="a")}}
+      }
+      qff <- future(
+        # qpid <- Sys.getpid()
+        # save(qpid, file = file.path(dir,"qpid"))
+        qf()
       )
+
+      save(qff, file = "q.R")
 
       qc_status <- function(){
         for(i in sFileq$SampleName){
@@ -157,7 +162,7 @@ tReasure <- function(){
       }
 
       qc_status()
-      qres <- value(qf)
+
 
       pre <- function(){
         apid <- Sys.getpid()
