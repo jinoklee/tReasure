@@ -129,12 +129,13 @@ tReasure <- function(){
 
       # preprocessing future-------------------
 
+      qnumber <- as.numeric(svalue(q))
       qf <- function(){
         for( i in sFile1$FileName){
           f <- FastqStreamer(i,readerBlockSize=1000)
           while(length(fq <- yield(f))){
             qPerBase = as(quality(fq), "matrix")
-            qcount = rowSums( qPerBase <= as.numeric(svalue(q)))
+            qcount = rowSums( qPerBase <= qnumber )
             qcount[is.na(qcount)] = 0
             writeFastq(fq[qcount == 0],
                        file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(i)))), mode="a")}}
@@ -145,7 +146,7 @@ tReasure <- function(){
         qf()
       )
 
-      save(qff, file = "q.R")
+      save(qff, file = "q.RData")
 
       qc_status <- function(){
         for(i in sFileq$SampleName){
