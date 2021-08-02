@@ -131,21 +131,20 @@ tReasure <- function(){
 
       qf <- future(
         for( i in sFile1$FileName){
-          bi <- gsub(paste0(dir, "/"), "",i)
           f <- FastqStreamer(i,readerBlockSize=1000)
           while(length(fq <- yield(f))){
             qPerBase = as(quality(fq), "matrix")
             qcount = rowSums( qPerBase <= as.numeric(svalue(q)))
             qcount[is.na(qcount)] = 0
             writeFastq(fq[qcount == 0],
-                       file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(bi)))), mode="a")}}
+                       file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(i)))), mode="a")}}
       )
 
       qc_status <- function(){
         for(i in sFileq$SampleName){
           a <- sFile1$FileName[grep(i, sFile2$SampleName)]
           t <- sFileq$FileName[grep(i, sFile2$SampleName)]
-          insert(st, paste("QC : ", a), do.newline = TRUE)
+          insert(st, paste("Screen : ", a), do.newline = TRUE)
           repeat{
             Sys.sleep(1)
             insert(st, ".", do.newline = FALSE)
