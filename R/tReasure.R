@@ -1272,9 +1272,9 @@ tReasure <- function(){
     DEcodon <- stat_codon[]
     DEaa <- stat_aa[]
 
-    write.table(DEtRNA, "./stat/DEtrna_list.txt", sep = "\t", quote = FALSE)
-    write.table(DEcodon, "./stat/DEisodecoder_list.txt", sep = "\t", quote = FALSE)
-    write.table(DEaa, "./stat/DEisoacceptor_list.txt", sep = "\t", quote = FALSE)
+    write.table(DEtRNA, "./stat/DEtrna_list.txt", sep = "\t", quote = FALSE, row.names = F)
+    write.table(DEcodon, "./stat/DEisodecoder_list.txt", sep = "\t", quote = FALSE, row.names = F)
+    write.table(DEaa, "./stat/DEisoacceptor_list.txt", sep = "\t", quote = FALSE, row.names = F)
 
     volcano(650, 460, 80)
     barplot(850, 460,80)
