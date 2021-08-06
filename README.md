@@ -37,8 +37,8 @@ tReasure is a package for the R computing environment and it is assumed that you
     The difference from installing with GitHub is that it is installed as a standalone tools
 
    **STEP 1.** Download and unzip a file
-   + Windows: tReasrue_win.zip [Download](doc/install/tReasure_win.zip)
-   + Linux/Mac OS: tReasure_src.zip [Download](doc/insta;;/tReasure_src.zip)     
+   + Windows: tReasrue_win.zip [Download](https://www.dropbox.com/sh/wyn0q5inoxx5lm7/AAB6gxpD7uNvR9arIAqYPrl3a?dl=0)
+   + Linux/Mac OS: tReasure_src.zip [Download](https://www.dropbox.com/sh/wyn0q5inoxx5lm7/AAB6gxpD7uNvR9arIAqYPrl3a?dl=0)     
 
    **STEP 2.** Double-click or type on command window an install-file  
    + Windows: install_win.bat
