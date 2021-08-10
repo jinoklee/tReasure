@@ -77,7 +77,7 @@ Installation may take several minutes.
 <br/>   
 
 ## User Manual
-* [Download](doc/tReasure-UserManual-0801.pdf)
+* [Download](doc/tReasure-UserManual.pdf)
 
 ## Sample Data  
 * Human breast cancer [Download](https://www.dropbox.com/sh/phkerfxxq3jmgo9/AAC3sR1rWWo5DsTZAD3_VUANa?dl=0)  
