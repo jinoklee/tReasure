@@ -5,7 +5,7 @@
 
 # tReasure
 ***
-**tReasure (tRNA Expression Analysis Software Utilizing R for Easy use)** is user-friendly tool for the tRNA expression analysis of deep-sequencing experiments for small RNAs using R packages. 
+**tReasure (tRNA Expression Analysis Software Utilising R for Easy use)** is user-friendly tool for the tRNA expression analysis of deep-sequencing experiments for small RNAs using R packages. 
 
     tReasure currently implements the following tasks:
     1) Making sample list for analysis
