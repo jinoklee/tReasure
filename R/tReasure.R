@@ -355,8 +355,12 @@ tReasure <- function(){
     bamlist <- basename(bamlist)
 
     rc_df <- function(dfbn){
+      dfbn$seqnames <-gsub("_t",":t", dfbn$seqnames) 
+      dfbn$seqnames <-gsub("_N",":N", dfbn$seqnames) 
+      dfbn$seqnames <-gsub("_none",":none", dfbn$seqnames) 
+      dfbn$seqnames <-gsub("_high",":high", dfbn$seqnames)
       chr <- data.frame(stringr::str_split_fixed(dfbn$seqnames, "[.]", 2))
-      out <- data.frame(stringr::str_split_fixed(chr$X2, "_", 4))
+      out <- data.frame(stringr::str_split_fixed(chr$X2, ":", 4))
       out$X1 <- paste(chr$X1, out$X1,sep = ".")
       colnames(out) <- c("tRNAscan.SE.id","GtRNAdb.id","Iso","Confidence")
       dfbn <- cbind(out, dfbn[,-1])
