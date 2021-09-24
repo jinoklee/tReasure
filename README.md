@@ -79,6 +79,8 @@ Installation may take several minutes.
 ## User Manual
 * [Download](doc/tReasure-Manual.pdf)
 
+## Detailed Mapping Methods
+* [Click](doc/Detailed-Mapping-Methods.pdf)
 ## Sample Data  
 * Human breast cancer [Download](https://www.dropbox.com/sh/phkerfxxq3jmgo9/AAC3sR1rWWo5DsTZAD3_VUANa?dl=0)  
 
