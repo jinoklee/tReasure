@@ -34,7 +34,7 @@ tReasure <- function(){
   ipak(pkg)
   
   # libraray
-  pkg <- c("gWidgets2","gWidgets2RGtk2","cairoDevice","plotrix","tidyverse",
+  pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse",
            "gridExtra","ggplot2","grid","dplyr","statmod","future", "stringr",
            "QuasR","DESeq2","edgeR", "Rsamtools","seqinr","ShortRead", "tReasure")
   sapply(pkg, require, character.only = TRUE)
