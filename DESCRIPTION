@@ -23,5 +23,4 @@ Imports:
   future,
   statmod,
   gWidgets2,
-  gWidgets2RGtk2
 RoxygenNote: 7.1.1
