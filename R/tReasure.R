@@ -18,17 +18,6 @@ tReasure <- function(){
   }
 
   ibpak(bpkg)
-  
-  install.packages("https://cran.r-project.org/src/contrib/Archive/gWidgets2RGtk2/gWidgets2RGtk2_1.0-7.tar.gz")
-  
-  pkg <- c("gWidgets2RGtk2")
-  
-  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-  if (length(new.pkg))
-    install.packages("https://cran.r-project.org/src/contrib/Archive/gWidgets2RGtk2/gWidgets2RGtk2_1.0-7.tar.gz", repos = NULL, type="source")
-  sapply(pkg, require, character.only = TRUE)
-
-ipak(pkg)
 
   # libraray
   pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse",
