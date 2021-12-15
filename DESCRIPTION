@@ -22,6 +22,5 @@ Imports:
   dplyr,
   future,
   statmod,
-  gWidgets2,
-  RGtk2
+  gWidgets2
 RoxygenNote: 7.1.1
