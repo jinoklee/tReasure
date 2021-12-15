@@ -18,7 +18,27 @@ tReasure <- function(){
   }
 
   ibpak(bpkg)
-
+  pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse",
+           "gridExtra","ggplot2","grid","dplyr","statmod",
+           "future", "stringr", "RGtk2")
+  
+  
+  ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg))
+      install.packages(new.pkg, dependencies = TRUE, repos = "http://cran.r-project.org")
+    sapply(pkg, require, character.only = TRUE)
+  }
+  
+  ipak(pkg)
+  
+  
+  R_path <-.libPaths()[1]
+  if(!dir.exists(file.path(R_path,"gWidgets2RGtk2"))){
+    download.file("http://treasure.pmrc.re.kr/data/gWidgets2RGtk2.zip", destfile = "gWidgets2RGtk2.zip")
+    unzip(zipfile = "gWidgets2RGtk2.zip", exdir= R_path)
+  }
+  
   # libraray
   pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse",
            "gridExtra","ggplot2","grid","dplyr","statmod","future", "stringr",
