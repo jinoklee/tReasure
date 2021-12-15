@@ -39,6 +39,11 @@ tReasure <- function(){
     unzip(zipfile = "gWidgets2RGtk2.zip", exdir= R_path)
   }
   
+  if(!dir.exists(file.path(R_path,"RGtk2"))){
+    download.file("http://treasure.pmrc.re.kr/data/RGtk2.zip", destfile = "RGtk2.zip")
+    unzip(zipfile = "RGtk2.zip", exdir= R_path)
+  }
+  
   # libraray
   pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse",
            "gridExtra","ggplot2","grid","dplyr","statmod","future", "stringr",
