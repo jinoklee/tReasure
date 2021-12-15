@@ -19,26 +19,13 @@ tReasure <- function(){
 
   ibpak(bpkg)
 
-  pkg <- c("gWidgets2","gWidgets2RGtk2","cairoDevice","plotrix","tidyverse",
-           "gridExtra","ggplot2","grid","dplyr","statmod",
-           "future", "stringr", "RGtk2")
-  
-  
-  ipak <- function(pkg){
-    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-    if (length(new.pkg))
-      install.packages(new.pkg)
-    sapply(pkg, require, character.only = TRUE)
-  }
-  
-  ipak(pkg)
-  
+
   # libraray
   pkg <- c("gWidgets2","RGtk2","cairoDevice","plotrix","tidyverse",
            "gridExtra","ggplot2","grid","dplyr","statmod","future", "stringr",
            "QuasR","DESeq2","edgeR", "Rsamtools","seqinr","ShortRead", "tReasure")
   sapply(pkg, require, character.only = TRUE)
-  options(guiToolkit="RGtk2")
+
   # Sys.setlocale('LC_ALL','C')
   #-------------------------------------------------------------------------------------
   # setting the PATH for TEST : system.file('', package="tReasure")
