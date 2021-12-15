@@ -20,7 +20,7 @@ tReasure <- function(){
   ibpak(bpkg)
   pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse",
            "gridExtra","ggplot2","grid","dplyr","statmod",
-           "future", "stringr", "RGtk2")
+           "future", "stringr")
   
   
   ipak <- function(pkg){
