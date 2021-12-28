@@ -3,7 +3,7 @@
 #' @param ()
 #' @return tReasure.win
 #' @export
-tReasure.win <- function(){
+tReasure.win <- function(intro,cl_name){
   library("gWidgets2RGtk2")
   #  load library
   pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse", "gWidgets2RGtk2",
@@ -12,10 +12,6 @@ tReasure.win <- function(){
   sapply(pkg, require, character.only = TRUE)
   
   # Sys.setlocale('LC_ALL','C')
-  #-------------------------------------------------------------------------------------
-  # setting the PATH for TEST : system.file('', package="tReasure")
-  #......................................................................................#
-
   #-------------------------------------------------------------------------------------
   #  tReasure
   #......................................................................................#
@@ -35,9 +31,7 @@ tReasure.win <- function(){
       return(TRUE)
     }
   })
-  
-  
-  
+ 
   mother <- ggroup(container = window, horizontal = FALSE)
   size(mother) <- c(1000,740)
   
@@ -60,7 +54,6 @@ tReasure.win <- function(){
   #  gr0. Introduction
   #......................................................................................
   ggr1 <- ggroup(container = gr0, horizontal = TRUE, fill = "both", expand = TRUE)
-  intro <- system.file("extdata", "intro.png", package = "tReasure", mustWork = TRUE)
   gimage(intro, container = ggr1)
   
   #-------------------------------------------------------------------------------------
@@ -184,7 +177,6 @@ tReasure.win <- function(){
   c4 <- glabel("  Species : ", container = gr_frame, anchor = c(-1,0))
   ref_P4 <- (v3names <- gcombobox(" ",container = gr_frame)) # container = tmp.3
   
-  cl_name <-  read.table(system.file("extdata", "class_name.txt", package = "tReasure",mustWork = TRUE), sep = "\t", fill = T,header = T, as.is = T)
   p2Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P2[grep(svalue(ref_P1), cl_name$P1)], envir=envir)
   p3Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P3[grep(svalue(ref_P2), cl_name$P2)], envir=envir)
   p4Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P4[grep(svalue(ref_P3), cl_name$P3)], envir=envir)
