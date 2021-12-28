@@ -4,7 +4,7 @@
 \alias{mk_sample}
 \title{window}
 \usage{
-mk_sample(h, ...)
+mk_sample(h, dir = svalue(fq_dir), ...)
 }
 \value{
 mk_sample
