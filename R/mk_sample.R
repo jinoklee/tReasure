@@ -3,17 +3,17 @@
 #' @param ()
 #' @return mk_sample
 #' @export
-mk_sample <- function(h,...){
-  dir <- svalue(fq_dir)
+mk_sample <- function(h,dir=svalue(fq_dir), ...){
+  #dir <- dir
   if(identical(dir,character(0))){
     gmessage("Warning : Select a directory of FASTQ files")
   }else{
-    fq_list <- list.files(svalue(fq_dir), pattern = "fastq", full=TRUE)
+    fq_list <- list.files(dir, pattern = "fastq", full=TRUE)
     if(length(grep("trim",fq_list)) == 0){
-      sfile <- list.files(svalue(fq_dir), pattern = "fastq")
+      sfile <- list.files(dir, pattern = "fastq")
     }else{
       fq_list <- fq_list[-grep("trim", fq_list)]
-      sfile <- list.files(svalue(fq_dir), pattern = "fastq")
+      sfile <- list.files(dir, pattern = "fastq")
       sfile <- sfile[-grep("trim", sfile)]
     }
     
@@ -33,7 +33,7 @@ mk_sample <- function(h,...){
     
     addHandlerChanged(tbl, handler = function(h, ...){
       new_sample <- tbl[]
-      SampleFile <- file.path(svalue(fq_dir), "sample.txt")
+      SampleFile <- file.path(dir, "sample.txt")
       write.table(new_sample, SampleFile, sep = "\t", quote = FALSE, row.names = FALSE)
       insert(st, " ", do.newline = TRUE)
     })
