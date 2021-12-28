@@ -74,7 +74,5 @@ tReasure <- function(){
   
   ibpak(bpkg)
   library(rstudioapi)
-  intro <- system.file("extdata", "intro.png", package = "tReasure", mustWork = TRUE)
-  cl_name <-  read.table(system.file("extdata", "class_name.txt", package = "tReasure",mustWork = TRUE), sep = "\t", fill = T,header = T, as.is = T)
-  restartSession(command = "tReasure.win(intro, cl_name)")
+  restartSession(command = "tReasure.win()")
 }
