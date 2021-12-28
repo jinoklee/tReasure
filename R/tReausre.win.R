@@ -71,7 +71,7 @@ tReasure.win <- function(){
   addSpace(tmp.1, 10)
   fq_dir <- gfilebrowse(text = " ", quote = FALSE, type = "selectdir", container = tmp.1)
   addSpace(tmp.1, 20)
-  make_button <- gbutton("RUN", container = tmp.1, handler = mk_sample)
+  make_button <- gbutton("RUN", container = tmp.1, handler = mk_sample(dir=svalue(fq_dir)))
   
   tmp.11 <- gframe(" [*OPTION] Upload the sample list ", container = paned.1, horizontal = FALSE, spacing = 10) ; size(tmp.11) <- c(250,200)
   addSpace(tmp.11, 10)
