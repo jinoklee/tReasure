@@ -4,7 +4,7 @@
 \alias{tReasure.win}
 \title{window}
 \usage{
-tReasure.win(intro, cl_name)
+tReasure.win()
 }
 \value{
 tReasure.win

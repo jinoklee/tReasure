@@ -56,7 +56,7 @@ tReasure.win <- function(){
   #  gr0. Introduction
   #......................................................................................
   ggr1 <- ggroup(container = gr0, horizontal = TRUE, fill = "both", expand = TRUE)
-  gimage(system.file("extdata", "intro.png", package = "tReasure", mustWork = TRUE), container = ggr1)
+  gimage(intro, container = ggr1)
   
   #-------------------------------------------------------------------------------------
   #  gr1. Uploading Samples
@@ -178,7 +178,7 @@ tReasure.win <- function(){
   
   c4 <- glabel("  Species : ", container = gr_frame, anchor = c(-1,0))
   ref_P4 <- (v3names <- gcombobox(" ",container = gr_frame)) # container = tmp.3
-  load("clname.RData")
+  cl_name <- loadcl_name()
   p2Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P2[grep(svalue(ref_P1), cl_name$P1)], envir=envir)
   p3Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P3[grep(svalue(ref_P2), cl_name$P2)], envir=envir)
   p4Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P4[grep(svalue(ref_P3), cl_name$P3)], envir=envir)
