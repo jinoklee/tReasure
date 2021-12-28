@@ -3,16 +3,14 @@
 #' @param ()
 #' @return pyramid
 #' @export
-pyramid <- function(width, height, res){
+pyramid <- function(width, height, res, pval, fc,statmethod){
   trna <- read.delim("./rc/readcount_isodecoders.txt")
   out <- read.delim("./stat/stat_isoacceptor_list.txt")
-  pval <- svalue(widget_list$pval)
-  fc <- svalue(widget_list$FC)
-  
-  if(svalue(widget_list$fdr_s) == "Benjamini-Hochberg"){
+
+  if(statmethod == "Benjamini-Hochberg"){
     dw <- filter(out, logFC < -fc, out$Benjamini < pval)
     up <- filter(out, logFC > fc, out$Benjamini <  pval)
-  }else if(svalue(widget_list$fdr_s) =="Bonferroni"){
+  }else if(statmethod =="Bonferroni"){
     dw <- filter(out, logFC < -fc, out$Bonferroni<  pval)
     up <- filter(out, logFC > fc, out$Bonferroni <  pval)
   }else{

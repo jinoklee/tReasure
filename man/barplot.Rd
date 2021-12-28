@@ -4,7 +4,7 @@
 \alias{barplot}
 \title{window}
 \usage{
-barplot(width, height, res)
+barplot(width, height, res, pval, fc, statmethod)
 }
 \value{
 barplot

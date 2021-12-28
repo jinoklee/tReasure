@@ -4,7 +4,7 @@
 \alias{pyramid}
 \title{window}
 \usage{
-pyramid(width, height, res)
+pyramid(width, height, res, pval, fc, statmethod)
 }
 \value{
 pyramid

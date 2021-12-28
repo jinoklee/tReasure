@@ -4,7 +4,7 @@
 \alias{sel_sample}
 \title{window}
 \usage{
-sel_sample(h, ...)
+sel_sample(h, selbtn = svalue(sel_button), dir = svalue(fq_dir), ...)
 }
 \value{
 sel_sample

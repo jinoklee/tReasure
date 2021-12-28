@@ -4,7 +4,7 @@
 #' @return edger
 #' @export
 
-edger<- function(count){
+edger<- function(count, edgeRmethod){
   rownames(count) <- count$Names
   sFile<- read.delim("sample.txt")
   case <- factor(sFile$Group)
@@ -20,9 +20,9 @@ edger<- function(count){
   y <- calcNormFactors(y)
   y <- estimateDisp(y, design, robust = TRUE)
   
-  if(svalue(method_edgeR) == "Exact test"){
+  if( edgeRmethod== "Exact test"){
     test <- exactTest(y)
-  }else if(svalue(method_edgeR) == "Quasi-likelihood F-test"){
+  }else if(edgeRmethod == "Quasi-likelihood F-test"){
     fit <- glmQLFit(y, design)
     test <- glmQLFTest(fit, coef=coef)
   }else{

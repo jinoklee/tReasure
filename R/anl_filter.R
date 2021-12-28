@@ -3,11 +3,11 @@
 #' @param ()
 #' @return anl_filter
 #' @export
-anl_filter <- function(h,...){
-  if(identical(svalue(selrc_button),character(0))){
+anl_filter <- function(h,selrcbtn= svalue(selrc_button), cfilv= svalue(cfilv),sfil = svalue(sfil),...){
+  if(identical(selrcbtn,character(0))){
     dir <- getwd()
   }else{
-    setwd(svalue(selrc_button))
+    setwd(selrcbtn)
     dir <- getwd()
     if(!dir.exists(paste(dir, "/pre", sep = ""))){
       dir.create(paste(dir, "/pre", sep = ""), recursive = TRUE)}
@@ -24,7 +24,7 @@ anl_filter <- function(h,...){
     rownames(count) <- count$Name
     count <- count[,colnames(count) %in% sFile$SampleName]
     x <- DGEList(count, group = sFile$Group)
-    isexpr <- rowSums(cpm(x) > svalue(cfilv)) >= svalue(sfil)*nrow(sFile)/100
+    isexpr <- rowSums(cpm(x) > cfilv) >= sfil*nrow(sFile)/100
     x <- x[isexpr,]
     return(x)
   }

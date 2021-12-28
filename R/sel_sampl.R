@@ -4,9 +4,9 @@
 #' @return sel_sample
 #' @export
 
-sel_sample <-  function(h,...){
-  sample2 <- read.table(svalue(sel_button), header = T, sep = "\t")
-  sampath <- gsub("sample.txt", "", svalue(sel_button))
+sel_sample <-  function(h,selbtn = svalue(sel_button),dir=svalue(fq_dir),...){
+  sample2 <- read.table(selbtn, header = T, sep = "\t")
+  sampath <- gsub("sample.txt", "", selbtn)
   setwd(sampath)
   dir <- getwd()
   if(!dir.exists(paste(dir, "/pre", sep = ""))){
@@ -23,7 +23,7 @@ sel_sample <-  function(h,...){
   # save update sample list
   addHandlerChanged(tbl, handler = function(h, ...){
     new_sample <- tbl[]
-    SampleFile <- file.path(svalue(fq_dir), "sample.txt")
+    SampleFile <- file.path(dir, "sample.txt")
     write.table(new_sample, SampleFile, sep = "\t", quote = FALSE, row.names = FALSE)
     insert(st, " ", do.newline = TRUE)
     insert(st, ".", do.newline = TRUE)

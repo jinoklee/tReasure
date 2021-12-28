@@ -4,7 +4,7 @@
 \alias{anl_trim}
 \title{window}
 \usage{
-anl_trim(h, ...)
+anl_trim(h, qv = svalue(q), adaptv = svalue(adapt), ...)
 }
 \value{
 anl_trim

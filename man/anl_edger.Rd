@@ -4,7 +4,7 @@
 \alias{anl_edger}
 \title{window}
 \usage{
-anl_edger(h, ...)
+anl_edger(h, edgeRmethod = svalue(method_edgeR), ...)
 }
 \value{
 anl_edger

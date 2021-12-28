@@ -4,7 +4,13 @@
 \alias{anl_filter}
 \title{window}
 \usage{
-anl_filter(h, ...)
+anl_filter(
+  h,
+  selrcbtn = svalue(selrc_button),
+  cfilv = svalue(cfilv),
+  sfil = svalue(sfil),
+  ...
+)
 }
 \value{
 anl_filter

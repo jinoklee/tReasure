@@ -4,7 +4,6 @@
 #' @return mk_sample
 #' @export
 mk_sample <- function(h,dir=svalue(fq_dir), ...){
-  #dir <- dir
   if(identical(dir,character(0))){
     gmessage("Warning : Select a directory of FASTQ files")
   }else{

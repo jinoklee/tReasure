@@ -4,7 +4,7 @@
 \alias{volcano}
 \title{window}
 \usage{
-volcano(width, height, res)
+volcano(width, height, res, pval, fc, statmethod)
 }
 \value{
 volcano

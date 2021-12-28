@@ -17,10 +17,7 @@ tReasure.win <- function(){
   #......................................................................................#
   intro <- system.file("extdata", "intro.png", package = "tReasure", mustWork = TRUE)
   cl_name <-  read.table(system.file("extdata", "class_name.txt", package = "tReasure",mustWork = TRUE), sep = "\t", fill = T,header = T, as.is = T)
-  #-------------------------------------------------------------------------------------
-  # function
-  #......................................................................................#
- 
+
   #-------------------------------------------------------------------------------------
   #  tReasure
   #......................................................................................#
@@ -65,7 +62,8 @@ tReasure.win <- function(){
   #  gr0. Introduction
   #......................................................................................
   ggr1 <- ggroup(container = gr0, horizontal = TRUE, fill = "both", expand = TRUE)
-  #gimage(intro, container = ggr1)
+  gimage(intro, container = ggr1)
+  
   #-------------------------------------------------------------------------------------
   #  gr1. Uploading Samples
   #......................................................................................
@@ -110,9 +108,8 @@ tReasure.win <- function(){
     if(!dir.exists(paste(dir, "/rc", sep = ""))){
       dir.create(paste(dir, "/rc", sep = ""), recursive = TRUE)}
   })
-  
-  
-  
+
+    
   #-------------------------------------------------------------------------------------
   #  gr2. Quality Control
   #......................................................................................#
@@ -218,13 +215,7 @@ tReasure.win <- function(){
   addSpace(tmp.3, 20)
   
   anl_button <- gbutton("RUN", container=tmp.3, handler = anl_align)
-  
   addSpace(pangr, 10)
-  # tmp.31 <- gframe(" [*OPTION] Working directory ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.31) <- c(250,70)
-  # addSpace(tmp.31, 10)
-  #
-  # glabel(" Select the directory of the FASTQ files : ", container = tmp.31, anchor = c(-1,0))
-  # addSpace(tmp.31, 10)
   
   tmp.32 <- gframe(" [*OPTION] Load the readcounts files ", container = pangr , horizontal = FALSE, spacing = 10); size(tmp.32) <- c(250,120)
   addSpace(tmp.32, 10)
@@ -232,8 +223,6 @@ tReasure.win <- function(){
   glabel(" Select the file of readcounts : ", container = tmp.32, anchor = c(-1,0))
   addSpace(tmp.32, 10)
   
-  # selfq_button <- gfilebrowse(text = "", quote = FALSE, type = "selectdir", container = tmp.31,
-  #                             filter=list("*.fa" = list(patterns = c("*.fa")), "*.*" = list(patterns = c("*"))))
   
   seltrn_button <- gfilebrowse(text = "tRNA level", quote = FALSE, type = "open", container = tmp.32,
                                filter=list("*.txt" = list(patterns = c("*.txt")), "*.*" = list(patterns = c("*"))))
@@ -405,10 +394,11 @@ tReasure.win <- function(){
     write.table(DEcodon, "./stat/DEisodecoder_list.txt", sep = "\t", quote = FALSE, row.names = F)
     write.table(DEaa, "./stat/DEisoacceptor_list.txt", sep = "\t", quote = FALSE, row.names = F)
     
-    volcano(650, 460, 80)
-    barplot(850, 460,80)
-    pyramid(650, 460,80)
+    volcano(width=650, height=460, res=80,pval=svalue(widget_list$pval), fc=svalue(widget_list$FC),statmethod=svalue(widget_list$fdr_s))
+    barplot(width=850, height=460, res=80,pval=svalue(widget_list$pval),fc=svalue(widget_list$FC), statmethod = svalue(widget_list$fdr_s))
+    pyramid(width= 650, height=460, res=80,pval = svalue(widget_list$pval),fc =svalue(widget_list$FC), statmethod=svalue(widget_list$fdr_s))
     
+
     insert(st, " ", do.newline = TRUE)
     insert(st,"Done : The plots of DEtRNA Detection. Click! Next tab of Visualization.", do.newline = TRUE )
     insert(st, ".", do.newline = TRUE)

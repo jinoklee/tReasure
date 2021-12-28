@@ -3,23 +3,20 @@
 #' @param ()
 #' @return volcano
 #' @export
-volcano <- function(width, height, res){
+volcano <- function(width, height, res, pval, fc, statmethod){
   out <- read.delim("./stat/stat_trna_list.txt")
   
-  if(svalue(widget_list$fdr_s) == "Bejamini-Hochberg"){
+  if(statmethod == "Bejamini-Hochberg"){
     outt <- select(out, Names, logFC, Benjamini)
     colnames(outt)[ncol(outt)]<-"FDR"
-  }else if(svalue(widget_list$fdr_s) == "Bonferroni"){
+  }else if(statmethod == "Bonferroni"){
     outt <- select(out, Names, logFC, Bonferroni)
     colnames(outt)[ncol(outt)]<-"FDR"
   }else{
     outt <- select(out, Names, logFC, FDR)
   }
   
-  pval <- svalue(widget_list$pval)
-  fc <- svalue(widget_list$FC)
-  
-  
+
   detRNA <- mutate(outt, Sig=ifelse(outt$FDR<= pval & outt$logFC <= -fc, "Down_DEtRNA", ifelse(outt$FDR <= pval & outt$logFC>= fc,"Up_DEtRNA", "Non_DEtRNA")))
   
   png("./stat/plot/volcanoplot_trna%02d.png", height=height, width=width, res=res)

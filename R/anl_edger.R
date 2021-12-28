@@ -3,7 +3,7 @@
 #' @param ()
 #' @return anl_edger
 #' @export
-anl_edger <- function(h,...){
+anl_edger <- function(h,edgeRmethod=svalue(method_edgeR),...){
   insert(st,"Statistical analysis  : EdgeR", do.newline = TRUE )
   insert(st,"It takes a few minutes. Please wait....", do.newline = TRUE )
   dir <- getwd()
@@ -12,9 +12,9 @@ anl_edger <- function(h,...){
   ccount <- read.delim(file.path(dir, "rc", "filtered_readcount_isodecoders.txt"))
   acount <- read.delim(file.path(dir, "rc", "filtered_readcount_isoacceptors.txt"))
   
-  t_out <- edger(tcount)
-  c_out <- edger(ccount)
-  a_out <- edger(acount)
+  t_out <- edger(count= tcount, edgeRmethod )
+  c_out <- edger(count= ccount, edgeRmethod )
+  a_out <- edger(count= acount, edgeRmethod )
   
   stat_trna[] <- t_out
   stat_codon[] <- c_out

@@ -4,7 +4,13 @@
 \alias{anl_align}
 \title{window}
 \usage{
-anl_align(h, ...)
+anl_align(
+  h,
+  gselbtn = svalue(gsel_button),
+  dir = svalue(fq_dir),
+  refP1 = svalue(ref_P1),
+  ...
+)
 }
 \value{
 anl_align

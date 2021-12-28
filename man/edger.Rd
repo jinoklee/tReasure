@@ -4,7 +4,7 @@
 \alias{edger}
 \title{window}
 \usage{
-edger(count)
+edger(count, edgeRmethod)
 }
 \value{
 edger

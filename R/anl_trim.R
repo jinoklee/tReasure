@@ -3,7 +3,7 @@
 #' @param ()
 #' @return anl_trim 
 #' @export
-anl_trim <-  function(h,...){
+anl_trim <-  function(h,qv= svalue(q),adaptv= svalue(adapt),...){
   plan(multiprocess)
   if(file.exists("sample.txt") == FALSE & file.exists("*.fastq") == FALSE){
     gmessage("Warning : No file found matching sample list or fastq files")
@@ -28,7 +28,7 @@ anl_trim <-  function(h,...){
     write.table(sFile2, sam_trim, sep = "\t", quote = FALSE, row.names = FALSE)
     
     # preprocessing future-------------------
-    qnumber <- as.numeric(svalue(q))
+    qnumber <- as.numeric(qv)
     qf <- function(){
       for( i in sFile1$FileName){
         f <- FastqStreamer(i,readerBlockSize=1000)
@@ -40,8 +40,6 @@ anl_trim <-  function(h,...){
                      file.path(dir, "pre", paste0(gsub(".fastq","_qc.fastq", basename(i)))), mode="a")}}
     }
     qff <- future(
-      # qpid <- Sys.getpid()
-      # save(qpid, file = file.path(dir,"qpid"))
       qf()
     )
     
@@ -75,14 +73,13 @@ anl_trim <-  function(h,...){
                                                  minLength = 10)
     return(resno)}
     
-    if(svalue(adapt) == "Illumina smallRNA 3' adapter"){
+    if(adaptv == "Illumina smallRNA 3' adapter"){
       aseq <- "TGGAATTCTCGGGTGCCAAGG"
-      #minLength = as.numeric(svalue(min))
       a <- future(pre())
-    }else if(svalue(adapt) =="Illumina universal adapter"){
+    }else if(adaptv =="Illumina universal adapter"){
       aseq <- "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"
       a <- future(pre())
-    }else if(svalue(adapt) =="SOLiD Adapter"){
+    }else if(adaptv =="SOLiD Adapter"){
       aseq <- "CGCCTTGGCCGTACAGCAG"
       a <-future(pre())
     }else{
@@ -105,9 +102,6 @@ anl_trim <-  function(h,...){
         insert(st, " ", do.newline = TRUE)
       }
     }
-    
-    #status <- future(preprocess_status())
-    
     
     preprocess_status()
     res <- value(a)

@@ -3,9 +3,8 @@
 #' @param ()
 #' @return anl_align
 #' @export
-anl_align <- function(h,...){
+anl_align <- function(h,gselbtn=svalue(gsel_button),dir =svalue(fq_dir),refP1 = svalue(ref_P1),...){
   insert(st,"Start : Alignment & Read Counting", do.newline = TRUE )
-  dir <- svalue(fq_dir)
   insert(st, paste("Check genome.... "), do.newline = TRUE)
   # download_refer
   dw_refer <- function(url, sub, sub.zip){
@@ -15,15 +14,15 @@ anl_align <- function(h,...){
     }
     Rsub_path <- file.path(R_path,"refer",sub)
     if(!file.exists(file.path(Rsub_path, paste0(sub,"_artificial.fa")))){
-      insert(st, "Download and unzip genome indexes. It takes several minutes. Please wait....", do.newline = TRUE)
+      insert(st, "Download and unzip genome indices. It takes several minutes. Please wait....", do.newline = TRUE)
       download.file(url, destfile = file.path(Rsub_path, sub.zip))
       unzip(zipfile = file.path(Rsub_path, sub.zip), exdir= Rsub_path)
     }
   }
   
-  ref_name <- cl_name$fa[grep(svalue(gsel_button),cl_name$P4)]
+  ref_name <- cl_name$fa[grep(gselbtn,cl_name$P4)]
   
-  url <- file.path("http://treasure.pmrc.re.kr/data/genome", svalue(ref_P1), ref_name, paste0(ref_name, ".zip"))
+  url <- file.path("http://treasure.pmrc.re.kr/data/genome", refP1, ref_name, paste0(ref_name, ".zip"))
   dw_refer(url, ref_name, paste0(ref_name, ".zip"))
   genome = system.file( "extdata", file.path("refer",ref_name, paste0(ref_name, "_artificial.fa")), package = "tReasure", mustWork = TRUE)
   
