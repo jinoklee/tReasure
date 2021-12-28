@@ -1,9 +1,9 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return sel_sample
 #' @export
-#' sel_sample
+
 sel_sample <-  function(h,...){
   sample2 <- read.table(svalue(sel_button), header = T, sep = "\t")
   sampath <- gsub("sample.txt", "", svalue(sel_button))

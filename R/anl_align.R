@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return anl_align
 #' @export
-#' anl_align
 anl_align <- function(h,...){
   insert(st,"Start : Alignment & Read Counting", do.newline = TRUE )
   dir <- svalue(fq_dir)

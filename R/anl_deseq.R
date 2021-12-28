@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return anl_deseq
 #' @export
-#' anl_deseq
 anl_deseq <- function(h,...){
   insert(st,"Statistical analysis  : DESeq2", do.newline = TRUE )
   dir <- getwd()

@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return anl_trim 
 #' @export
-#' anl_trim
 anl_trim <-  function(h,...){
   plan(multiprocess)
   if(file.exists("sample.txt") == FALSE & file.exists("*.fastq") == FALSE){

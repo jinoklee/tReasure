@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return anl_rm
 #' @export
-#' anl_rm
 anl_rm <- function(ref_name){
   dir <- getwd()
   genomeDir <- system.file("extdata", "refer", ref_name , package = "tReasure", mustWork = TRUE)

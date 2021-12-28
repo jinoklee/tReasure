@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return deseq
 #' @export
-#' deseq
 
 deseq<- function(count){
   rownames(count) <- count$Names

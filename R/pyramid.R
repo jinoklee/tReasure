@@ -1,10 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return pyramid
 #' @export
-#' pyramid
-
 pyramid <- function(width, height, res){
   trna <- read.delim("./rc/readcount_isodecoders.txt")
   out <- read.delim("./stat/stat_isoacceptor_list.txt")

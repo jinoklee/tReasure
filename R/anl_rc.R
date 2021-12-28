@@ -1,10 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return anl_rc 
 #' @export
-#' anl_rc
-
 anl_rc <- function(ref_name){
   dir <- getwd()
   workDir <- file.path(dir, "post")

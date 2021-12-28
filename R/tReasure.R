@@ -3,7 +3,7 @@
 #' @param ()
 #' @return tReasure install and load
 #' @export
-#' tReasure
+
 tReasure <- function(){
   # install cran pakcage
   pkg <- c("gWidgets2","plotrix","tidyverse",

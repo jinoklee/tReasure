@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return stopFuture
 #' @export
-#' stopFuture
 stopFuture <- function(x){
   tools::pskill(x,signal = tools::SIGTERM)
   tools::pskill(x,signal = tools::SIGKILL)

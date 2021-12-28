@@ -1,9 +1,9 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return edger
 #' @export
-#' edger
+
 edger<- function(count){
   rownames(count) <- count$Names
   sFile<- read.delim("sample.txt")

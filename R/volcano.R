@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return volcano
 #' @export
-#' volcano
 volcano <- function(width, height, res){
   out <- read.delim("./stat/stat_trna_list.txt")
   

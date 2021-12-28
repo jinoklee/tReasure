@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return mk_sample
 #' @export
-#' mk_sample
 mk_sample <- function(h,...){
   dir <- svalue(fq_dir)
   if(identical(dir,character(0))){

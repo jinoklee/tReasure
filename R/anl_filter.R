@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return anl_filter
 #' @export
-#' anl_filter
 anl_filter <- function(h,...){
   if(identical(svalue(selrc_button),character(0))){
     dir <- getwd()

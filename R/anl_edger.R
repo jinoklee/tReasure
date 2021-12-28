@@ -1,9 +1,8 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return anl_edger
 #' @export
-#' anl_edger
 anl_edger <- function(h,...){
   insert(st,"Statistical analysis  : EdgeR", do.newline = TRUE )
   insert(st,"It takes a few minutes. Please wait....", do.newline = TRUE )

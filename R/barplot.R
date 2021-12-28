@@ -1,9 +1,9 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure function
+#' @return barplot
 #' @export
-#' barplot
+
 barplot <- function(width, height, res){
   trna <- read.delim("./rc/readcount_isodecoders.txt")
   out <- read.delim("./stat/stat_isodecoder_list.txt")

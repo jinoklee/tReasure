@@ -1,9 +1,9 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure window
+#' @return tReasure01
 #' @export
-tReasure <- function(){
+tReasure01 <- function(){
   # install
   if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
