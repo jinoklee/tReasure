@@ -9,6 +9,7 @@ anl_align(
   gselbtn = svalue(gsel_button),
   dir = svalue(fq_dir),
   refP1 = svalue(ref_P1),
+  cl_name,
   ...
 )
 }

@@ -3,7 +3,7 @@
 #' @param ()
 #' @return anl_align
 #' @export
-anl_align <- function(h,gselbtn=svalue(gsel_button),dir =svalue(fq_dir),refP1 = svalue(ref_P1),...){
+anl_align <- function(h,gselbtn=svalue(gsel_button),dir =svalue(fq_dir),refP1 = svalue(ref_P1),cl_name,...){
   insert(st,"Start : Alignment & Read Counting", do.newline = TRUE )
   insert(st, paste("Check genome.... "), do.newline = TRUE)
   # download_refer
