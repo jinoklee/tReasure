@@ -1050,15 +1050,15 @@ tReasure.win <- function(){
   p4Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P4[grep(svalue(ref_P3), cl_name$P3)], envir=envir)
   
   addHandlerChanged(ref_P1, handler = function(h,...){
-    ref_P2[] <- p2Nms(d=svalue(ref_P2), refv=svalue(ref_P1))
+    ref_P2[] <- p2Nms(svalue(ref_P2))
   })
   
   addHandlerChanged(ref_P2, handler = function(h,...){
-    ref_P3[] <- p3Nms(d=svalue(ref_P3), refv=svalue(ref_P2))
+    ref_P3[] <- p3Nms(svalue(ref_P3))
   })
   
   addHandlerChanged(ref_P3, handler = function(h,...){
-    ref_P4[] <- p4Nms(d=svalue(ref_P4), refv=svalue(ref_P3))
+    ref_P4[] <- p4Nms(svalue(ref_P4))
   })
   
   addSpace(gr_frame, 20)
