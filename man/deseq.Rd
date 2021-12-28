@@ -7,7 +7,7 @@
 deseq(count)
 }
 \value{
-tReasure function
+deseq
 }
 \description{
 window

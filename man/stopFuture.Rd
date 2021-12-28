@@ -7,7 +7,7 @@
 stopFuture(x)
 }
 \value{
-tReasure function
+stopFuture
 }
 \description{
 window

@@ -7,7 +7,7 @@
 pyramid(width, height, res)
 }
 \value{
-tReasure function
+pyramid
 }
 \description{
 window

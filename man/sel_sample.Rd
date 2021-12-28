@@ -7,7 +7,7 @@
 sel_sample(h, ...)
 }
 \value{
-tReasure function
+sel_sample
 }
 \description{
 window

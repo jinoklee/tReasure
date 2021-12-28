@@ -7,7 +7,7 @@
 anl_trim(h, ...)
 }
 \value{
-tReasure function
+anl_trim
 }
 \description{
 window

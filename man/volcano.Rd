@@ -7,7 +7,7 @@
 volcano(width, height, res)
 }
 \value{
-tReasure function
+volcano
 }
 \description{
 window

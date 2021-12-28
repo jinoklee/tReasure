@@ -7,7 +7,7 @@
 tReasure.win()
 }
 \value{
-tReasure window
+tReasure.win
 }
 \description{
 window

@@ -7,7 +7,7 @@
 edger(count)
 }
 \value{
-tReasure function
+edger
 }
 \description{
 window

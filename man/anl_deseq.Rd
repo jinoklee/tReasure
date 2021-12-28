@@ -7,7 +7,7 @@
 anl_deseq(h, ...)
 }
 \value{
-tReasure function
+anl_deseq
 }
 \description{
 window

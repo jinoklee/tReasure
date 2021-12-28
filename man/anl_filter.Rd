@@ -7,7 +7,7 @@
 anl_filter(h, ...)
 }
 \value{
-tReasure function
+anl_filter
 }
 \description{
 window

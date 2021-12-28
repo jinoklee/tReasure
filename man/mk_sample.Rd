@@ -7,7 +7,7 @@
 mk_sample(h, ...)
 }
 \value{
-tReasure function
+mk_sample
 }
 \description{
 window

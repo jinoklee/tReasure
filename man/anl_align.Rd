@@ -7,7 +7,7 @@
 anl_align(h, ...)
 }
 \value{
-tReasure function
+anl_align
 }
 \description{
 window

@@ -7,7 +7,7 @@
 barplot(width, height, res)
 }
 \value{
-tReasure function
+barplot
 }
 \description{
 window

@@ -7,7 +7,7 @@
 anl_edger(h, ...)
 }
 \value{
-tReasure function
+anl_edger
 }
 \description{
 window

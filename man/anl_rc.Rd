@@ -7,7 +7,7 @@
 anl_rc(ref_name)
 }
 \value{
-tReasure function
+anl_rc
 }
 \description{
 window
