@@ -74,5 +74,5 @@ tReasure <- function(){
   
   ibpak(bpkg)
   library(rstudioapi)
-  restartSession(command = "tReasure.win()")
+  restartSession(command = "tReasure::tReasure.win()")
 }
