@@ -14,8 +14,6 @@ tReasure.win <- function(){
   # Sys.setlocale('LC_ALL','C')
   intro <- system.file("extdata", "intro.png", package = "tReasure", mustWork = TRUE)
   cl_name <-  read.table(system.file("extdata", "class_name.txt", package = "tReasure",mustWork = TRUE), sep = "\t", fill = T,header = T, as.is = T)
-  print(dim(cl_name))
-  print(file.exists(intro))
   #-------------------------------------------------------------------------------------
   #  tReasure
   #......................................................................................#
@@ -180,20 +178,22 @@ tReasure.win <- function(){
   
   c4 <- glabel("  Species : ", container = gr_frame, anchor = c(-1,0))
   ref_P4 <- (v3names <- gcombobox(" ",container = gr_frame)) # container = tmp.3
-  p2Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P2[grep(svalue(ref_P1), cl_name$P1)], envir=envir)
-  p3Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P3[grep(svalue(ref_P2), cl_name$P2)], envir=envir)
-  p4Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P4[grep(svalue(ref_P3), cl_name$P3)], envir=envir)
+  
+  
+  #p2Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P2[grep(svalue(ref_P1), cl_name$P1)], envir=envir)
+  #p3Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P3[grep(svalue(ref_P2), cl_name$P2)], envir=envir)
+  #p4Nms <- function(d, envir=.GlobalEnv)  unique(cl_name$P4[grep(svalue(ref_P3), cl_name$P3)], envir=envir)
   
   addHandlerChanged(ref_P1, handler = function(h,...){
-    ref_P2[] <- p2Nms(svalue(ref_P2))
+    ref_P2[] <- p2Nms(d=svalue(ref_P2), refv=svalue(ref_P1))
   })
   
   addHandlerChanged(ref_P2, handler = function(h,...){
-    ref_P3[] <- p3Nms(svalue(ref_P3))
+    ref_P3[] <- p3Nms(d=svalue(ref_P3), refv=svalue(ref_P2))
   })
   
   addHandlerChanged(ref_P3, handler = function(h,...){
-    ref_P4[] <- p4Nms(svalue(ref_P4))
+    ref_P4[] <- p4Nms(d=svalue(ref_P4), refv=svalue(ref_P3))
   })
   
   addSpace(gr_frame, 20)
