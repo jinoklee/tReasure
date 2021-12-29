@@ -1254,9 +1254,9 @@ tReasure.win <- function(){
     write.table(DEcodon, "./stat/DEisodecoder_list.txt", sep = "\t", quote = FALSE, row.names = F)
     write.table(DEaa, "./stat/DEisoacceptor_list.txt", sep = "\t", quote = FALSE, row.names = F)
     
-    volcano(width=650, height=460, res=80,pval=svalue(widget_list$pval), fc=svalue(widget_list$FC),statmethod=svalue(widget_list$fdr_s))
-    barplot(width=850, height=460, res=80,pval=svalue(widget_list$pval),fc=svalue(widget_list$FC), statmethod = svalue(widget_list$fdr_s))
-    pyramid(width= 650, height=460, res=80,pval = svalue(widget_list$pval),fc =svalue(widget_list$FC), statmethod=svalue(widget_list$fdr_s))
+    volcano(width=650, height=460, res=80)
+    barplot(width=850, height=460, res=80)
+    pyramid(width= 650, height=460, res=80)
     
 
     insert(st, " ", do.newline = TRUE)

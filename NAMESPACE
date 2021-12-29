@@ -2,4 +2,3 @@
 
 export(tReasure)
 export(tReasure.win)
-export(tReasure01)
