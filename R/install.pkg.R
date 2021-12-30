@@ -21,42 +21,40 @@ install.pkg <- function(){
   if(Sys.info()[names(Sys.info())== "sysname"] == "Linux"){
     if(!"RGtk2"%in%installed.packages()[,"Package"]){
       install.packages(
-        "https://cran.microsoft.com/snapshot/2021-12-15/src/contrib/RGtk2_2.20.36.2.tar.gz",repos=NULL) 
+        "https://cran.microsoft.com/snapshot/2021-11-08/src/contrib/RGtk2_2.20.36.2.tar.gz",repos=NULL) 
     }
     if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
       install.packages(
-        "https://cran.microsoft.com/snapshot/2021-12-15/src/contrib/Archive/gWidgets2RGtk2/gWidgets2RGtk2_1.0-7.tar.gz",repos=NULL)
+        "https://cran.microsoft.com/snapshot/2021-11-08/src/contrib/gWidgets2RGtk2_1.0-7.tar.gz",repos=NULL)
     }
     if(!"cairoDevice"%in%installed.packages()[,"Package"]){
       install.packages(
-        "https://cran.microsoft.com/snapshot/2021-12-15/src/contrib/cairoDevice_2.28.2.1.tar.gz",repos=NULL)
+        "https://cran.microsoft.com/snapshot/2021-11-08/src/contrib/cairoDevice_2.28.2.1.tar.gz",repos=NULL)
     }
   }else if(Sys.info()[names(Sys.info())== "sysname"] == "Windows"){
     if(grepl("3.6",R.version.string)){
       if(!"RGtk2"%in%installed.packages()[,"Package"]){
         install.packages(
-          "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/3.6/RGtk2_2.20.36.zip",repos=NULL)
+          "https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/3.6/RGtk2_2.20.36.zip",repos=NULL)
       }
       if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
         install.packages(
-          "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/3.6/gWidgets2RGtk2_1.0-7.zip",repos=NULL)
+          "https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/3.6/gWidgets2RGtk2_1.0-7.zip",repos=NULL)
       }
       if(!"cairoDevice"%in%installed.packages()[,"Package"]){
         install.packages(
-          "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/3.6/cairoDevice_2.28.2.zip",repos=NULL)
+          "https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/3.6/cairoDevice_2.28.2.zip",repos=NULL)
       }
       }else{
+        ver <- regmatches(R.version.string, regexpr("\\d{1}\\.\\d{1}", R.version.string))
         if(!"RGtk2"%in%installed.packages()[,"Package"]){
-          install.packages(
-            "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/r-release/RGtk2_2.20.36.2.zip",repos=NULL)
+          install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/", ver,"/RGtk2_2.20.36.2.zip") , repost= NULL)
         }
         if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
-          install.packages(
-            "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/4.2/gWidgets2RGtk2_1.0-7.zip",repos=NULL)
+          install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/", ver,"/gWidgets2RGtk2_1.0-7.zip") , repost= NULL)
         }
         if(!"cairoDevice"%in%installed.packages()[,"Package"]){
-          install.packages(
-            "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/r-release/cairoDevice_2.28.2.1.zip",repos=NULL)
+          install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/", ver,"/cairoDevice_2.28.2.1.zip") , repost= NULL)
         }
       }
     }else{
@@ -74,18 +72,16 @@ install.pkg <- function(){
             "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/cairoDevice_2.27.tgz",repos=NULL)
         }
         }else{
+          ver <- regmatches(R.version.string, regexpr("\\d{1}\\.\\d{1}", R.version.string))
           if(!"RGtk2"%in%installed.packages()[,"Package"]){
-        install.packages(
-          "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/contrib/r-release/RGtk2_2.20.36.2.tgz",repos=NULL)
+            install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/", ver,"/RGtk2_2.20.36.2.tgz") , repost= NULL)
           }
           if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
-        install.packages(
-          "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/contrib/r-release/gWidgets2RGtk2_1.0-7.tgz",repos=NULL)
+            install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/", ver,"/gWidgets2RGtk2_1.0-7.tgz") , repost= NULL)
           }
           if(!"cairoDevice"%in%installed.packages()[,"Package"]){
-        install.packages(
-          "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/contrib/r-release/cairoDevice_2.28.2.1.tgz",repos=NULL)
-          }
+            install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/", ver,"/cairoDevice_2.28.2.1.tgz") , repost= NULL)
+            }
           }
   }
   
