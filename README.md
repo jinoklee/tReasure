@@ -22,12 +22,14 @@ tReasure is a package for the R computing environment and it is assumed that you
 ### Preliminaries  
 
   1) For linux users :  
-     Users need to install libgtk2.0-dev and libxml2-dev before installing tReasure.
+     Users need to install libgtk2.0-dev and libxml2-dev before installing tReasure. 
      
-     sudo apt-get update -y 
+     ```
+     sudo apt-get update -y
      sudo apt-get install libxml2-dev
      sudo apt-get install -y libgtk2.0-dev
- 
+     ```
+     
   2) For Mac OS users :  
      Users need to install [XQuartz](https://www.xquartz.org) before installing tReasure.
      
