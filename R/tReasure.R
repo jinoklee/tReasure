@@ -103,7 +103,6 @@ tReasure <- function(){
   }
   
   ibpak(bpkg)
-  library("gWidgets2RGtk2")
   library(rstudioapi)
   restartSession(command = "tReasure::tReasure.win()")
   

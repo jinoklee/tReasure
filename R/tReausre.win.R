@@ -4,7 +4,7 @@
 #' @return tReasure.win
 #' @export
 tReasure.win <- function(){
-  # library("gWidgets2RGtk2")
+  library("gWidgets2RGtk2")
   #  load library
   pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse", "gWidgets2RGtk2",
            "gridExtra","ggplot2","grid","dplyr","statmod","future", "stringr",
