@@ -56,7 +56,7 @@ tReasure <- function(){
         }
         if(!"cairoDevice"%in%installed.packages()[,"Package"]){
           install.packages(
-            "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/4.2/cairoDevice_2.28.2.1.zip",repos=NULL)
+            "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/r-release/cairoDevice_2.28.2.1.zip",repos=NULL)
         }
       }
     }else{
