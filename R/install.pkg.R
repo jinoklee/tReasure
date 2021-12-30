@@ -4,7 +4,7 @@
 #' @return tReasure install and load
 #' @export
 
-tReasure <- function(){
+install.pkg <- function(){
   # install cran pakcage
   pkg <- c("gWidgets2","plotrix","tidyverse",
            "gridExtra","ggplot2","grid","dplyr","statmod",

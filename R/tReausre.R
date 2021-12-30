@@ -1,9 +1,9 @@
 #' window
 #'
 #' @param ()
-#' @return tReasure.win
+#' @return tReasure
 #' @export
-tReasure.win <- function(){
+tReasure<- function(){
   library("gWidgets2RGtk2")
   #  load library
   pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse", "gWidgets2RGtk2",
