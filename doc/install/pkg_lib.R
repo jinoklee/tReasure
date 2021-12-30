@@ -1,21 +1,91 @@
 
-pkg <- c("gWidgets2","gWidgets2RGtk2","cairoDevice","plotrix","tidyverse",
+# install cran pakcage
+pkg <- c("gWidgets2","plotrix","tidyverse",
          "gridExtra","ggplot2","grid","dplyr","statmod",
-         "future", "stringr", "RGtk2")
-
-
+         "future", "stringr")
 ipak <- function(pkg){
   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
   if (length(new.pkg))
     install.packages(new.pkg, dependencies = TRUE, repos = "http://cran.r-project.org")
-  sapply(pkg, require, character.only = TRUE)
+  #sapply(pkg, require, character.only = TRUE)
 }
-
 ipak(pkg)
 
+# install RGTK2 GUI
+if(Sys.info()[names(Sys.info())== "sysname"] == "Linux"){
+  if(!"RGtk2"%in%installed.packages()[,"Package"]){
+    install.packages(
+      "https://cran.microsoft.com/snapshot/2021-12-15/src/contrib/RGtk2_2.20.36.2.tar.gz",repos=NULL) 
+  }
+  if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
+    install.packages(
+      "https://cran.microsoft.com/snapshot/2021-12-15/src/contrib/Archive/gWidgets2RGtk2/gWidgets2RGtk2_1.0-7.tar.gz",repos=NULL)
+  }
+  if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+    install.packages(
+      "https://cran.microsoft.com/snapshot/2021-12-15/src/contrib/cairoDevice_2.28.2.1.tar.gz",repos=NULL)
+  }
+}else if(Sys.info()[names(Sys.info())== "sysname"] == "Windows"){
+  if(grepl("3.6",R.version.string)){
+    if(!"RGtk2"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/3.6/RGtk2_2.20.36.zip",repos=NULL)
+    }
+    if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/3.6/gWidgets2RGtk2_1.0-7.zip",repos=NULL)
+    }
+    if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/3.6/cairoDevice_2.28.2.zip",repos=NULL)
+    }
+  }else{
+    if(!"RGtk2"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/r-release/RGtk2_2.20.36.2.zip",repos=NULL)
+    }
+    if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/4.2/gWidgets2RGtk2_1.0-7.zip",repos=NULL)
+    }
+    if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/4.2/cairoDevice_2.28.2.1.zip",repos=NULL)
+    }
+  }
+}else{
+  if(grepl("3.",R.version.string)){
+    if(!"RGtk2"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/RGtk2_2.20.36.tgz",repos=NULL)
+    }
+    if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/gWidgetsRGtk2_0.0-86.tgz",repos=NULL)
+    }
+    if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/cairoDevice_2.27.tgz",repos=NULL)
+    }
+  }else{
+    if(!"RGtk2"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/contrib/r-release/RGtk2_2.20.36.2.tgz",repos=NULL)
+    }
+    if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/contrib/r-release/gWidgets2RGtk2_1.0-7.tgz",repos=NULL)
+    }
+    if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/contrib/r-release/cairoDevice_2.28.2.1.tgz",repos=NULL)
+    }
+  }
+}
+
+# install Biomanger
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
-  BiocManager::install(version = "3.12")
 
 bpkg <- c("pillar","QuasR","DESeq2","edgeR", "Rsamtools","seqinr","ShortRead")
 
@@ -23,8 +93,8 @@ ibpak <- function(bpkg){
   new.pkg <- bpkg[!(bpkg %in% installed.packages()[, "Package"])]
   if (length(new.pkg))
     BiocManager::install(new.pkg)
-  sapply(bpkg, require, character.only = TRUE)
+  # sapply(bpkg, require, character.only = TRUE)
 }
 
 ibpak(bpkg)
-
+library(gWidgets2RGtk2)

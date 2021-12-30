@@ -4,7 +4,7 @@
 #' @return tReasure.win
 #' @export
 tReasure.win <- function(){
-  library("gWidgets2RGtk2")
+  # library("gWidgets2RGtk2")
   #  load library
   pkg <- c("gWidgets2","cairoDevice","plotrix","tidyverse", "gWidgets2RGtk2",
            "gridExtra","ggplot2","grid","dplyr","statmod","future", "stringr",
@@ -677,6 +677,36 @@ tReasure.win <- function(){
     out <- data.frame(Names = rownames(out), out[,])
     return(out)
   }
+ 
+  quant<- function(count){
+    rownames(count) <- count$Names
+    sFile<- read.delim("sample.txt")
+    case <- factor(sFile$Group)
+    case <- relevel(case, ref="control")
+    if(nlevels(sFile$Batch) != 0){batch <- factor(sFile$Batch)
+    design <- model.matrix(~batch+case)
+    coef = nlevels(batch)+1
+    }else{design <- model.matrix(~case)
+    coef = 2}
+    rownames(design) <- colnames(count)[-1]
+    
+    v <- voom(count[,-1], design, normalize = "quantile" )
+    fit <- lmFit(v, design)
+    fit <- eBayes(fit)
+    
+    out_bh <- topTable(fit, coef=ncol(design), n= Inf, adjust.method = "BH")
+    colnames(out_bh)[grep("adj",colnames(out_bh))] <- "Benjamini"
+    
+    out_bonf <- topTable(fit, coef=ncol(design), n= Inf, adjust.method = "bonferroni")
+    colnames(out_bonf)[grep("adj",colnames(out_bonf))] <- "Bonferroni"
+    
+    out_fdr <- topTable(fit, coef=ncol(design), n= Inf, adjust.method = "fdr")
+    colnames(out_fdr)[grep("adj",colnames(out_fdr))] <- "FDR"
+    
+    out <- cbind(out_fdr[,c(1,2,3,4,6,5)], Bonferroni = out_bonf$Bonferroni, Benjamini=out_bh$Benjamini)
+    out <- data.frame(Names = rownames(out), out[,])
+    return(out)
+  }
   
   anl_deseq <- function(h,...){
     insert(st,"Statistical analysis  : DESeq2", do.newline = TRUE )
@@ -716,6 +746,31 @@ tReasure.win <- function(){
     t_out <- edger(tcount)
     c_out <- edger(ccount)
     a_out <- edger(acount)
+    
+    stat_trna[] <- t_out
+    stat_codon[] <- c_out
+    stat_aa[] <- a_out
+    
+    write.table(t_out, "./stat/stat_trna_list.txt", sep="\t", quote = FALSE, row.names = F)
+    write.table(c_out, "./stat/stat_isodecoder_list.txt", sep="\t", quote = FALSE, row.names = F)
+    write.table(a_out, "./stat/stat_isoacceptor_list.txt", sep="\t", quote = FALSE, row.names = F)
+    insert(st, " ", do.newline = TRUE)
+    insert(st,"Done : Statistical analysis. Set the threshold value.", do.newline = TRUE )
+    insert(st, ".", do.newline = TRUE)
+  }
+  
+  anl_quantile <- function(h,...){
+    insert(st,"Statistical analysis  : Quqntile Normalization using limma voom ", do.newline = TRUE )
+    insert(st,"It takes a few minutes. Please wait....", do.newline = TRUE )
+    dir <- getwd()
+    
+    tcount <- read.delim(file.path(dir, "rc", "filtered_readcount_trnas.txt"))
+    ccount <- read.delim(file.path(dir, "rc", "filtered_readcount_isodecoders.txt"))
+    acount <- read.delim(file.path(dir, "rc", "filtered_readcount_isoacceptors.txt"))
+    
+    t_out <- quant(tcount)
+    c_out <- quant(ccount)
+    a_out <- quant(acount)
     
     stat_trna[] <- t_out
     stat_codon[] <- c_out
@@ -1161,8 +1216,10 @@ tReasure.win <- function(){
   addSpace(ggr61, 10)
   
   ggr62 <- gnotebook(container=paned.6, tab.pos  = 3) ; size(ggr62) <- c(250, 200)
+  stat3 <- ggroup(container = ggr62, label = " Limma(QN) ")
   stat2 <- ggroup(container = ggr62, label = " DEseq2 ")
   stat1 <- ggroup(container = ggr62, label = " EdgeR ")
+ 
   
   tmp.61 <- gframe("  Statics  ", container = stat1, horizontal = FALSE, spacing = 10); size(tmp.61) <- c(235,150)
   addSpace(tmp.61, 10)
@@ -1178,10 +1235,17 @@ tReasure.win <- function(){
   method_deseq <- gradio("Walt test", container = tmp.62)
   addSpace(tmp.62, 10)
   
+  tmp.63 <- gframe("  Statics  ", container = stat3, horizontal = FALSE, spacing = 10); size(tmp.63) <- c(235,150)
+  addSpace(tmp.63, 10)
+  glabel(" Stat.Method : ", container = tmp.63, anchor = c(-1,0))
+  addSpace(tmp.63, 10)
+  method_deseq <- gradio("eBayes", container = tmp.63)
+  addSpace(tmp.63, 10)
+  
   
   statedgeR_button <- gbutton ("RUN EdgeR", container = tmp.61, handler = anl_edger)
   statdeseq_button <- gbutton("RUN DESeq2", container = tmp.62, handler = anl_deseq)
-  
+  statlimma_button <- gbutton("RUN Limma(QN)", container = tmp.63, handler = anl_quantile)
   
   widget_list <- list()
   ggr.63 <- gframe("  Threshold  ", container = paned.6, horizontal = FALSE, spacing = 10)

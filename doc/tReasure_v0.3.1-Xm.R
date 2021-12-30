@@ -40,8 +40,10 @@ source(system.file("extdata", "func/anl_rc.R", package = "tReasure", mustWork = 
 source(system.file("extdata", "func/anl_filter.R", package = "tReasure", mustWork = TRUE))
 source(system.file("extdata", "func/deseq.R", package = "tReasure", mustWork = TRUE))
 source(system.file("extdata", "func/edger.R", package = "tReasure", mustWork = TRUE))
+source(system.file("extdata", "func/quant.R", package = "tReasure", mustWork = TRUE))
 source(system.file("extdata", "func/anl_deseq.R", package = "tReasure", mustWork = TRUE))
 source(system.file("extdata", "func/anl_edger.R", package = "tReasure", mustWork = TRUE))
+source(system.file("extdata", "func/anl_quantile.R", package = "tReasure", mustWork = TRUE))
 source(system.file("extdata", "func/pyramid.R", package = "tReasure", mustWork = TRUE))
 source(system.file("extdata", "func/volcano.R", package = "tReasure", mustWork = TRUE))
 source(system.file("extdata", "func/barplot.R", package = "tReasure", mustWork = TRUE))
@@ -580,6 +582,7 @@ paned.6 <- gpanedgroup(container = ggr61, horizontal = FALSE, spacing = 10)
 addSpace(ggr61, 10)
 
 ggr62 <- gnotebook(container=paned.6, tab.pos  = 3) ; size(ggr62) <- c(250, 200)
+stat3 <- ggroup(container = ggr62, label = " Limma(QN) ")
 stat2 <- ggroup(container = ggr62, label = " DEseq2 ")
 stat1 <- ggroup(container = ggr62, label = " EdgeR ")
 
@@ -597,10 +600,16 @@ addSpace(tmp.62, 10)
 method_deseq <- gradio("Walt test", container = tmp.62)
 addSpace(tmp.62, 10)
 
+tmp.63 <- gframe("  Statics  ", container = stat3, horizontal = FALSE, spacing = 10); size(tmp.63) <- c(235,150)
+addSpace(tmp.63, 10)
+glabel(" Stat.Method : ", container = tmp.63, anchor = c(-1,0))
+addSpace(tmp.63, 10)
+method_deseq <- gradio("eBayes", container = tmp.63)
+addSpace(tmp.63, 10)
 
 statedgeR_button <- gbutton ("RUN EdgeR", container = tmp.61, handler = anl_edger)
 statdeseq_button <- gbutton("RUN DESeq2", container = tmp.62, handler = anl_deseq)
-
+statlimma_button <- gbutton("RUN Limma(QN)", container = tmp.63, handler = anl_quantile)
 
 widget_list <- list()
 ggr.63 <- gframe("  Threshold  ", container = paned.6, horizontal = FALSE, spacing = 10)

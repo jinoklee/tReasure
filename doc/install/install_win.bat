@@ -1,7 +1,7 @@
 :: Require files
 :: pkg_lib.R
 :: loadR_v1.R
-:: tReasure.R
+:: tReasure_v1.R
 :: tReasure_source.tar.gz
 
 

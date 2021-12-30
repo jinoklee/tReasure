@@ -5,7 +5,7 @@
 
 # tReasure
 ***
-**tReasure (tRNA Expression Analysis Software Utilising R for Easy use)** is user-friendly tool for the tRNA expression analysis of deep-sequencing experiments for small RNAs using R packages. 
+**tReasure (tRNA Expression Analysis Software Utilizing R for Easy use)** is user-friendly tool for the tRNA expression analysis of deep-sequencing experiments for small RNAs using R packages. 
 
     tReasure currently implements the following tasks:
     1) Making sample list for analysis
@@ -19,26 +19,49 @@ tReasure is a package for the R computing environment and it is assumed that you
 
 <br/>   
 
-### **Method 1. Install tReasure from GitHub**  : Open Rstudio or R and type as below   
+### Preliminaries  
+
+  1) For linux users :  
+     Users need to install libgtk2.0-dev and libxml2-dev before installing tReasure.
+     
+     sudo apt-get update -y 
+     sudo apt-get install libxml2-dev
+     sudo apt-get install -y libgtk2.0-dev
+ 
+  2) For Mac OS users :  
+     Users need to install [XQuartz](https://www.xquartz.org) before installing tReasure.
+     
+     
+### **Method 1. Install tReasure from GitHub**  : Open Rstudio or R and type as below.  
+    It takes a few minutes to install for the first time. 
    
     install.packages("devtools")
     library("devtools")
     devtools::install_github("jinoklee/tReasure",force = TRUE)
+    library("tReasure")
+    tReasure()
     
-   ***Note*** If the descriptioin shows as below during the installation, choose 1 
+    
+   ***Note*** If the descriptioin shows as below during the installation, choose **"Install GTK+"** 
     
     
-    Select a GUI toolkit
-        1: gWidgets2RGK2
-        2: gWidtets2ticltk
+    Need GTK+? (Restart Required)
+        Install GTK+
+        Do not install GTK+
+        
     
-
+    
+   ***Note*** If the installation was successful, the tReasure window appears. If the window dose not appear, restart R and type as below.  
+   
+    tReasure::tReasure.win()
+   
+   
 ### **Method 2. Install tReasure from source**   
     The difference from installing with GitHub is that it is installed as a standalone tools
 
    **STEP 1.** Download and unzip a file
-   + Windows: tReasrue_win.zip [Download](https://www.dropbox.com/sh/wyn0q5inoxx5lm7/AAB6gxpD7uNvR9arIAqYPrl3a?dl=0)
-   + Linux/Mac OS: tReasure_src.zip [Download](https://www.dropbox.com/sh/wyn0q5inoxx5lm7/AAB6gxpD7uNvR9arIAqYPrl3a?dl=0)     
+   + Windows: tReasrue_win.zip [Download]()
+   + Linux/Mac OS: tReasure_src.zip [Download]()     
 
    **STEP 2.** Double-click or type on command window an install-file  
    + Windows: install_win.bat
@@ -61,8 +84,11 @@ Installation may take several minutes.
     
     library("tReasure")
     tReasure()
-       
+    
+or 
 
+     library("tReasure")
+     tReasure::tReasure.win()
 ### **Method 2.  In case downloading tReasrue from source**  
    + Windows: Double-click the icon of tReasure on Desktop.  
 

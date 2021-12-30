@@ -32,46 +32,61 @@ tReasure <- function(){
         "https://cran.microsoft.com/snapshot/2021-12-15/src/contrib/cairoDevice_2.28.2.1.tar.gz",repos=NULL)
     }
   }else if(Sys.info()[names(Sys.info())== "sysname"] == "Windows"){
-    if(!"RGtk2"%in%installed.packages()[,"Package"]){
-      install.packages(
-        "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/r-release/RGtk2_2.20.36.2.zip",repos=NULL)
-    }
-    if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
-      install.packages(
-        "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/4.2/gWidgets2RGtk2_1.0-7.zip",repos=NULL)
-    }
-    if(!"cairoDevice"%in%installed.packages()[,"Package"]){
-      install.packages(
-        "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/r-release/cairoDevice_2.28.2.1.zip",repos=NULL)
-    }
-  }else{
-    if(grepl("3.",R.version.string)){
+    if(grepl("3.6",R.version.string)){
       if(!"RGtk2"%in%installed.packages()[,"Package"]){
         install.packages(
-          "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/RGtk2_2.20.36.tgz",repos=NULL)
+          "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/3.6/RGtk2_2.20.36.zip",repos=NULL)
       }
       if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
         install.packages(
-          "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/gWidgetsRGtk2_0.0-86.tgz",repos=NULL)
+          "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/3.6/gWidgets2RGtk2_1.0-7.zip",repos=NULL)
       }
       if(!"cairoDevice"%in%installed.packages()[,"Package"]){
         install.packages(
-          "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/cairoDevice_2.27.tgz",repos=NULL)
+          "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/3.6/cairoDevice_2.28.2.zip",repos=NULL)
+      }
+      }else{
+        if(!"RGtk2"%in%installed.packages()[,"Package"]){
+          install.packages(
+            "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/r-release/RGtk2_2.20.36.2.zip",repos=NULL)
+        }
+        if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
+          install.packages(
+            "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/4.2/gWidgets2RGtk2_1.0-7.zip",repos=NULL)
+        }
+        if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+          install.packages(
+            "https://cran.microsoft.com/snapshot/2021-12-15/bin/windows/contrib/4.2/cairoDevice_2.28.2.1.zip",repos=NULL)
+        }
       }
     }else{
-      if(!"RGtk2"%in%installed.packages()[,"Package"]){
+      if(grepl("3.",R.version.string)){
+        if(!"RGtk2"%in%installed.packages()[,"Package"]){
+          install.packages(
+            "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/RGtk2_2.20.36.tgz",repos=NULL)
+        }
+        if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
+          install.packages(
+            "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/gWidgetsRGtk2_0.0-86.tgz",repos=NULL)
+        }
+        if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+          install.packages(
+            "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/cairoDevice_2.27.tgz",repos=NULL)
+        }
+        }else{
+          if(!"RGtk2"%in%installed.packages()[,"Package"]){
         install.packages(
           "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/contrib/r-release/RGtk2_2.20.36.2.tgz",repos=NULL)
-      }
-      if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
+          }
+          if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
         install.packages(
           "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/contrib/r-release/gWidgets2RGtk2_1.0-7.tgz",repos=NULL)
-      }
-      if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+          }
+          if(!"cairoDevice"%in%installed.packages()[,"Package"]){
         install.packages(
           "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/contrib/r-release/cairoDevice_2.28.2.1.tgz",repos=NULL)
-      }
-    }
+          }
+          }
   }
   
   # install Biomanger
@@ -88,6 +103,8 @@ tReasure <- function(){
   }
   
   ibpak(bpkg)
+  library("gWidgets2RGtk2")
   library(rstudioapi)
   restartSession(command = "tReasure::tReasure.win()")
+  
 }
