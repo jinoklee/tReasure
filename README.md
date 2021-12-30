@@ -41,7 +41,7 @@ tReasure is a package for the R computing environment and it is assumed that you
     library("devtools")
     devtools::install_github("jinoklee/tReasure",force = TRUE)
     library("tReasure")
-    tReasure()
+    install.pkg()
     
     
    ***Note*** If the descriptioin shows as below during the installation, choose **"Install GTK+"** 
@@ -55,7 +55,7 @@ tReasure is a package for the R computing environment and it is assumed that you
     
    ***Note*** If the installation was successful, the tReasure window appears. If the window dose not appear, restart R and type as below.  
    
-    tReasure::tReasure.win()
+    tReasure::tReasure()
    
    
 ### **Method 2. Install tReasure from source**   
@@ -83,14 +83,9 @@ Installation may take several minutes.
 ## Start   
 ### **Method 1. In case downloading tReasure from GitHub**  : Open Rstuido or R and type as below  
   
-    
-    library("tReasure")
-    tReasure()
-    
-or 
 
      library("tReasure")
-     tReasure::tReasure.win()
+     tReasure::tReasure()
 ### **Method 2.  In case downloading tReasrue from source**  
    + Windows: Double-click the icon of tReasure on Desktop.  
 
