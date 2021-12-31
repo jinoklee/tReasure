@@ -28,16 +28,28 @@ anl_align <- function(h,...){
     sFile2 <- read.delim(sFile)
 
     # alignment future----------------------
-
-    bowtie <- function(sFile, genome){
-      plan(multiprocess)
+    bowtie_win <- function(sFile, genome){
+      plan(multisession)
       bpid <- Sys.getpid()
       save(bpid, file = file.path(dir,"bpid"))
       proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 3 --best", clObj = NULL)
       return(proj)
     }
 
-    bow <- future({bowtie(sFile, genome)})
+    bowtie <- function(sFile, genome){
+      plan(multicore)
+      bpid <- Sys.getpid()
+      save(bpid, file = file.path(dir,"bpid"))
+      proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 3 --best", clObj = NULL)
+      return(proj)
+    }
+
+    if(Sys.info()[names(Sys.info())== "sysname"] == "Windows"){
+      bow <- future({bowtie_win(sFile, genome)})
+    }else{
+      bow <- future({bowtie(sFile, genome)})
+    }
+    
 
     # alignment status----------------------
 
