@@ -41,7 +41,7 @@ tReasure is a package for the R computing environment and it is assumed that you
     library("devtools")
     devtools::install_github("jinoklee/tReasure",force = TRUE)
     library("tReasure")
-    install.pkg()
+    install.tReasure()
     
     
    ***Note*** If the descriptioin shows as below during the installation, choose **"Install GTK+"** 
