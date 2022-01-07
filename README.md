@@ -15,14 +15,26 @@
     5) Visualization 
 
 ## Installation       
-tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). Also, addtional R tools (http://www.r-project.org) must be installed. tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
+tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
 
 <br/>   
 
 ### Preliminaries  
 
-  1) For linux users :  
-     Users need to install libgtk2.0-dev and libxml2-dev before installing tReasure. 
+  1) For window users :  
+     User need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/rtools40.html) before installing tReasure.
+  
+  5) For linux users :  
+     Users need to install **libcurl4-openssl-dev** and **libssl-dev** for devtools.  
+     - Example for user Ubuntu
+     
+     ```
+     sudo apt-get install libcurl4-openssl-dev 
+     sudo apt-get install libssl-dev
+     ```
+     
+     Also, user need to install **libgtk2.0-dev** and **libxml2-dev** for tReasure.  
+     - Example for user Ubuntu
      
      ```
      sudo apt-get update -y
@@ -80,7 +92,7 @@ Installation may take several minutes.
 
 <br/>
 
-## Start   
+## Quick start   
 ### **Method 1. In case downloading tReasure from GitHub**  : Open Rstuido or R and type as below  
   
 
@@ -105,7 +117,10 @@ Installation may take several minutes.
 ## Detailed Mapping Methods
 * [Click](doc/Detailed-Mapping-Methods.pdf)
 ## Sample Data  
-* Human breast cancer [Download](https://www.dropbox.com/sh/phkerfxxq3jmgo9/AAC3sR1rWWo5DsTZAD3_VUANa?dl=0)  
+* Small RNA-seq dataset from human breast tissues (part of GSE68085)
+    - [Download](https://www.dropbox.com/sh/phkerfxxq3jmgo9/AAC3sR1rWWo5DsTZAD3_VUANa?dl=0)
+    - Control (Normal): SRR1982473, SRR1982474, SRR1982475
+    - Test (Cancer): SRR1982580, SRR1982581, SRR1982582
 
 ## Tutorial Videos
  * Installation and setup [ Click ! ](https://www.dropbox.com/s/4n6uz5bxvf1w9e2/Installaion.tReasure.mkv?dl=0) 
