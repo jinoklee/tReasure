@@ -43,7 +43,12 @@ tReasure is a package for the R computing environment and it is assumed that you
      ```
      
   2) For Mac OS users :  
-     Users need to install [XQuartz](https://www.xquartz.org) before installing tReasure.
+     Users need to install [XQuartz](https://www.xquartz.org), **gtk+** and **cairo** before installing tReasure.  
+     - Example using brew 
+     ```
+     brew install gtk+
+     brew install cairo  
+     ```
      
      
 ### **Method 1. Install tReasure from GitHub**  : Open Rstudio or R and type as below.  
@@ -123,7 +128,7 @@ Installation may take several minutes.
     - Test (Cancer): SRR1982580, SRR1982581, SRR1982582
 
 ## Tutorial Videos
- * Installation and setup [ Click ! ](https://www.dropbox.com/s/4n6uz5bxvf1w9e2/Installaion.tReasure.mkv?dl=0) 
- * Full version of analysis [ Click ! ](https://www.dropbox.com/s/2oueoevis9fhqlv/Analysis.tReasure.mkv?dl=0)   
+ * Installation and setup [ Click ! ]
+ * Full version of analysis [ Click ! ] 
 
 
