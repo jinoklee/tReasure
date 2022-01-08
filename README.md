@@ -43,11 +43,11 @@ tReasure is a package for the R computing environment and it is assumed that you
      ```
      
   2) For Mac OS users :  
-     Users need to install [XQuartz](https://www.xquartz.org), **gtk+** and **cairo** before installing tReasure.  
+     Users need to install [XQuartz](https://www.xquartz.org), **gtk2** and **cairo** before installing tReasure.  
      - Example using brew 
      ```
-     brew install gtk+
      brew install cairo  
+     brew install gtk+
      ```
      
      
