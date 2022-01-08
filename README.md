@@ -56,15 +56,18 @@ tReasure is a package for the R computing environment and it is assumed that you
      ```
  
      
-### **Method 1. Install tReasure from GitHub**  : Open Rstudio or R and type as below.  
-    It takes a few minutes to install for the first time. 
+### **Method 1. Install tReasure from GitHub**  : Open Rstudio or R and type as below.
+It takes a few minutes to install for the first time.  
+
+   
    
     install.packages("devtools")
     library("devtools")
+    
     devtools::install_github("jinoklee/tReasure",force = TRUE)
     library("tReasure")
     install.tReasure()
-    
+   
     
    ***Note*** If the descriptioin shows as below during the installation, choose **"Install GTK+"** 
     
@@ -101,11 +104,12 @@ Installation may take several minutes.
 <br/>
 
 ## 🌱 Running tReasure  
-### **Method 1. In case downloading tReasure from GitHub**  : Open Rstuido or R and type as below  
-    ```
+### **Method 1. In case downloading tReasure from GitHub**  
+: Open Rstuido or R and type as below  
+
      library("tReasure")
      tReasure::tReasure()
-     ```
+
 ### **Method 2.  In case downloading tReasrue from source**  
    + Windows: Double-click the icon of tReasure on Desktop.  
 
