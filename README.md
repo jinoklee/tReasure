@@ -2,7 +2,6 @@
 
 <img src = "https://github.com/jinoklee/tReasure/blob/master/inst/extdata/tresure.png" width="100" height="100" />
 
-
 # tReasure
 ***
 **tReasure (tRNA Expression Analysis Software Utilizing R for Easy use)** is user-friendly tool for the tRNA expression analysis of deep-sequencing experiments for small RNAs using R packages. 
@@ -13,11 +12,11 @@
     3) Alignment and quantification
     4) Statistical analysis for differentially expressed tRNAs gene
     5) Visualization 
+<br/>
 
-## Installation       
+## 🌱 Installation       
 tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
 
-<br/>   
 
 ### Preliminaries  
 
@@ -43,18 +42,32 @@ tReasure is a package for the R computing environment and it is assumed that you
      ```
      
   2) For Mac OS users :  
-     Users need to install [XQuartz](https://www.xquartz.org) before installing tReasure.
+     Users need to install **opnssl** for devtools.   
+     - Example using brew
+     ```
+     brew update
+     brew install openssl
+     ```
+     Users need to install [XQuartz](https://www.xquartz.org), **gtk2** and **cairo** before installing tReasure.  
+     - Example using brew 
+     ```
+     brew install cairo  
+     brew install gtk+
+     ```
+ 
      
-     
-### **Method 1. Install tReasure from GitHub**  : Open Rstudio or R and type as below.  
-    It takes a few minutes to install for the first time. 
+### **Method 1. Install tReasure from GitHub**  : Open Rstudio or R and type as below.
+It takes a few minutes to install for the first time.  
+
+   
    
     install.packages("devtools")
     library("devtools")
+    
     devtools::install_github("jinoklee/tReasure",force = TRUE)
     library("tReasure")
     install.tReasure()
-    
+   
     
    ***Note*** If the descriptioin shows as below during the installation, choose **"Install GTK+"** 
     
@@ -84,20 +97,19 @@ tReasure is a package for the R computing environment and it is assumed that you
         ~~~   
         sh install_src_v1.sh
         ~~~   
-
 Installation may take several minutes. 
 + It automatically installs tReasure package.
 + It creates a folder named tReasure_v1 on Documents. 
 + It creates **shortcut for tReasure** on Desktop (only Window).
-
 <br/>
 
-## Quick start   
-### **Method 1. In case downloading tReasure from GitHub**  : Open Rstuido or R and type as below  
-  
+## 🌱 Running tReasure  
+### **Method 1. In case downloading tReasure from GitHub**  
+: Open Rstuido or R and type as below  
 
      library("tReasure")
      tReasure::tReasure()
+
 ### **Method 2.  In case downloading tReasrue from source**  
    + Windows: Double-click the icon of tReasure on Desktop.  
 
@@ -109,21 +121,21 @@ Installation may take several minutes.
         sh run_tReasure.sh.command
        ~~~
     
-<br/>   
+<br/>  
 
-## User Manual
+## 🔔 User Manual
 * [Download](doc/tReasure-Manual.pdf)
 
-## Detailed Mapping Methods
+## 🔔 Detailed Mapping Methods
 * [Click](doc/Detailed-Mapping-Methods.pdf)
-## Sample Data  
+## 🔔 Sample Data  
 * Small RNA-seq dataset from human breast tissues (part of GSE68085)
     - [Download](https://www.dropbox.com/sh/phkerfxxq3jmgo9/AAC3sR1rWWo5DsTZAD3_VUANa?dl=0)
     - Control (Normal): SRR1982473, SRR1982474, SRR1982475
     - Test (Cancer): SRR1982580, SRR1982581, SRR1982582
 
-## Tutorial Videos
- * Installation and setup [ Click ! ](https://www.dropbox.com/s/4n6uz5bxvf1w9e2/Installaion.tReasure.mkv?dl=0) 
- * Full version of analysis [ Click ! ](https://www.dropbox.com/s/2oueoevis9fhqlv/Analysis.tReasure.mkv?dl=0)   
+## 🔔 Tutorial Videos
+ * Installation and setup [ Click ! ]
+ * Full version of analysis [ Click ! ] 
 
 
