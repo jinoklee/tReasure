@@ -261,7 +261,7 @@ tReasure<- function(){
   }
   
   anl_trim <-  function(h,...){
-    plan(multiprocess)
+    plan(multisession)
     if(file.exists("sample.txt") == FALSE & file.exists("*.fastq") == FALSE){
       gmessage("Warning : No file found matching sample list or fastq files")
     }else{
@@ -385,7 +385,7 @@ tReasure<- function(){
   }
   
   anl_trim_linux <-  function(h,...){
-    plan(multiprocess)
+    plan(multisession)
     if(file.exists("sample.txt") == FALSE & file.exists("*.fastq") == FALSE){
       gmessage("Warning : No file found matching sample list or fastq files")
     }else{
@@ -546,7 +546,7 @@ tReasure<- function(){
     }
     
     bowtie<- function(sFile, genome){
-      plan(multiprocess)
+      plan(multisession)
       bpid <- Sys.getpid()
       save(bpid, file = file.path(dir,"bpid"))
       proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 3 --best", clObj = NULL)
@@ -554,7 +554,7 @@ tReasure<- function(){
     }
     
     bowtie_linux <- function(sFile, genome){
-      plan(multiprocess)
+      plan(multisession)
       bpid <- Sys.getpid()
       save(bpid, file = file.path(dir,"bpid"))
       proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 3 --best", clObj = NULL)
