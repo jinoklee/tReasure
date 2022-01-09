@@ -124,7 +124,7 @@ Installation may take several minutes.
 <br/>  
 
 ## 🔔 User Manual
-* [Download](doc/tReasure-Manual.pdf)
+* [Download](doc/tReasure-Manual-220109.pdf)
 
 ## 🔔 Detailed Mapping Methods
 * [Click](doc/Detailed-Mapping-Methods.pdf)
