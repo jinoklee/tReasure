@@ -1364,7 +1364,7 @@ tReasure<- function(){
   
   addSpace(gr_frame, 10)
   c1 <- glabel("  Domain : ", container = gr_frame, anchor = c(-1,0))
-  ref_P1 <- gcombobox(c(" ", "Eukaryota" ,"Archaea", "Bacteria"),container = gr_frame) # container = tmp.3
+  ref_P1 <- gcombobox(c(" ", "Eukarya" ,"Archaea", "Bacteria"),container = gr_frame) # container = tmp.3
   addSpace(gr_frame, 10)
   
   c2 <- glabel("  Next 1 : ", container = gr_frame, anchor = c(-1,0))
