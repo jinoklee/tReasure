@@ -546,7 +546,7 @@ tReasure<- function(){
     }
     
     bowtie<- function(sFile, genome){
-      plan(multisession)
+      plan(multicore)
       bpid <- Sys.getpid()
       save(bpid, file = file.path(dir,"bpid"))
       proj <- qAlign(sFile, genome = genome, aligner = "Rbowtie",alignmentParameter = "-v 3 --best", clObj = NULL)
