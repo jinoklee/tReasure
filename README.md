@@ -124,7 +124,7 @@ Installation may take several minutes.
 <br/>  
 
 ## 🔔 User Manual
-* [Download](doc/tReasure-Manual.pdf)
+* [Download](doc/tReasure-Manual-220109.pdf)
 
 ## 🔔 Detailed Mapping Methods
 * [Click](doc/Detailed-Mapping-Methods.pdf)
@@ -135,7 +135,7 @@ Installation may take several minutes.
     - Test (Cancer): SRR1982580, SRR1982581, SRR1982582
 
 ## 🔔 Tutorial Videos
- * Installation and setup [ Click ! ]
- * Full version of analysis [ Click ! ] 
-
+ * Installation and setup:
+ * Full version of analysis: [Window](https://www.dropbox.com/s/vinwwdl1umw74l7/tReasure.Analysis.mp4?dl=0) [Mac](https://www.dropbox.com/s/ylt89pxcw9bf4eq/tReasure.Analysis.Mac.mov?dl=0)
+ * Results folders: [Click](https://www.dropbox.com/s/3kwx3i45sllnnhu/tReasure.Outputs.mp4?dl=0)
 
