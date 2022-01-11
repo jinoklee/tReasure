@@ -18,7 +18,7 @@
 tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
 
 
-### Preliminaries  
+### 1. Preliminaries  
 
   1) For window users :  
      User need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/rtools40.html) before installing tReasure.
@@ -56,17 +56,16 @@ tReasure is a package for the R computing environment and it is assumed that you
      ```
  
      
-### **Method 1. Install tReasure from GitHub**  : Open Rstudio or R and type as below.
-It takes a few minutes to install for the first time.  
-
+### 2. Installation of tReasure : Open Rstudio or R and type as below.
+    It takes a few minutes to install for the first time.  
+ 
    
-   
-    install.packages("devtools")
-    library("devtools")
+     install.packages("devtools")
+     library("devtools")
     
-    devtools::install_github("jinoklee/tReasure",force = TRUE)
-    library("tReasure")
-    install.tReasure()
+     devtools::install_github("jinoklee/tReasure",force = TRUE)
+     library("tReasure")
+     install.tReasure()
    
     
    ***Note*** If the descriptioin shows as below during the installation, choose **"Install GTK+"** 
@@ -82,46 +81,13 @@ It takes a few minutes to install for the first time.
    
     tReasure::tReasure()
    
-   
-### **Method 2. Install tReasure from source**   
-    The difference from installing with GitHub is that it is installed as a standalone tools
-
-   **STEP 1.** Download and unzip a file
-   + Windows: tReasrue_win.zip [Download]()
-   + Linux/Mac OS: tReasure_src.zip [Download]()     
-
-   **STEP 2.** Double-click or type on command window an install-file  
-   + Windows: install_win.bat
-   + Mac OS: install.sh.command
-   + Linux: open commnad window and type as below       
-        ~~~   
-        sh install_src_v1.sh
-        ~~~   
-Installation may take several minutes. 
-+ It automatically installs tReasure package.
-+ It creates a folder named tReasure_v1 on Documents. 
-+ It creates **shortcut for tReasure** on Desktop (only Window).
-<br/>
 
 ## 🌱 Running tReasure  
-### **Method 1. In case downloading tReasure from GitHub**  
-: Open Rstuido or R and type as below  
+### Open Rstuido or R and type as below
 
      library("tReasure")
      tReasure::tReasure()
 
-### **Method 2.  In case downloading tReasrue from source**  
-   + Windows: Double-click the icon of tReasure on Desktop.  
-
-   + MacOS: Ddouble-Click **run_tReasure.sh.command**   
-
-   + Linux: type as belows         
-       ~~~
-        chmod 777 run_tReasure.sh.command
-        sh run_tReasure.sh.command
-       ~~~
-    
-<br/>  
 
 ## 🔔 User Manual
 * [Download](doc/tReasure-Manual-220109.pdf)
