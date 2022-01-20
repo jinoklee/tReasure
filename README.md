@@ -37,7 +37,7 @@ tReasure is a package for the R computing environment and it is assumed that you
      
      ```
      sudo apt-get update -y
-     sudo apt-get install libxml2-dev
+     sudo apt-get install -y libxml2-dev
      sudo apt-get install -y libgtk2.0-dev
      ```
      
