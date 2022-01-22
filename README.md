@@ -101,7 +101,7 @@ tReasure is a package for the R computing environment and it is assumed that you
     - Test (Cancer): SRR1982580, SRR1982581, SRR1982582
 
 ## 🔔 Tutorial Videos
- * Installation and setup:
+ * Installation and setup: [Window](https://www.dropbox.com/s/ssxux5ad7jwvxk7/win_install.mkv?dl=0) 
  * Full version of analysis: [Window](https://www.dropbox.com/s/vinwwdl1umw74l7/tReasure.Analysis.mp4?dl=0) [Mac](https://www.dropbox.com/s/ylt89pxcw9bf4eq/tReasure.Analysis.Mac.mov?dl=0)
  * Results folders: [Click](https://www.dropbox.com/s/3kwx3i45sllnnhu/tReasure.Outputs.mp4?dl=0)
 
