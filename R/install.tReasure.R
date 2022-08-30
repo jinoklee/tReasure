@@ -93,7 +93,7 @@ install.tReasure <- function(){
             install.packages(
               "https://cran.r-project.org/src/contrib/Archive/cairoDevice/cairoDevice_2.28.2.2.tar.gz",repos=NULL, type = "source")
           }
-          if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+          if(!"gWidgets2"%in%installed.packages()[,"Package"]){
             install.packages(
               "https://cran.r-project.org/src/contrib/Archive/gWidgets2/gWidgets2_1.0-8.tar.gz",repos=NULL, type = "source")
           }
