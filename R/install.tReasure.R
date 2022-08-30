@@ -58,7 +58,7 @@ install.tReasure <- function(){
         }
       }
     }else{
-      if(grepl("3.",R.version.string)){
+      if(grepl("R version 4.",R.version.string)){
         if(!"RGtk2"%in%installed.packages()[,"Package"]){
           install.packages(
             "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/RGtk2_2.20.36.tgz",repos=NULL)
