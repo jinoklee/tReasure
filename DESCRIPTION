@@ -14,12 +14,8 @@ Imports:
   ggplot2,
   grid,
   gridExtra,
-  plotrix,
-  tidyverse,
   stringr,
-  seqinr,
   dplyr,
   future,
-  statmod,
-  gWidgets2
+  statmod
 RoxygenNote: 7.2.0

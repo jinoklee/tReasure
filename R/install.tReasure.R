@@ -31,6 +31,10 @@ install.tReasure <- function(){
       install.packages(
         "https://cran.microsoft.com/snapshot/2021-11-08/src/contrib/cairoDevice_2.28.2.1.tar.gz",repos=NULL)
     }
+    if(!"gWidgets2"%in%installed.packages()[,"Package"]){
+      install.packages(
+        "https://cran.microsoft.com/snapshot/2021-11-08/src/contrib/gWidgets2_1.0-8.tar.gz", repos=NULL)
+    }
   }else if(Sys.info()[names(Sys.info())== "sysname"] == "Windows"){
     if(grepl("3.6",R.version.string)){
       if(!"RGtk2"%in%installed.packages()[,"Package"]){
@@ -43,8 +47,10 @@ install.tReasure <- function(){
       }
       if(!"cairoDevice"%in%installed.packages()[,"Package"]){
         install.packages(
-          "https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/3.6/cairoDevice_2.28.2.zip",repos=NULL)
-      }
+          "https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/3.6/cairoDevice_2.28.2.zip",repos=NULL)}
+      if(!"gWidgets2"%in%installed.packages()[,"Package"]){
+        install.packages(
+          "https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/3.6/gWidgets2_1.0-8.zip",repos=NULL)}
       }else{
         ver <- regmatches(R.version.string, regexpr("\\d{1}\\.\\d{1}", R.version.string))
         if(!"RGtk2"%in%installed.packages()[,"Package"]){
@@ -56,6 +62,9 @@ install.tReasure <- function(){
         if(!"cairoDevice"%in%installed.packages()[,"Package"]){
           install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/", ver,"/cairoDevice_2.28.2.1.zip") , repos= NULL)
         }
+        
+        if(!"gWidgets2"%in%installed.packages()[,"Package"]){
+          iinstall.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/", ver,"/gWidgets2_1.0-8.zip ") , repos= NULL)}
       }
     }else{
       if(grepl("R version 4.",R.version.string)){
@@ -83,6 +92,10 @@ install.tReasure <- function(){
           if(!"cairoDevice"%in%installed.packages()[,"Package"]){
             install.packages(
               "https://cran.r-project.org/src/contrib/Archive/cairoDevice/cairoDevice_2.28.2.2.tar.gz",repos=NULL, type = "source")
+          }
+          if(!"cairoDevice"%in%installed.packages()[,"Package"]){
+            install.packages(
+              "https://cran.r-project.org/src/contrib/Archive/gWidgets2/gWidgets2_1.0-8.tar.gz",repos=NULL, type = "source")
           }
           }
   }
