@@ -64,38 +64,44 @@ install.tReasure <- function(){
         }
         
         if(!"gWidgets2"%in%installed.packages()[,"Package"]){
-          iinstall.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/", ver,"/gWidgets2_1.0-8.zip ") , repos= NULL)}
+          install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/windows/contrib/", ver,"/gWidgets2_1.0-8.zip ") , repos= NULL)}
       }
     }else{
-      if(grepl("R version 3.",R.version.string)){
+      ver <- regmatches(R.version.string, regexpr("\\d{1}\\.\\d{1}", R.version.string))
+      if(ver != "4.2"){
         if(!"RGtk2"%in%installed.packages()[,"Package"]){
-          install.packages(
-            "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/RGtk2_2.20.36.tgz",repos=NULL)
+          install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/",ver,"/RGtk2_2.20.36.2.tgz"),
+                           repos=NULL)
         }
         if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
-          install.packages(
-            "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/gWidgetsRGtk2_0.0-86.tgz",repos=NULL)
+          install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/",ver,"/gWidgets2RGtk2_1.0-7.tgz"),
+                           repos=NULL)
         }
         if(!"cairoDevice"%in%installed.packages()[,"Package"]){
-          install.packages(
-            "https://cran.microsoft.com/snapshot/2021-12-15/bin/macosx/el-capitan/contrib/r-oldrel/cairoDevice_2.27.tgz",repos=NULL)
+          install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/",ver,"/cairoDevice_2.28.2.1.tgz"),
+                           repos=NULL)
+        }
+        if(!"gWidgets2"%in%installed.packages()[,"Package"]){
+          install.packages(paste0("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/",ver,"/gWidgets2_1.0-8.tgz"),
+                           repos=NULL)
         }
         }else{
+          
           if(!"RGtk2"%in%installed.packages()[,"Package"]){
             install.packages("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/r-release/RGtk2_2.20.36.2.tgz",
-                             repos=NULL, type = "source")
+                             repos=NULL)
           }
           if(!"gWidgets2RGtk2"%in%installed.packages()[,"Package"]){
             install.packages("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/r-release/gWidgets2RGtk2_1.0-7.tgz",
-                             repos=NULL, type = "source")
+                             repos=NULL)
           }
           if(!"cairoDevice"%in%installed.packages()[,"Package"]){
             install.packages("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/r-release/cairoDevice_2.28.2.1.tgz",
-                             repos=NULL, type = "source")
+                             repos=NULL)
           }
           if(!"gWidgets2"%in%installed.packages()[,"Package"]){
             install.packages("https://cran.microsoft.com/snapshot/2021-11-08/bin/macosx/contrib/r-release/gWidgets2_1.0-8.tgz",
-                             repos=NULL, type = "source")
+                             repos=NULL)
           }
           }
   }
