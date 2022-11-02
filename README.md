@@ -19,7 +19,6 @@ tReasure is a package for the R computing environment and it is assumed that you
 
 ### 🔔 Notics
 * tReasure works fine with version R4.1. After being updated to the latest R version 4.2, an error has been identified in the tReasure. As soon as possible, we will revise the code and announce it again.
-* 
 * Being tested using conda as an alternative to install.
     - 2022-11-02 completion: under R4.1 using conda on Ubuntu.
     - 2022-11-02 ongoing: under R4.1 using conda on Mac
