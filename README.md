@@ -19,6 +19,7 @@ tReasure is a package for the R computing environment and it is assumed that you
 
 ### 🔔 Notics
 * tReasure works fine with version R4.1. After being updated to the latest R version 4.2, an error has been identified in the tReasure. As soon as possible, we will revise the code and announce it again.
+* 
 * Being tested using conda as an alternative to install.
     - 2022-11-02 completion: under R4.1 using conda on Ubuntu.
     - 2022-11-02 ongoing: under R4.1 using conda on Mac
@@ -96,15 +97,20 @@ tReasure is a package for the R computing environment and it is assumed that you
 
 ## 🔔 User Manual
 * [Download](doc/tReasure-Manual-220109.pdf)
-
 ## 🔔 Detailed Mapping Methods
 * [Click](doc/Detailed-Mapping-Methods.pdf)
+## 🔔 Indiced reference
+* tReasure is automatically downloaded during analysis. If an error occurs during download, we recommend that you download the file directly, and then move it to a specific location, and unzip it.
+    - Make folder (Hsapi38 or Mmusc10) on tReasure package folder.  **ex) [R4.1 PATH]/library/tReasure/extdata/refer/Hsapi38/**
+    - Move and extract the downloaded files into the folder created.
+    - [Homo sapiens hg38](https://treasure.pmrc.re.kr/data/genome/Eukarya/Hsapi38/Hsapi38.zip)
+    - [Mus musculus 10](https://treasure.pmrc.re.kr/data/genome/Eukarya/Mmusc10/Mmusc10.zip)
+
 ## 🔔 Sample Data  
 * Small RNA-seq dataset from human breast tissues (part of GSE68085)
     - [Download](https://www.dropbox.com/sh/phkerfxxq3jmgo9/AAC3sR1rWWo5DsTZAD3_VUANa?dl=0)
     - Control (Normal): SRR1982473, SRR1982474, SRR1982475
     - Test (Cancer): SRR1982580, SRR1982581, SRR1982582
-
 ## 🔔 Tutorial Videos
  * Installation and setup: [Window](https://www.dropbox.com/s/ssxux5ad7jwvxk7/win_install.mkv?dl=0) 
  * Full version of analysis: [Window](https://www.dropbox.com/s/vinwwdl1umw74l7/tReasure.Analysis.mp4?dl=0) [Mac](https://www.dropbox.com/s/ylt89pxcw9bf4eq/tReasure.Analysis.Mac.mov?dl=0)
