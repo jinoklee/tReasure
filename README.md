@@ -18,7 +18,8 @@
 tReasure is a package for the R computing environment and it is assumed that you have already installed R according to your operating system. See the R project at (http://www.r-project.org). tReasure requires the gwidget2 graphical library to run and a few additional packages for the analysis of RNA-seq. 
 
 ### 🔔 Notics
-* tReasure works fine with version R4.1. After being updated to the latest R version 4.2, an error has been identified in the tReasure. As soon as possible, We will revise the code and announce it again.
+* tReasure works fine with version R4.1. After being updated to the latest R version 4.2, an error has been identified in the tReasure. As soon as possible, we will revise the code and announce it again.
+
 
 ### 1. Preliminaries  
 
