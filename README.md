@@ -62,16 +62,16 @@ tReasure is a package for the R computing environment and it is assumed that you
  
      
 ### 2. Installation of tReasure : Open Rstudio or R and type as below.
-    It takes a few minutes to install for the first time.  
- 
-   
+It takes a few minutes to install for the first time.  
+
+
      install.packages("devtools")
      library("devtools")
     
      devtools::install_github("jinoklee/tReasure",force = TRUE)
      library("tReasure")
      install.tReasure()
-   
+
     
    ***Note*** If the descriptioin shows as below during the installation, choose **"Install GTK+"** 
     
@@ -86,13 +86,39 @@ tReasure is a package for the R computing environment and it is assumed that you
    
     tReasure::tReasure()
    
+### 🌱 Installation using conda  
 
+1) For Ubuntu :  
+* [Install miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html) and create enviroment      
+    ```
+    conda create --name r4.1
+    conda activate r4.1
+    ```
+* Install Mamba for bioinformatics packages in conda and need to update conda.
+    ```
+    conda install mamba -c conda-forge -y
+    conda update conda -y
+    conda update -all 
+    ```
+* Install R 4.1 and required packages.
+    ```
+    mamba install -c conda-forge r-base=4.1.2
+    mamba install -c conda-forge r-devtools
+    mamba install -c conda-forge r-rgtk2
+    mamba install -c conda-forge r-cairodevice
+    ```
+ * Open R and type as below
+    ```
+    library("devtools") 
+    devtools::install_github("jinoklee/tReasure",force = TRUE)
+    library("tReasure")
+    install.tReasure()
+    ```
 ## 🌱 Running tReasure  
 ### Open Rstuido or R and type as below
 
      library("tReasure")
      tReasure::tReasure()
-
 
 ## 🔔 User Manual
 * [Download](doc/tReasure-Manual-220109.pdf)
